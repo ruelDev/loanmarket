@@ -41,7 +41,7 @@
         <div class="container">
             <div id="default-carousel" class="relative w-full" data-carousel="slide">
                 <div class="w-full flex justify-center">
-                    <h2 class="text-center  md:text-2xl md:text-2xl xl:text-2xl mb-5 text-blue-1 w-[90vw] md:w-[40vw] xl:w-[50vw]">
+                    <h2 class="text-center  md:text-2xl xl:text-2xl mb-5 text-blue-1 w-[90vw] md:w-[40vw] xl:w-[50vw]">
                         Loan Market brokers can compare over 60 lenders and thousands of home loan products to find the right loan deal for you.
                     </h2>
                 </div>
