@@ -1,7 +1,10 @@
 @extends('layouts.admin.index')
 
 @section('content')
-    <div id="kt_app_content_container" class="app-container container-fluid">
+    @php
+        $title = 'Clients';
+    @endphp
+    <div id="kt_app_content_container" class="container-fluid p-0">
         <div class="card card-flush p-10">
             <div class="flex justify-end mb-3">
                 <div class="d-flex align-items-center position-relative my-1">
@@ -14,7 +17,8 @@
                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Number</th>
+                    <th>Phone</th>
+                    <th>Broker</th>
                 </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-semibold">
@@ -40,6 +44,7 @@
                 { data: 'name'},
                 { data: 'email' },
                 { data: 'phone' },
+                { data: 'broker.name' },
             ],
         })
 

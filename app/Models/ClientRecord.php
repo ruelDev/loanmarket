@@ -9,6 +9,9 @@ class ClientRecord extends Model
 {
     use HasFactory;
 
-    protected $table = 'client_records';
+    protected $table = 'client_record';
 
+    public function broker() {
+        return $this->belongsTo(Brokers::class, 'broker_id');
+    }
 }

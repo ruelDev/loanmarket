@@ -1,7 +1,10 @@
 @extends('layouts.admin.index')
 
 @section('content')
-    <div id="kt_app_content_container" class="app-container container-fluid">
+    @php
+        $title = 'Real Estate Offices'
+    @endphp
+    <div id="kt_app_content_container" class="container-fluid p-0">
         <div class="card card-flush p-10">
             <div class="flex justify-end items-center mb-3 gap-3">
                 <div class="d-flex align-items-center position-relative my-1">
@@ -22,7 +25,7 @@
                     <th class="min-w-50px">Name</th>
                     <th class="min-w-50px">Email</th>
                     <th class="min-w-50px">Tagline</th>
-                    <th class="min-w-100px">Action</th>
+                    {{-- <th class="min-w-100px">Action</th> --}}
                 </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-semibold">
@@ -341,37 +344,37 @@
                     },
                 },
                 { data: 'tagline' },
-                {
-                    data: 'id',
-                    render: function (data, type, row) {
-                        return `<div class="flex gap-3">
-                                    <label class="form-check form-switch form-check-custom form-check-solid">
-                                        <input class="form-check-input h-50 ros_status" onChange="updateROSStatus(${data})" type="checkbox" value="${data}" checked="checked"/>
-                                    </label>
-                                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" onClick="updateROS(${data})">
-                                        <i class="ki-duotone ki-pencil fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>
-                                    </button>
-                                    <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" onClick="deleteROS(${data})">
-                                        <i class="ki-duotone ki-trash fs-2">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                            <span class="path4"></span>
-                                            <span class="path5"></span>
-                                        </i>
-                                    </button>
-                                </div>`;
-                    }
-                }
+                // {
+                //     data: 'id',
+                //     render: function (data, type, row) {
+                //         return `<div class="flex gap-3">
+                //                     <label class="form-check form-switch form-check-custom form-check-solid">
+                //                         <input class="form-check-input h-50 ros_status" onChange="updateROSStatus(${data})" type="checkbox" value="${data}" checked="checked"/>
+                //                     </label>
+                //                     <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" onClick="updateROS(${data})">
+                //                         <i class="ki-duotone ki-pencil fs-2">
+                //                             <span class="path1"></span>
+                //                             <span class="path2"></span>
+                //                         </i>
+                //                     </button>
+                //                     <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" onClick="deleteROS(${data})">
+                //                         <i class="ki-duotone ki-trash fs-2">
+                //                             <span class="path1"></span>
+                //                             <span class="path2"></span>
+                //                             <span class="path3"></span>
+                //                             <span class="path4"></span>
+                //                             <span class="path5"></span>
+                //                         </i>
+                //                     </button>
+                //                 </div>`;
+                //     }
+                // }
             ],
             columnDefs: [
                 { width: "150px", targets: 0 },
                 { width: "200px", targets: 1 },
                 { width: "250px", targets: 2 },
-                { width: "90px", targets: 3},
+                // { width: "90px", targets: 3},
             ]
         })
 

@@ -50,7 +50,6 @@
                         <!--end:Menu link-->
                     </div>
                     <div class="menu-item">
-                        <!--begin:Menu link-->
                         <a class="menu-link" href="{{route('admin.ros')}}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-abstract-13 fs-2">
@@ -60,23 +59,8 @@
                             </span>
                             <span class="menu-title">Real State Offices</span>
                         </a>
-                        <!--end:Menu link-->
                     </div>
                     <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{route('admin.lenders')}}">
-                            <span class="menu-icon">
-                                <i class="ki-duotone ki-abstract-13 fs-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                            </span>
-                            <span class="menu-title">Lenders</span>
-                        </a>
-                        <!--end:Menu link-->
-                    </div>
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
                         <a class="menu-link" href="{{route('admin.brokers')}}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-abstract-13 fs-2">
@@ -86,20 +70,74 @@
                             </span>
                             <span class="menu-title">Brokers</span>
                         </a>
-                        <!--end:Menu link-->
                     </div>
-                    <div class="menu-item">
-                        <!--begin:Menu link-->
-                        <a class="menu-link" href="{{route('admin.clients')}}">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-abstract-13 fs-2">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Clients</span>
-                        </a>
-                        <!--end:Menu link-->
+                            <span class="menu-title">Lender</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{route('admin.lenders.list')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">List</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{route('admin.lenders.rates')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Rates</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                        </div>
+                    </div>
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-abstract-13 fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Client</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{route('admin.clients')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Records</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{route('admin.clients.lenders')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Lenders</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                        </div>
                     </div>
                     <!--end:Menu item-->
                 </div>

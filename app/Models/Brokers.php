@@ -11,4 +11,10 @@ class Brokers extends Model
 
     protected $table = 'brokers';
 
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'rso'
+    ];
 }

@@ -12,7 +12,7 @@
             main{
                 background-image:
                         linear-gradient(to bottom, #3d3d3d6f, #1d1d1dae),
-                        url("{{asset($data['background'])}}");
+                        url(@yield('background'));
 
                 min-height: 100vh !important;
             }

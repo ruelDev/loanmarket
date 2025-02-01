@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\LenderRates;
-use App\Models\Lenders;
+use App\Models\ClientLenders;
 use Illuminate\Http\Request;
+use App\Models\ClientRecord;
 
-class LendersController extends Controller
+class ClientsController extends Controller
 {
     public function index(Request $request) {
 
@@ -18,36 +18,41 @@ class LendersController extends Controller
 
             // $orderColumnIndex = $request->get('order') !== null ? $request->get('order')[0]['column']: null;
             // $orderDirection = $orderColumnIndex !== null ? $request->get('order')[0]['dir'] : 'asc';
-            // $columns = ['name'];
+            // $columns = ['name', 'email', 'phone'];
 
             // if($orderColumnIndex !== null) $orderColumn = $columns[$orderColumnIndex];
 
-            $query = Lenders::select([
-                'id',
-                'name'
-            ]);
+            $query = ClientRecord::with('broker');
 
             // Apply search filter
             if (!empty($searchValue)) {
                 $query->where(function ($q) use ($searchValue) {
-                    $q->where('name', 'like', "%{$searchValue}%");
+                    $q->where('name', 'like', "%{$searchValue}%")
+                      ->orWhere('email', 'like', "%{$searchValue}%")
+                      ->orWhere('phone', 'like', "%{$searchValue}%");
                 });
             }
 
+            // Apply additional filters (if any, e.g., specific fields)
+            // if ($request->has('filter_field') && $request->get('filter_field')) {
+            //     $filterField = $request->get('filter_field'); // Example field
+            //     $query->where('some_column', $filterField); // Modify to fit your filter logic
+            // }
             // if($orderColumnIndex !== null) $query->orderBy($orderColumn, $orderDirection);
             $count = $query->count();
             $paginated = $query->paginate($pageSize, ['*'], 'page', $page);
             return response()->json([
                 'draw' => $request->get('draw'),
-                'recordsTotal' => Lenders::count(),
+                'recordsTotal' => ClientRecord::count(),
                 'recordsFiltered' => $count,
                 'data' => $paginated->items(),
             ]);
         }
-        return view('pages.admin.lenders');
+
+        return view('pages.admin.clients');
     }
 
-    public function rates(Request $request) {
+    public function lenders(Request $request) {
 
         if ($request->ajax()) {
             $page = $request->get('start') / $request->get('length') + 1;
@@ -57,57 +62,43 @@ class LendersController extends Controller
             // $orderColumnIndex = $request->get('order') !== null ? $request->get('order')[0]['column']: null;
             // $orderDirection = $orderColumnIndex !== null ? $request->get('order')[0]['dir'] : 'asc';
             // $columns = [
-            //     'lvr',
+            //     'lender',
             //     'loan_type',
             //     'loan_rate',
             //     'loan_term',
+            //     'monthly',
             // ];
 
             // if($orderColumnIndex !== null) $orderColumn = $columns[$orderColumnIndex];
 
-            // $query = LenderRates::with('lender')->get();
-            $query = LenderRates::with('lender');
+            $query = ClientLenders::with('client');
 
             // Apply search filter
             if (!empty($searchValue)) {
                 $query->where(function ($q) use ($searchValue) {
-                    $q->where('lvr', 'like', "%{$searchValue}%")
-                        ->where('loan_type', 'like', "%{$searchValue}%")
-                        ->where('loan_rate', 'like', "%{$searchValue}%")
-                        ->where('loan_term', 'like', "%{$searchValue}%");
+                    $q->where('name', 'like', "%{$searchValue}%")
+                      ->orWhere('email', 'like', "%{$searchValue}%")
+                      ->orWhere('phone', 'like', "%{$searchValue}%");
                 });
             }
 
+            // Apply additional filters (if any, e.g., specific fields)
+            // if ($request->has('filter_field') && $request->get('filter_field')) {
+            //     $filterField = $request->get('filter_field'); // Example field
+            //     $query->where('some_column', $filterField); // Modify to fit your filter logic
+            // }
             // if($orderColumnIndex !== null) $query->orderBy($orderColumn, $orderDirection);
+
             $count = $query->count();
             $paginated = $query->paginate($pageSize, ['*'], 'page', $page);
             return response()->json([
                 'draw' => $request->get('draw'),
-                'recordsTotal' => LenderRates::count(),
+                'recordsTotal' => ClientLenders::count(),
                 'recordsFiltered' => $count,
                 'data' => $paginated->items(),
             ]);
         }
 
-        return view('pages.admin.lenderRates');
-    }
-
-    public function store(Request $request) {
-
-        Lenders::create([
-            'name' => $request->name,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        return response()->json(['success' => 'Lender created successfully.']);
-    }
-
-    public function delete(Request $request) {
-
-        $lender = Lenders::findOrFail($request->id);
-        $lender->delete();
-
-        return response()->json(['success' => 'Lender deleted successfully.']);
+        return view('pages.admin.clientsLender');
     }
 }

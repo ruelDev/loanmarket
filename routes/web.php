@@ -7,30 +7,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ROSController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ROSController as AdminROSController;
-use App\Http\Controllers\Admin\LendersController as AdminLendersController;
 use App\Http\Controllers\Admin\BrokersController as AdminBrokersController;
-use App\Http\Controllers\Admin\ClientRecordController as AdminClientRecordController;
-
-// use App\Http\Controllers\Admin\B
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-// Route::get('/', function () {
-//     $data = config('data');
-//     return view('welcome', compact('data'));
-// });
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+use App\Http\Controllers\Admin\LendersController as AdminLendersController;
+use App\Http\Controllers\Admin\ClientsController as AdminClientsController;
+use App\Http\Controllers\UtilityController;
 
 require __DIR__ . '/auth.php';
 
@@ -41,15 +21,23 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/admin/logout', [DashboardController::class, 'logout'])->name('admin.logout');
     Route::get('/admin/real-state-offices', [AdminROSController::class, 'index'])->name('admin.ros');
+    Route::post('/admin/brokers/store', [AdminBrokersController::class, 'store'])->name('admin.brokers.store');
+    Route::post('/admin/brokers/delete', [AdminBrokersController::class, 'delete'])->name('admin.brokers.delete');
     Route::get('/admin/brokers', [AdminBrokersController::class, 'index'])->name('admin.brokers');
-    Route::get('/admin/lenders', [AdminLendersController::class, 'index'])->name('admin.lenders');
-    Route::get('/admin/clients', [AdminClientRecordController::class, 'index'])->name('admin.clients');
+    Route::get('/admin/utility/lenders-option', [UtilityController::class, 'lendersOption'])->name('admin.utility.lenders.option');
+    Route::get('/admin/utility/ros-option', [UtilityController::class, 'rosOption'])->name('admin.utility.ros.option');
+    Route::post('/admin/lenders/store', [AdminLendersController::class, 'store'])->name('admin.lenders.store');
+    Route::post('/admin/lenders/delete', [AdminLendersController::class, 'delete'])->name('admin.lenders.delete');
+    Route::get('/admin/lenders/list', [AdminLendersController::class, 'index'])->name('admin.lenders.list');
+    Route::get('/admin/lenders/rates', [AdminLendersController::class, 'rates'])->name('admin.lenders.rates');
+    Route::get('/admin/clients/lenders', [AdminClientsController::class, 'lenders'])->name('admin.clients.lenders');
+    Route::get('/admin/clients', [AdminClientsController::class, 'index'])->name('admin.clients');
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 Route::get('/compare-loans', [CompareLendersController::class, 'index']);
+Route::get('/{id}', [ROSController::class, 'index'])->name('ros');
 Route::get('/', [MainController::class, 'index'])->name('home');
 
-// Wildcard route should always come last
-Route::get('/{id}', [ROSController::class, 'index'])->name('ros');

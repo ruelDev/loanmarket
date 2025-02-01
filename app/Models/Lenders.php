@@ -10,4 +10,13 @@ class Lenders extends Model
     use HasFactory;
 
     protected $table = 'lenders';
+
+    protected $fillable = [
+        'name',
+    ];
+
+    public function lenderRates()
+    {
+        return $this->hasMany(LenderRates::class, 'lender_id');
+    }
 }

@@ -8,6 +8,7 @@ use App\Models\ClientRecord;
 use App\Models\Lenders;
 use App\Models\ROS;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -18,13 +19,18 @@ class DashboardController extends Controller
         $brokers = Brokers::count();
         $clients = ClientRecord::count();
 
-        $card = [
-            'Real Estate Offices' => $ros,
-            'Lenders' => $lenders,
-            'Brokers' => $brokers,
-            'Clients' => $clients,
-        ];
+        return view('pages.admin.dashboard', compact('ros', 'lenders', 'brokers', 'clients'));
+    }
 
-        return view('pages.admin.dashboard', compact('card'));
+    public function logout(Request $request) {
+        // auth()->logout();
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect(route('home'));
+        return redirect(url('/'));
     }
 }

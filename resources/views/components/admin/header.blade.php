@@ -13,7 +13,8 @@
                 <img alt="Logo" src="{{asset('assets/images/loanmarket/logos/Loan-Market.svg')}}" class="h-30px" />
             </a>
         </div>
-        <div class="d-flex align-items-stretch justify-content-end flex-lg-grow-1" id="kt_app_header_wrapper">
+        <div class="d-flex items-center justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
+            <h3 class="font-bold text-2xl">{{ $title }}</h3>
             <div class="app-navbar flex-shrink-0">
                 <div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
                     <div class="cursor-pointer symbol symbol-35px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
@@ -37,11 +38,7 @@
                             <a href="" class="menu-link px-5">My Profile</a>
                         </div>
                         <div class="menu-item px-5">
-                            <form method="POST" action="{{ route('logout') }}"
-                            data-kt-redirect-url="/" class="menu-link px-5">
-                                @csrf
-                                <button>Sign Out</button>
-                            </form>
+                            <a href="{{route('admin.logout')}}" class="menu-link px-5">Sign Out</a>
                         </div>
                     </div>
                 </div>

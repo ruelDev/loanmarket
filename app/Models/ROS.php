@@ -10,5 +10,4 @@ class ROS extends Model
     use HasFactory;
 
     protected $table = 'real_estate_offices';
-
 }

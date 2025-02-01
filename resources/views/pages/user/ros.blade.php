@@ -1,5 +1,5 @@
 @extends('layouts.pages.ros')
-
+@section('background', $data['featured'])
 @section('content')
     <div class="container relative">
         <image
@@ -63,7 +63,6 @@
             </div>
         </div>
     </div>
-
 
     <x-bladewind::modal
         name="userDetails"
