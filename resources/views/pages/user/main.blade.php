@@ -1,99 +1,101 @@
 @extends('layouts.pages.main')
 
 @section('content')
-    <div class="container relative w-full">
-        <image src="{{ asset('assets/images/loanmarket/logos/Loan-Market.svg') }}"
-            class=" top-0 left-5 md:left-0 w-[3rem] md:w-[5rem] xl:w-[6rem]"/>
-    </div>
     <div id="hero-section" class="bg-cover bg-no-repeat bg-center h-[30vh] md:h-[50vh]">
         <div class="container h-full flex flex-col items-center justify-center gap-5">
             @foreach ($data['hero']['title'] as $key => $item)
-                <h1 class="text-center text-2xl md:text-4xl xl:text-5xl {{ $key != 0 ? "font-bold" : "font-serif"}}">{{$item}}</h1>
+                <h1 class="text-center text-2xl md:text-6xl text-white {{ $key != 0 ? "font-bold" : "font-serif"}}">{{$item}}</h1>
             @endforeach
         </div>
     </div>
-    <div id="rso-section">
+    <section id="rso-section">
         <div class="container py-20">
-            <h2 class="text-xl md:text-2xl font-bold mb-5 text-blue-1">Real Estate Offices</h2>
-            <div class="grid md:grid-cols-3 gap-5 xl:gap-10">
+            <h2 class="text-xl md:text-3xl font-bold mb-5 text-blue-1">Real Estate Offices</h2>
+            <div class="grid md:grid-cols-2 gap-5 md:gap-10">
                 @foreach($ros as $key => $item)
-                    {{-- <div class="item cursor-pointer" onclick="window.location.href='{{route('ros', $key)}}'"> --}}
-                    <div class="item cursor-pointer" onclick="window.location.href='{{route('ros', $item['name'])}}'">
-                        <div class="relative w-full h-[200px] bg-center bg-cover"
-                            style="
-                            background-image:
-                                linear-gradient(to bottom, #fefefe00, #1d1d1d00),
-                                url('{{ asset($item['featured']) }}');
-                            ">
-                            <image class="absolute w-[80px] h-auto" src="{{ asset($item['logo']) }}"/>
-                        </div>
-                        <div class="text-center mt-3">
-                            <p class="text-xl font-bold text-blue-1 mb-2">{{$item['name']}}</p>
-                            <p class="text-blue-1">{{$item['tagline']}}</p>
+                    <div class="p-5">
+                        <div class="item cursor-pointer rso-card rounded overflow-hidden" onclick="window.location.href='{{route('calculator')}}'">
+                            <div class="relative w-full h-[300px] bg-center bg-cover flex items-center justify-center"
+                                style="
+                                background-image:
+                                    linear-gradient(to bottom, #fefefe00, #1d1d1dbc),
+                                    url('{{ asset($item['featured']) }}');
+                                ">
+                                <image class="absolute w-[50px] md:w-[80px] h-auto top-0 left-5" src="{{ asset($item['logo']) }}"/>
+                                <div class="text-center mt-3">
+                                    <p class="text-2xl md:text-3xl font-bold text-white mb-2">{{$item['name']}}</p>
+                                    <p class="text-xl text-white">{{$item['tagline']}}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
-    </div>
+    </section>
     <div class="divider h-[1px] bg-blue-1 w-[90vw] mx-auto md:hidden"></div>
-    <div id="lenders-section" class="slider mt-10">
-        <div class="container">
-            <div id="default-carousel" class="relative w-full" data-carousel="slide">
-                <div class="w-full flex justify-center">
-                    <h2 class="text-center  md:text-2xl xl:text-2xl mb-5 text-blue-1 w-[90vw] md:w-[40vw] xl:w-[50vw]">
-                        Loan Market brokers can compare over 60 lenders and thousands of home loan products to find the right loan deal for you.
-                    </h2>
-                </div>
-                <div class="relative h-56 overflow-hidden rounded-lg md:h-[800px]">
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('assets/images/lenders/slider/1.png') }}" class="absolute block h-[100%] -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"/>
+    @include('components.lenders')
+    <section>
+        <div class="container mb-5">
+            <div class="card p-5 md:p-10">
+                <div class="grid grid-cols-5 gap-10 md:gap-0">
+                    <div class="col-span-5 md:col-span-3 md:p-3 flex items-center">
+                        <div>
+                            <h3 class="text-3xl">Home loan products and features</h3>
+                            <p class="text-[1.01rem] mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure ex quae itaque! Id architecto reiciendis ipsam ex optio non beatae temporibus tenetur, recusandae cumque, ea magnam est praesentium reprehenderit, nemo iure. Quidem nemo corporis recusandae!</p>
+                            <ul class="mt-5">
+                                <li class="text-[1.01rem] flex align-items-center gap-3"><i class="fa-solid fa-circle text-[5px]"></i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, quo?</li>
+                                <li class="text-[1.01rem] flex align-items-center gap-3"><i class="fa-solid fa-circle text-[5px]"></i> Lorem ipsum dolor sit amet consectetur.</li>
+                                <li class="text-[1.01rem] flex align-items-center gap-3"><i class="fa-solid fa-circle text-[5px]"></i> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Distinctio totam velit soluta.</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('assets/images/lenders/slider/2.png') }}" class="absolute block h-[100%] -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"/>
-                    </div>
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('assets/images/lenders/slider/3.png') }}" class="absolute block h-[100%] -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"/>
-                    </div>
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('assets/images/lenders/slider/4.png') }}" class="absolute block h-[100%] -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"/>
-                    </div>
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('assets/images/lenders/slider/5.png') }}" class="absolute block h-[100%] -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"/>
-                    </div>
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="{{ asset('assets/images/lenders/slider/6.png') }}" class="absolute block h-[100%] -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"/>
+                    <div class="col-span-5 md:col-span-2">
+                        <div class="rounded overflow-hidden">
+                            <img src="{{asset('assets/images/loanmarket/featured1.webp')}}" alt="">
+                        </div>
                     </div>
                 </div>
-
-                <!-- Slider indicators -->
-                {{-- <div class="absolute z-30 flex -translate-x-1/2 bottom-0 left-1/2 space-x-3 rtl:space-x-reverse">
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
-                </div> --}}
-                <!-- Slider controls -->
-                {{-- <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-                        </svg>
-                        <span class="sr-only">Previous</span>
-                    </span>
-                </button>
-                <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                        </svg>
-                        <span class="sr-only">Next</span>
-                    </span>
-                </button> --}}
             </div>
         </div>
-    </div>
+    </section>
+    <section>
+        <div class="container mb-10">
+            <div class="card p-10 bg-blue">
+                <div class="grid grid-cols-2 md:grid-cols-6">
+                    <div class="col-span-2">
+                        <h3 class="text-3xl text-white mb-10 md:mb-0">
+                            Why Company?
+                        </h3>
+                    </div>
+                    <div class="col-span-2">
+                        <div class="flex flex-col gap-3 mb-10">
+                            <img src="{{asset('assets/images/loanmarket/svg/perscent.svg')}}" width="50px"/>
+                            <h4 class="text-white text-xl md:w-2/3">Settle for nothing less than great rates and low fees.</h4>
+                            <p class="text-white text-[.9rem] md:w-2/3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, quis?</p>
+                        </div>
+                        <div class="flex flex-col gap-3 mb-10">
+                            <img src="{{asset('assets/images/loanmarket/svg/diffShape.svg')}}" width="50px"/>
+                            <h4 class="text-white text-xl md:w-2/3">When it comes to your home loan, we’re flexible.</h4>
+                            <p class="text-white text-[.9rem] md:w-2/3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, quis?</p>
+                        </div>
+                    </div>
+                    <div class="col-span-2">
+                        <div class="flex flex-col gap-3 mb-10">
+                            <img src="{{asset('assets/images/loanmarket/svg/turnaroundtime.svg')}}" width="50px"/>
+                            <h4 class="text-white text-xl md:w-2/3">Turnaround times that won’t leave you wondering.</h4>
+                            <p class="text-white text-[.9rem] md:w-2/3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, quis?</p>
+                        </div>
+                        <div class="flex flex-col gap-3 mb-10">
+                            <img src="{{asset('assets/images/loanmarket/svg/mobile.svg')}}" width="50px"/>
+                            <h4 class="text-white text-xl md:w-2/3">An award-winning digital app.</h4>
+                            <p class="text-white text-[.9rem] md:w-2/3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, quis?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
 
 @push('scripts')

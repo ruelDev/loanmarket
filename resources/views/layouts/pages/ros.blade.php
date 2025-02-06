@@ -22,7 +22,7 @@
         <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
         <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
 
-        @vite('resources/css/app.css')
+        @vite(['resources/css/app.css','resources/js/app.js'])
     </head>
     <body>
         <main class="bg-cover bg-center bg-no-repeat">

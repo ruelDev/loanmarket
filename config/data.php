@@ -3,22 +3,21 @@
 return [
     'hero' => [
         'title' => [
-            'Your Home Loan Review...',
-            'Calculate your own savings in 5 minutes'
+            'Your Home Loan Review',
         ]
     ],
     'ros' => [
         [
-            'name' => 'Bracken Ridge',
-            'tagline' => 'We don\'t sell houses, We sell homes.',
-            'logo' => "assets/images/raywhite/brackenridge/logo.svg",
-            'background' => "assets/images/raywhite/brackenridge/bg.jpg"
+            'name' => 'RayWhite',
+            'tagline' => 'Your Investment. Our Priority.',
+            'logo' => "assets/images/raywhite/logo.svg",
+            'background' => "assets/images/raywhite/bg.jpg"
         ],
         [
-            'name' => 'Rochedale',
-            'tagline' => 'We don\'t sell houses, We sell homes.',
-            'logo' => "assets/images/raywhite/rochedale/logo.svg",
-            'background' => "assets/images/raywhite/rochedale/bg.png"
+            'name' => 'Housemark',
+            'tagline' => 'Rental Properties Properly Managed',
+            'logo' => "assets/images/housemark/logo.png",
+            'background' => "assets/images/housemark/bg.webp"
         ],
     ],
     'lenders' => [

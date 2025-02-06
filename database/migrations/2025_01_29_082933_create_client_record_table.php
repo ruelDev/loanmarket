@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone');
-            $table->integer('broker_id');
+            $table->integer('broker_id')->nullable();
             $table->timestamps();
         });
     }

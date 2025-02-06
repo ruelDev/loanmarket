@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\ROSController as AdminROSController;
 use App\Http\Controllers\Admin\BrokersController as AdminBrokersController;
 use App\Http\Controllers\Admin\LendersController as AdminLendersController;
 use App\Http\Controllers\Admin\ClientsController as AdminClientsController;
+use App\Http\Controllers\CalculatorController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\UtilityController;
 
 require __DIR__ . '/auth.php';
@@ -37,7 +39,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
+Route::get('/request-email', [EmailController::class, 'requestEmail'])->name('request.email');
 Route::get('/compare-loans', [CompareLendersController::class, 'index']);
+Route::get('/calculator', [CalculatorController::class, 'index'])->name('calculator');
+Route::post('/calculate-savings', [CalculatorController::class, 'calculateSavings'])->name('calculate-savings');
 Route::get('/{id}', [ROSController::class, 'index'])->name('ros');
 Route::get('/', [MainController::class, 'index'])->name('home');
 

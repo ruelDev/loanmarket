@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('lender_rates', function (Blueprint $table) {
             $table->id();
             $table->integer('lender_id');
-            $table->integer('lvr');
+            $table->integer('lvr')->nullable();
             $table->string('loan_type');
-            $table->float('loan_rate');
+            $table->decimal('loan_rate', 10, 6);
             $table->integer('loan_term');
             $table->timestamps();
         });

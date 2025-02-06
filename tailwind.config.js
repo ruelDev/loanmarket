@@ -39,7 +39,8 @@ export default {
                 white: {
                     DEFAULT: "#fff",
                     1: "#FEFEFE",
-                    2: "E5F7FD",
+                    2: "#E5F7FD",
+                    3: "#f7f7f7",
                 },
                 darkGreen: {
                     DEFAULT: "#1A2C32",

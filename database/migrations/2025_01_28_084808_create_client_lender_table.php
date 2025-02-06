@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('client_lender', function (Blueprint $table) {
             $table->id();
             $table->integer('client_id');
+            $table->string('property_address');
+            $table->decimal('property_value', 10, 6);
             $table->string('lender');
             $table->string('loan_type');
             $table->float('loan_rate');
             $table->integer('loan_term');
-            $table->float('monthly');
+            $table->decimal('monthly', 10, 6);
+            $table->decimal('savings', 10, 6);
             $table->timestamps();
         });
     }
