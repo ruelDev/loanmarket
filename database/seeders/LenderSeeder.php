@@ -16,16 +16,19 @@ class LenderSeeder extends Seeder
         Lenders::insert([
             [
                 'name' => 'CBA',
+                'logo' => 'assets/images/lenders/Commonwealth.svg',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'Macquarie',
+                'logo' => 'assets/images/lenders/macquarie.png',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'St. George',
+                'logo' => 'assets/images/lenders/stGeorge.png',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

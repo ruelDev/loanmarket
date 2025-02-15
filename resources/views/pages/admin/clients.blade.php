@@ -18,7 +18,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>Broker</th>
+                    {{-- <th>Action</th> --}}
                 </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-semibold">
@@ -44,7 +44,7 @@
                 { data: 'name'},
                 { data: 'email' },
                 { data: 'phone' },
-                { data: 'broker.name' },
+                // { data: 'broker.name' },
             ],
         })
 

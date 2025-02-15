@@ -14,7 +14,7 @@
 		<meta property="og:url" content="https://keenthemes.com/metronic" />
 		<meta property="og:site_name" content="Metronic by Keenthemes" />
 		<link rel="canonical" href="http://preview.keenthemes.comindex.html" />
-        <link rel="icon" href="{{ asset('assets/images/loanmarket/logos/Loan-Market.svg') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('assets/images/loanmarket/logos/Logo.png') }}" type="image/x-icon">
 
 		<!--begin::Fonts(mandatory for all pages)-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />

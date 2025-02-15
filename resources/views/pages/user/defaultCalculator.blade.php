@@ -5,11 +5,11 @@
         style="background-image:
                         linear-gradient(to bottom, #3d3d3d6f, #1d1d1dae),
                         /* linear-gradient(to bottom, #E5F7FD, #e5f7fd), */
-                        url('{{asset($rso['featured'])}}');
+                        url('{{asset('assets/images/loanmarket/bg/Mortgage-Repayments-Calculator.webp')}}');
                         color: #fefefe;">
         <div class="container h-full flex items-center justify-center gap-5">
             <h1 class="text-center text-white text-2xl md:text-6xl font-bold animate-hero-title flex items-center" style="animation-delay: {{1 * 0.3}}s;">
-                <img src="{{asset($rso['logo'])}}" class="me-3 w-[2rem] md:w-[3rem]" height="100%" /> {{ $rso['name'] }}
+                Calculate Savings
             </h1>
         </div>
     </div>
@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="calc-input flex flex-col gap-1" id="loan-term-container">
                                             <label class="label text-xs text-black" for="loan_term">Fixed Term</label>
-                                            <select id="loan_term" class="" name="text" type="text" placeholder="Term">
+                                            <select id="loan_term" class="" name="loan_term" placeholder="Fixed Term">
                                                 <option value="1">1 Year</option>
                                                 <option value="2">2 Years</option>
                                                 <option value="3">3 Years</option>
@@ -123,27 +123,27 @@
                                     <div class="flex flex-col gap-5 w-full" id="top-3-container">
                                         @foreach($data['lenders'] as $item)
                                          @foreach ($item as $key => $value)
-                                         <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto">
-                                            <div class="header bg-black h-[60px] ps-5">
-                                                <image src='{{ asset($value['logo'])}}' style="height: 100%; width: 100px"/>
+                                            <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto">
+                                                <div class="header bg-black h-[60px] ps-5">
+                                                    <image src='{{ asset($value['logo'])}}' style="height: 100%; width: 100px"/>
+                                                </div>
+                                                <div class="grid gap-10 md:grid-cols-3 py-3 hover:bg-blue-hover">
+                                                    <div class="text-center">
+                                                        <p class="text-2xl">{{ $value['ratePA'] }}%</p>
+                                                        <p class="text-xs text-black-1">RATE P.A</p>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <p class="text-2xl">{{ $value['comparisonRatePA'] }}%</p>
+                                                        <p class="text-xs text-black-1">RATE P.A</p>
+                                                        <p class="text-xs text-black-1">COMPARISON**</p>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <p class="text-2xl">${{ $value['perMonth'] }}</p>
+                                                        <p class="text-xs text-black-1">Savings over</p>
+                                                        <p class="text-xs text-black-1">5 years</p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="grid gap-10 md:grid-cols-3 py-3 hover:bg-blue-hover">
-                                                <div class="text-center">
-                                                    <p class="text-2xl">{{ $value['ratePA'] }}%</p>
-                                                    <p class="text-xs text-black-1">RATE P.A</p>
-                                                </div>
-                                                <div class="text-center">
-                                                    <p class="text-2xl">{{ $value['comparisonRatePA'] }}%</p>
-                                                    <p class="text-xs text-black-1">RATE P.A</p>
-                                                    <p class="text-xs text-black-1">COMPARISON**</p>
-                                                </div>
-                                                <div class="text-center">
-                                                    <p class="text-2xl">${{ $value['perMonth'] }}</p>
-                                                    <p class="text-xs text-black-1">Savings over</p>
-                                                    <p class="text-xs text-black-1">5 years</p>
-                                                </div>
-                                            </div>
-                                        </div>
                                          @endforeach
                                         @endforeach
                                     </div>
@@ -203,13 +203,12 @@
                         <label class="label text-xs text-black" for="email">Email</label>
                         <input id="email" name="email" type="email" placeholder="Email">
                     </div>
-                    <button type="button" class="bg-gray-100 border border-blue text-black px-5 py-3 rounded" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="border border-blue text-black px-5 py-3 rounded" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="bg-blue text-white px-5 py-3 rounded" id="clientDetailsSubmit" onclick="calculateSavings()">Continue</button>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="modal fade" tabindex="-1" id="how_calc_works_modal">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -257,6 +256,7 @@
     </div>
 
     @include('components.lenders')
+
 @endsection
 
 @push('scripts')
@@ -303,7 +303,6 @@
             const loanPurpose = document.querySelector('input[name="loan_purpose"]:checked').value;
             const clientTerm = document.getElementById('client_term').value;
             const clientRate = document.getElementById('client_rate').value;
-
 
             if(propertyValue == null || propertyValue == '') {
                 document.getElementById('property_value').value = 0

@@ -23,4 +23,9 @@ class VariableRate extends Model
         'tier_max',
         'tier_unitOfMeasure',
     ];
+
+    public function lender()
+    {
+        return $this->belongsTo(Lenders::class, 'lender_id');
+    }
 }

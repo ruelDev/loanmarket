@@ -2,7 +2,7 @@
 
 @section('content')
     @php
-        $title = 'Fixed Lender Rates';
+        $title = 'Variable Lender Rates';
     @endphp
     <div id="kt_app_content_container" class="container-fluid p-0">
         <div class="card card-flush p-10">
@@ -22,16 +22,15 @@
             <table id="kt_datatable_example_1" class="table align-middle table-row-dashed fs-6 gy-5">
                 <thead>
                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                    <th class="min-w-150px px-0">Lender</th>
-                    <th class="min-w-150px">Rate</th>
-                    <th class="min-w-100px">Term</th>
-                    <th class="min-w-200px">Comparison Rate</th>
-                    <th class="min-w-200px">Purpose</th>
-                    <th class="min-w-200px">Repayment</th>
+                    <th class="min-w-200px px-0">Lender</th>
+                    <th class="min-w-200px">Rate</th>
                     <th class="min-w-200px">Tier</th>
                     <th class="min-w-200px">Tier Minimum</th>
-                    <th class="min-w-200px">Tier Minaximum</th>
+                    <th class="min-w-200px">Tier Minimum</th>
                     <th class="min-w-200px">Tier UOM</th>
+                    <th class="min-w-200px">Purpose</th>
+                    <th class="min-w-200px">Comparison Rate</th>
+                    <th class="min-w-200px">Repayment</th>
                 </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-semibold">
@@ -339,10 +338,6 @@
             columns: [
                 {data: 'lender.name' },
                 {data: 'loan_rate'},
-                {data: 'loan_term'},
-                {data: 'comparison_rate' },
-                {data: 'loan_purpose'},
-                {data: 'repayment_type'},
                 {
                     data: 'tier_name',
                     render: function (data, type, row) {
@@ -367,6 +362,9 @@
                         return `<p class="align-top">${data ?? 'N/A'}</p>`;
                     },
                 },
+                {data: 'loan_purpose'},
+                {data: 'comparison_rate'},
+                {data: 'repayment_type'},
             ],
             columnDefs: [
                 { width: "200px", targets: 0 },

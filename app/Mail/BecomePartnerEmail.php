@@ -5,12 +5,12 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Env;
 
-class RequestCallEmail extends Mailable
+class BecomePartnerEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,8 +32,9 @@ class RequestCallEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'LoanMarket: Client Request Call',
-            from: 'ruellobo.04@gmail.com',
+            subject: 'YourHomeLoanRevie: Become Partner - Inquiry',
+            from: $this->client['email'],
+            to: 'ruellobo.04@gmail.com',
         );
     }
 
@@ -43,7 +44,7 @@ class RequestCallEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.client',
+            view: 'email.becomePartner',
             with: [
                 'clientName' => $this->client,
                 'messageContent' => $this->messageContent,

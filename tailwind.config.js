@@ -19,6 +19,7 @@ export default {
         },
         extend: {
             fontFamily: {
+                poppins: ["Poppins", "sans-serif"],
                 geomanist: ["Geomanist", "sans-serif"],
                 ttramillas: ["ttRamillas", "sans-serif"],
             },
@@ -55,6 +56,30 @@ export default {
                 },
                 green: {
                     card: "#17C653",
+                },
+            },
+            animation: {
+                'hero-title': 'fadeInUp 0.8s ease-out forwards',
+                'slide-left': 'slideInLeft 1s ease-out forwards',
+                'slide-right': 'slideInRight 1s ease-out forwards',
+                'card': 'fadeIn 0.8s ease-out forwards',
+            },
+            keyframes: {
+                fadeInUp: {
+                    '0%': { opacity: 0, transform: 'translateY(30px)' },
+                    '100%': { opacity: 1, transform: 'translateY(0)' },
+                },
+                slideInLeft: {
+                    '0%': { transform: '-translate-x-1/2' },
+                    '100%': { transform: 'translateX(0)' },
+                },
+                slideInRight: {
+                    '0%': { transform: 'translate-x-1/2' },
+                    '100%': { transform: 'translateX(0)' },
+                },
+                fadeIn: {
+                    '0%': { opacity: 0 },
+                    '100%': { opacity: 1 },
                 },
             },
         },

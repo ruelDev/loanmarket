@@ -3,10 +3,10 @@
 
 <head>
     <base href="../../../" />
-    <title>LoanMarket-Login</title>
+    <title>YourHomeLoanReview-Login</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="{{ asset('assets/images/loanmarket/logos/Loan-Market.svg') }}" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/loanmarket/logos/Logo.png') }}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -43,9 +43,9 @@
                     @csrf
                     <div class="flex flex-col items-center justify-center gap-5 mb-5">
                         <!--begin::Title-->
-                        <image src="{{ asset('assets/images/loanmarket/logos/Loan-Market.svg') }}"
-                            class="w-[3rem] md:w-[5rem] w-xl-[5rem]" />
-                        <h1 class="text-blue-1 text-3xl fw-bolder mb-3">LoanMarket</h1>
+                        <image src="{{ asset('assets/images/loanmarket/logos/Logo.png') }}"
+                            class="w-[3rem] md:w-[8rem]" />
+                        <h1 class="text-blue-1 text-3xl fw-bolder mb-3">Your Home Loan Review</h1>
                         <!--end::Title-->
                         <!--begin::Subtitle-->
                         <!--end::Subtitle=-->

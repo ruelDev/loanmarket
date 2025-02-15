@@ -34,7 +34,7 @@
                 </div>
             </a>
         </div>
-        <div class="mb-md-5 mb-xl-10">
+        {{-- <div class="mb-md-5 mb-xl-10">
             <a href="{{route('admin.brokers')}}" class="{{"card card-flush bgi-size-contain bgi-position-x-end mb-5 mb-xl-10 h-100 w-100 bg-pattern bg-red-card"}}">
                 <div class="card-header pt-5">
                     <div class="card-title d-flex flex-column">
@@ -43,6 +43,6 @@
                     </div>
                 </div>
             </a>
-        </div>
+        </div> --}}
     </div>
 @endsection

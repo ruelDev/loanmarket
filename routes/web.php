@@ -33,16 +33,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/lenders/store', [AdminLendersController::class, 'store'])->name('admin.lenders.store');
     Route::post('/admin/lenders/delete', [AdminLendersController::class, 'delete'])->name('admin.lenders.delete');
     Route::get('/admin/lenders/list', [AdminLendersController::class, 'index'])->name('admin.lenders.list');
-    Route::get('/admin/lenders/rates', [AdminLendersController::class, 'rates'])->name('admin.lenders.rates');
+    Route::get('/admin/lenders/rates/fixed', [AdminLendersController::class, 'rates'])->name('admin.lenders.rates');
+    Route::get('/admin/lenders/rates/variable', [AdminLendersController::class, 'ratesVariable'])->name('admin.lenders.rates.variable');
     Route::get('/admin/clients/lenders', [AdminClientsController::class, 'lenders'])->name('admin.clients.lenders');
     Route::get('/admin/clients', [AdminClientsController::class, 'index'])->name('admin.clients');
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
-Route::get('/request-email', [EmailController::class, 'requestEmail'])->name('request.email');
+Route::post('/request-email', [EmailController::class, 'requestEmail'])->name('request.email');
+Route::post('/become-partner-email', [EmailController::class, 'becomePartnerEmail'])->name('become-partner.email');
 Route::get('/compare-loans', [CompareLendersController::class, 'index']);
-Route::get('/calculator', [CalculatorController::class, 'index'])->name('calculator');
 Route::post('/calculate-savings', [CalculatorController::class, 'calculateSavings'])->name('calculate-savings');
-Route::get('/{id}', [ROSController::class, 'index'])->name('ros');
+Route::get('/calculate-savings', [CalculatorController::class, 'calculateSavingsDefault'])->name('calculate-savings-default');
+Route::get('/{name}', [CalculatorController::class, 'index'])->name('rso');
+// Route::get('/{id}', [ROSController::class, 'index'])->name('ros');
 Route::get('/', [MainController::class, 'index'])->name('home');
 

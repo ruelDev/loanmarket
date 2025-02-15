@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FixedRate;
 use App\Models\LenderRates;
 use App\Models\Lenders;
+use App\Models\VariableRate;
 use Illuminate\Http\Request;
 
 class LendersController extends Controller
@@ -66,7 +68,7 @@ class LendersController extends Controller
             // if($orderColumnIndex !== null) $orderColumn = $columns[$orderColumnIndex];
 
             // $query = LenderRates::with('lender')->get();
-            $query = LenderRates::with('lender');
+            $query = FixedRate::with('lender');
 
             // Apply search filter
             if (!empty($searchValue)) {
@@ -83,13 +85,43 @@ class LendersController extends Controller
             $paginated = $query->paginate($pageSize, ['*'], 'page', $page);
             return response()->json([
                 'draw' => $request->get('draw'),
-                'recordsTotal' => LenderRates::count(),
+                'recordsTotal' => FixedRate::count(),
                 'recordsFiltered' => $count,
                 'data' => $paginated->items(),
             ]);
         }
 
         return view('pages.admin.lenderRates');
+    }
+
+    public function ratesVariable(Request $request) {
+
+        if ($request->ajax()) {
+            $page = $request->get('start') / $request->get('length') + 1;
+            $pageSize = $request->get('length');
+            $searchValue = $request->get('search')['value'];
+
+            $query = VariableRate::with('lender');
+            if (!empty($searchValue)) {
+                $query->where(function ($q) use ($searchValue) {
+                    $q->where('lvr', 'like', "%{$searchValue}%")
+                        ->where('loan_type', 'like', "%{$searchValue}%")
+                        ->where('loan_rate', 'like', "%{$searchValue}%")
+                        ->where('loan_term', 'like', "%{$searchValue}%");
+                });
+            }
+
+            $count = $query->count();
+            $paginated = $query->paginate($pageSize, ['*'], 'page', $page);
+            return response()->json([
+                'draw' => $request->get('draw'),
+                'recordsTotal' => VariableRate::count(),
+                'recordsFiltered' => $count,
+                'data' => $paginated->items(),
+            ]);
+        }
+
+        return view('pages.admin.lenderRatesVariable');
     }
 
     public function store(Request $request) {

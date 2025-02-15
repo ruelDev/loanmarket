@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->integer('lender_id');
             $table->string('productID');
-            $table->decimal('loan_rate', 10, 6);
+            $table->decimal('loan_rate', 10, 5);
             $table->integer('loan_term');
             $table->decimal('comparison_rate', 10, 6)->nullable();
             $table->string('loan_purpose');
             $table->string('loan_type');
             $table->string('repayment_type')->nullable();
             $table->string('tier_name')->nullable();
-            $table->decimal('tier_min', 20, 6)->nullable();
-            $table->decimal('tier_max', 20, 6)->nullable();
+            $table->decimal('tier_min', 20, 2)->nullable();
+            $table->decimal('tier_max', 20, 2)->nullable();
             $table->string('tier_unitOfMeasure')->nullable();
             $table->timestamps();
         });

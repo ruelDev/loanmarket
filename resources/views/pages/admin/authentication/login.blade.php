@@ -35,7 +35,7 @@
                             <!--begin::Title-->
                             <image src="{{ asset('assets/images/loanmarket/logos/Loan-Market.svg') }}"
                                 class="w-[3rem] md:w-[5rem] w-xl-[5rem]"/>
-                            <h1 class="text-blue-1 text-3xl fw-bolder mb-3">LoanMarket</h1>
+                            <h1 class="text-blue-1 text-3xl fw-bolder mb-3">Your Home Loan Review</h1>
                             <!--end::Title-->
                             <!--begin::Subtitle-->
                             <!--end::Subtitle=-->

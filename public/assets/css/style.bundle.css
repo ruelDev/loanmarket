@@ -50113,7 +50113,7 @@ body,
   }
 }
 [data-kt-app-layout=dark-sidebar] .app-sidebar {
-  background-color: #0D0E12;
+  background-color: #00ABE6;
   border-right: 0;
 }
 [data-kt-app-layout=dark-sidebar] .app-sidebar .scroll-y,
@@ -50141,7 +50141,7 @@ body,
   background-color: transparent;
 }
 [data-kt-app-layout=dark-sidebar] .app-sidebar .app-sidebar-logo {
-  border-bottom: 1px dashed #1F212A;
+  border-bottom: 1px dashed #fff;
 }
 [data-kt-app-layout=dark-sidebar] .app-sidebar .btn-custom {
   color: #B5B5C3;
@@ -50159,13 +50159,13 @@ body,
   background-color: rgba(63, 66, 84, 0.35) !important;
 }
 [data-kt-app-layout=dark-sidebar] .app-sidebar .menu .menu-item .menu-heading {
-  color: #636674 !important;
+  color: #fefefe !important;
 }
 [data-kt-app-layout=dark-sidebar] .app-sidebar .menu .menu-item .menu-link {
   color: #9A9CAE;
 }
 [data-kt-app-layout=dark-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-title {
-  color: #9A9CAE;
+  color: #fff;
 }
 [data-kt-app-layout=dark-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-icon,
 [data-kt-app-layout=dark-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-icon .svg-icon,
@@ -50188,7 +50188,7 @@ body,
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
-  background-color: #464852;
+  background-color: #fff;
   -webkit-mask-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' fill='%23464852'%3e%3cpath d='M3.27989 3.23571L1.53642 4.97917C1.36382 5.15176 1.36383 5.43158 1.53642 5.60417C1.70901 5.77676 1.98882 5.77676 2.16139 5.60417L4.47096 3.29463C4.63371 3.13192 4.63371 2.86809 4.47096 2.70538L2.16139 0.395812C1.98883 0.22325 1.70901 0.22325 1.53642 0.395812C1.36383 0.568437 1.36383 0.84825 1.53642 1.02081L3.27989 2.76429C3.41006 2.89446 3.41006 3.10554 3.27989 3.23571Z'/%3e%3c/svg%3e");
   mask-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' fill='%23464852'%3e%3cpath d='M3.27989 3.23571L1.53642 4.97917C1.36382 5.15176 1.36383 5.43158 1.53642 5.60417C1.70901 5.77676 1.98882 5.77676 2.16139 5.60417L4.47096 3.29463C4.63371 3.13192 4.63371 2.86809 4.47096 2.70538L2.16139 0.395812C1.98883 0.22325 1.70901 0.22325 1.53642 0.395812C1.36383 0.568437 1.36383 0.84825 1.53642 1.02081L3.27989 2.76429C3.41006 2.89446 3.41006 3.10554 3.27989 3.23571Z'/%3e%3c/svg%3e");
   /*rtl:end:remove*/

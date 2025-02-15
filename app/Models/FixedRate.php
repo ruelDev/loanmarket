@@ -25,4 +25,8 @@ class FixedRate extends Model
         'tier_unitOfMeasure',
     ];
 
+    public function lender()
+    {
+        return $this->belongsTo(Lenders::class, 'lender_id');
+    }
 }

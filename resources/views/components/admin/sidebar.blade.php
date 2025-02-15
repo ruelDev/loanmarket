@@ -1,11 +1,11 @@
-<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+<div id="kt_app_sidebar" class="app-sidebar flex-column bg-blue" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <!--begin::Logo-->
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
         <!--begin::Logo image-->
-        <a href="index.html" class="flex items-center gap-3">
-            <img alt="Logo" src="{{ asset('assets/images/loanmarket/logos/Loan-Market.svg') }}" class="h-50px app-sidebar-logo-default" />
-            <span class="app-sidebar-logo-default text-white">LoanMarket</span>
-            <img alt="Logo" src="{{ asset('assets/images/loanmarket/logos/Loan-Market.svg') }}" class="h-30px app-sidebar-logo-minimize" />
+        <a href="{{route('admin.dashboard')}}" class="flex items-center gap-3">
+            <img alt="Logo" src="{{ asset('assets/images/loanmarket/logos/Logo.png') }}" class="h-50px app-sidebar-logo-default" />
+            <span class="app-sidebar-logo-default text-white">YourHomeLoanReview</span>
+            <img alt="Logo" src="{{ asset('assets/images/loanmarket/logos/Logo.png') }}" class="h-30px app-sidebar-logo-minimize" />
         </a>
         <!--end::Logo image-->
         <!--begin::Sidebar toggle-->
@@ -40,7 +40,7 @@
                         <!--begin:Menu link-->
                         <a class="menu-link" href="{{route('admin.dashboard')}}">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-abstract-13 fs-2">
+                                <i class="ki-duotone ki-abstract-13 fs-2 text-white">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
@@ -50,17 +50,61 @@
                         <!--end:Menu link-->
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="{{route('admin.ros')}}">
+                        <a class="menu-link" href="{{route('admin.clients')}}">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-abstract-13 fs-2">
+                                <i class="ki-duotone ki-abstract-13 fs-2 text-white">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Real State Offices</span>
+                            <span class="menu-title">Client Record</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-abstract-13 fs-2 text-white">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Lender Interest Rates</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{route('admin.lenders.rates')}}">
+                                    {{-- <span class="menu-bullet" style="color: #fff">
+                                        <span class="bullet bullet-dot text-white" style="color: #fff"></span>
+                                    </span> --}}
+                                    <i class="fa-solid fa-circle text-white text-[4px] mx-3"></i>
+                                    <span class="menu-title">Fixed</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{route('admin.lenders.rates.variable')}}">
+                                    <i class="fa-solid fa-circle text-white text-[4px] mx-3"></i>
+                                    <span class="menu-title">Variable</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            {{-- <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{route('admin.lenders.rates')}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Rates</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div> --}}
+                        </div>
+                    </div>
+                    {{-- <div class="menu-item">
                         <a class="menu-link" href="{{route('admin.brokers')}}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-abstract-13 fs-2">
@@ -70,30 +114,36 @@
                             </span>
                             <span class="menu-title">Brokers</span>
                         </a>
-                    </div>
+                    </div> --}}
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
-                                <i class="ki-duotone ki-abstract-13 fs-2">
+                                <i class="ki-duotone ki-abstract-13 fs-2 text-white">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
                             </span>
-                            <span class="menu-title">Lender</span>
+                            <span class="menu-title">Management Module</span>
                             <span class="menu-arrow"></span>
                         </span>
                         <div class="menu-sub menu-sub-accordion">
                             <div class="menu-item">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="{{route('admin.lenders.list')}}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">List</span>
+                                <a class="menu-link" href="{{route('admin.ros')}}">
+                                    <i class="fa-solid fa-circle text-white text-[4px] mx-3"></i>
+                                    <span class="menu-title">Real Estate Office</span>
                                 </a>
                                 <!--end:Menu link-->
                             </div>
                             <div class="menu-item">
+                                <!--begin:Menu link-->
+                                <a class="menu-link" href="{{route('admin.lenders.list')}}">
+                                    <i class="fa-solid fa-circle text-white text-[4px] mx-3"></i>
+                                    <span class="menu-title">Lenders</span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div>
+                            {{-- <div class="menu-item">
                                 <!--begin:Menu link-->
                                 <a class="menu-link" href="{{route('admin.lenders.rates')}}">
                                     <span class="menu-bullet">
@@ -102,10 +152,10 @@
                                     <span class="menu-title">Rates</span>
                                 </a>
                                 <!--end:Menu link-->
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-abstract-13 fs-2">
@@ -138,7 +188,7 @@
                                 <!--end:Menu link-->
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!--end:Menu item-->
                 </div>
                 <!--end::Menu-->
