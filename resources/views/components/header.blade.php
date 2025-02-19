@@ -22,15 +22,20 @@
             </label>
             <div id="backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden"></div>
             <div id="mobile-nav" class="side-nav-mobile md:hidden fixed top-0 right-0 h-full w-2/3 bg-white z-40 transform translate-x-full transition-transform duration-300">
-                <ul class="flex flex-col items-center justify-between gap-5 py-10">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li class="{{ request()->routeIs('home') ? '' : 'hidden' }}"><a href="#rso-section">Our Partners</a></li>
-                    <li><a href="#lenders-section">Lenders</a></li>
-                    <li class="{{ !request()->routeIs(['calculate-savings-default', 'rso'])  ? '' : 'hidden' }}"><a href="{{route('calculate-savings-default')}}">Calculate Savings</a></li>
-                    <li><a href="#footer">Contact</a></li>
-                    <li class="cursor-pointer">Become a Partner</li>
-                    <li><a href="{{route('login')}}" class="text-blue font-bold">Login</a></li>
-                </ul>
+                <div class="flex flex-col justify-between h-full">
+                    <ul class="flex flex-col items-center justify-between gap-5 py-10">
+                        <li><a href="{{route('home')}}">Home</a></li>
+                        <li class="{{ request()->routeIs('home') ? '' : 'hidden' }}"><a href="#rso-section">Our Partners</a></li>
+                        <li><a href="#lenders-section">Lenders</a></li>
+                        <li class="{{ !request()->routeIs(['calculate-savings-default', 'rso'])  ? '' : 'hidden' }}"><a href="{{route('calculate-savings-default')}}">Calculate Savings</a></li>
+                        <li><a href="#footer">Contact</a></li>
+                        <li class="cursor-pointer" onclick="openmodal()">Become a Partner</li>
+                        <li><a href="{{route('login')}}" class="text-blue font-bold">Login</a></li>
+                    </ul>
+                    <ul class="flex flex-col items-center justify-between gap-5 py-10">
+                        <li class="cursor-pointer" onclick="openmodalFeedback()">Send Feedback</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

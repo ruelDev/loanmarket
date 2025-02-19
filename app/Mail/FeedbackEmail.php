@@ -8,22 +8,18 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Env;
 
-class BecomePartnerEmail extends Mailable
+class FeedbackEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $client;
-    public $messageContent;
-
+    public $data;
     /**
      * Create a new message instance.
      */
-    public function __construct($client, $messageContent)
+    public function __construct($data)
     {
-        $this->client = $client;
-        $this->messageContent = $messageContent;
+        $this->data = $data;
     }
 
     /**
@@ -32,8 +28,8 @@ class BecomePartnerEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'YourHomeLoanReview: Become Partner - Inquiry',
-            from: $this->client['email'],
+            subject: 'YourHomeLoanReview: Feedback',
+            from: $this->data['email'],
             to: 'ruellobo.04@gmail.com',
         );
     }
@@ -44,11 +40,9 @@ class BecomePartnerEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.becomePartner',
+            view: 'email.feedback',
             with: [
-                'clientName' => $this->client,
-                'messageContent' => $this->messageContent,
-                'logo' => "asset('assets/images/loanmarket/logos/Loan-Market.svg')"
+                'data' => $this->data
             ],
         );
     }

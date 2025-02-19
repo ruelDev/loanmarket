@@ -1,7 +1,7 @@
 @extends('layouts.pages.main')
 
 @section('content')
-    <div class="bg-cover bg-no-repeat bg-center h-[20vh] md:h-[40vh]"
+    <div class="bg-cover bg-no-repeat bg-center h-[20vh] lg:h-[40vh]"
         style="background-image:
                         linear-gradient(to bottom, #3d3d3d6f, #1d1d1dae),
                         /* linear-gradient(to bottom, #E5F7FD, #e5f7fd), */
@@ -17,25 +17,25 @@
         <div class="container py-10">
             <div class="container">
                 <div class="card bg-white rounded-md p-5 p-sm-10">
-                    <div class="grid gap-4 grid-cols-1 md:grid-cols-6">
-                        <div class="col-span-4 md:col-span-2">
+                    <div class="grid gap-4 grid-cols-1 lg:grid-cols-6">
+                        <div class="col-span-6 lg:col-span-2">
                             <div class="flex flex-col justify-between h-full">
                                 <div>
                                     <h3 class="text-2xl mb-5 text-black">Calculate Your Own Savings</h3>
                                     <div class="calc-form flex flex-col gap-3">
                                         <div class="calc-input flex flex-col gap-1">
-                                            <label class="label text-xs text-black" for="property_address">Property Address</label>
+                                            <label class="label text-xs text-black required" for="property_address">Property Address</label>
                                             <input id="property_address" name="property_ddress" type="text" placeholder="Address">
                                             <small class="text-red-500 hidden" id="property_address_error">Please enter a valid address.</small>
                                         </div>
                                         <div class="calc-input flex flex-col gap-1">
                                             <label class="label text-xs text-black" for="property_value">Property Value ($)</label>
-                                            <input id="property_value" class="input-style" name="text" type="number" placeholder="Value" min="0">
+                                            <input id="property_value" class="input-style" name="text" type="number" placeholder="Value" min="0" value="500000">
                                             <small class="text-red-500 hidden" id="property_value_error">Please enter a valid value.</small>
                                         </div>
                                         <div class="calc-input flex flex-col gap-1">
                                             <label class="label text-xs text-black" for="loan_amount">Loan Amount ($)</label>
-                                            <input id="loan_amount" class="" name="text" type="number" placeholder="Amount" min="0">
+                                            <input id="loan_amount" class="" name="text" type="number" placeholder="Amount" min="0" value="300000">
                                             <small class="text-red-500 hidden" id="loan_amount_error">Please enter a valid amount.</small>
                                         </div>
                                         {{-- <div class="calc-input flex flex-col gap-1">
@@ -75,23 +75,23 @@
                                                 <option value="2">2 Years</option>
                                                 <option value="3">3 Years</option>
                                                 <option value="4">4 Years</option>
-                                                <option value="5">5 Years</option>
+                                                <option value="5" selected>5 Years</option>
                                             </select>
                                         </div>
                                         <div class="calc-input flex flex-col gap-1">
                                             <label class="label text-xs text-black" for="client_rate">Interest Rate (%)</label>
-                                            <input id="client_rate" class="input-style" name="client_rate" type="number" placeholder="Current interest rate" min="6">
+                                            <input id="client_rate" class="input-style" name="client_rate" type="number" placeholder="Current interest rate" min="0" value="6.5">
                                             <small class="text-red-500 hidden" id="property_value_error">Please enter a valid value.</small>
                                         </div>
                                         <div class="calc-input flex flex-col gap-1" id="loan-term-container">
-                                            <label class="label text-xs text-black" for="client_term">Term</label>
+                                            <label class="label text-xs text-black" for="client_term">Remaning Loan Term</label>
                                             <select id="client_term" class="" name="client_term" placeholder="Term">
                                                 <option value="5">5 Years</option>
                                                 <option value="10">10 Years</option>
                                                 <option value="15">15 Years</option>
                                                 <option value="20">20 Years</option>
                                                 <option value="25">25 Years</option>
-                                                <option value="30">30 Years</option>
+                                                <option value="30" selected>30 Years</option>
                                             </select>
                                         </div>
                                         <button id="calculate-btn" class="bg-blue text-white w-[200px] py-3 rounded-lg">Calculate Savings</button>
@@ -103,11 +103,12 @@
                                 >How did we do the computations?</p>
                             </div>
                         </div>
-                        <div class="col-span-4">
+                        <div class="col-span-6 lg:col-span-4">
                             <div class="bg-white-3 border p-5 rounded">
                                 <div class="hidden md:flex justify-between items-center">
                                     <h4 class="text-xl calc-title">Top 3 Lenders</h4>
                                     <button class="text-blue text-[1.1rem] text-decoration-underline requestCallBtn hidden" onclick="requestCall()">Request a call from your Property  Manager</button>
+                                    <p class="text-blue text-[1.1rem] requestCallBtnPw  hidden">Please wait...</p>
                                 </div>
                                 <div class="flex justify-center items-center md:hidden">
                                     <h4 class="text-2xl font-bold calc-title">Top 3 Lenders</h4>
@@ -127,15 +128,26 @@
                                                 <div class="header bg-black h-[60px] ps-5">
                                                     <image src='{{ asset($value['logo'])}}' style="height: 100%; width: 100px"/>
                                                 </div>
-                                                <div class="grid gap-10 md:grid-cols-3 py-3 hover:bg-blue-hover">
+                                                <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                                     <div class="text-center">
-                                                        <p class="text-2xl">{{ $value['ratePA'] }}%</p>
-                                                        <p class="text-xs text-black-1">RATE P.A</p>
+                                                        <div class="text-2xl flex items-center justify-center gap-2">
+                                                            <p>0</p>
+                                                            <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
+                                                        </div>
+                                                        <p class="text-xs text-black-1">Fixed rate</p>
+                                                        <p class="text-xs text-black-1">for 5 years</p>
                                                     </div>
                                                     <div class="text-center">
-                                                        <p class="text-2xl">{{ $value['comparisonRatePA'] }}%</p>
-                                                        <p class="text-xs text-black-1">RATE P.A</p>
-                                                        <p class="text-xs text-black-1">COMPARISON**</p>
+                                                        <div class="text-2xl flex items-center justify-center gap-2">
+                                                            <p>{{ $value['comparisonRatePA'] }}</p>
+                                                            <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
+                                                        </div>
+                                                        <p class="text-xs text-black-1">Comparison</p>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <p class="text-2xl">${{ $value['perMonth'] }}</p>
+                                                        <p class="text-xs text-black-1">Monthly</p>
+                                                        <p class="text-xs text-black-1">Repayments</p>
                                                     </div>
                                                     <div class="text-center">
                                                         <p class="text-2xl">${{ $value['perMonth'] }}</p>
@@ -149,7 +161,8 @@
                                     </div>
                                 </div>
                                 <div class="flex md:hidden justify-center items-center mt-5">
-                                    <button class="text-white bg-blue py-3 w-full rounded requestCallBtn hidden" onclick="requestCall()">Request a call from your Property  Manager</button>
+                                    <button id="requestCallBtnMobile" class="text-white bg-blue py-3 w-full rounded requestCallBtn hidden" onclick="requestCall()">Request a call from your Property  Manager</button>
+                                    <p class="text-blue text-[1.1rem] requestCallBtnPw hidden">Please wait...</p>
                                 </div>
                             </div>
                         </div>
@@ -261,8 +274,34 @@
 
 @push('scripts')
     <script>
+
+        let propertyAddress;
+
         document.addEventListener("DOMContentLoaded", function() {
             localStorage.removeItem('client')
+
+            propertyAddress = document.getElementById('property_address').value.trim();
+            let propertyValue = document.getElementById('property_value').value;
+            let loanAmount = document.getElementById('loan_amount').value;
+            const loanType = document.querySelector('input[name="loan_type"]:checked').value;
+            const loanTerm = document.getElementById('loan_term').value;
+            const loanPurpose = document.querySelector('input[name="loan_purpose"]:checked').value;
+            const clientTerm = document.getElementById('client_term').value;
+            const clientRate = document.getElementById('client_rate').value;
+
+            calculatorData = JSON.stringify({
+                propertyAddress,
+                propertyValue,
+                loanAmount,
+                loanType,
+                loanTerm,
+                loanPurpose,
+                clientTerm,
+                clientRate
+            })
+
+            calculateSavingsNoDelay()
+
         });
 
         $.ajaxSetup({
@@ -293,7 +332,7 @@
             event.preventDefault();
 
             // Gather form data
-            const propertyAddress = document.getElementById('property_address').value.trim();
+            propertyAddress = document.getElementById('property_address').value.trim();
             const propertyAddressError = document.getElementById('property_address_error')
 
             let propertyValue = document.getElementById('property_value').value;
@@ -403,15 +442,25 @@
                                     <div class="header ${bgColor[lender?.lender]} h-[60px] flex items-center ps-5">
                                         <image src='${lender.logo}' style="height: auto; width: 130px"/>
                                     </div>
-                                    <div class="grid gap-10 md:grid-cols-3 py-3 hover:bg-blue-hover">
+                                    <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                         <div class="text-center">
-                                            <p class="text-2xl">${lender.rate }%</p>
-                                            <p class="text-xs text-black-1">RATE P.A</p>
+                                            <div class="text-2xl flex items-center justify-center gap-2">
+                                                <p>${lender.rate }</p>
+                                                <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
+                                            </div>
+                                            <p class="text-xs text-black-1">${lender.type} rate</p>
                                         </div>
                                         <div class="text-center">
-                                            <p class="text-2xl">${ lender.comparison }%</p>
-                                            <p class="text-xs text-black-1">RATE P.A</p>
-                                            <p class="text-xs text-black-1">COMPARISON**</p>
+                                            <div class="text-2xl flex items-center justify-center gap-2">
+                                                <p>${ lender.comparison }</p>
+                                                <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
+                                            </div>
+                                            <p class="text-xs text-black-1">Comparison</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-2xl">$ ${ Number(lender.monthly).toLocaleString() }</p>
+                                            <p class="text-xs text-black-1">Monthly</p>
+                                            <p class="text-xs text-black-1">Repayments</p>
                                         </div>
                                         <div class="text-center">
                                             <p class="text-2xl">$ ${ Number(lender.savings).toLocaleString() }</p>
@@ -426,8 +475,9 @@
                         dotsContainer.classList.add('hidden')
                         calcTitle.innerHTML = 'Top 3 Lenders';
                         container.innerHTML = `<ul>${lenderList}</ul>`;
+                        if(!propertyAddress == '') document.querySelector('.requestCallBtn').classList.remove('hidden')
+                        if(!propertyAddress == '') document.querySelector('#requestCallBtnMobile').classList.remove('hidden')
                         $('#client_details_modal').modal('hide');
-                        document.querySelector('.requestCallBtn').classList.remove('hidden')
                     }
                 })
                 .catch(error => {
@@ -449,9 +499,13 @@
 
         function requestCall () {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            const clientJson = localStorage.getItem('client')
+            const clientJson = localStorage.getItem('client');
             let clientData = {};
-            let calcData = JSON.parse(calculatorData)
+            let calcData = JSON.parse(calculatorData);
+
+            $(".requestCallBtn").addClass('hidden');
+            $(".requestCallBtnPw").removeClass('hidden');
+
 
             if(clientJson) {
                 const parsed = JSON.parse(clientJson)
@@ -467,64 +521,208 @@
                 ...calcData
             };
 
-            Swal.fire({
-                text: "Are you sure you want to request a call?",
-                icon: "info",
-                iconColor: '#00ABE6',
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                cancelButtonText: "No, Cancel.",
-                confirmButtonText: "Yes, Proceed!",
+            fetch("{{route('request.email')}}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify(combinedData)
             })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    fetch("{{route('request.email')}}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': csrfToken,
-                            'X-Requested-With': 'XMLHttpRequest',
-                        },
-                        body: JSON.stringify(combinedData)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.success) {
-                            Swal.fire({
-                                text: "Request send successfully!",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
-                            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    Swal.fire({
+                        text: "Request send successfully!",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
                         }
-                        else {
-                            Swal.fire({
-                                text: "Something went wrong while requesting.",
-                                icon: "error",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok",
-                                customClass: {
-                                    confirmButton: "btn btn-danger"
-                                }
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            text: "An error occurred while submitting the form.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok",
-                            customClass: {
-                                confirmButton: "btn btn-danger"
-                            }
-                        });
                     });
+
+                    $(".requestCallBtn").removeClass('hidden');
+                    $(".requestCallBtnPw").addClass('hidden');
                 }
+                else {
+                    Swal.fire({
+                        text: "Something went wrong while requesting.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok",
+                        customClass: {
+                            confirmButton: "btn btn-danger"
+                        }
+                    });
+
+                    $(".requestCallBtn").removeClass('hidden');
+                    $(".requestCallBtnPw").addClass('hidden');
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    text: "An error occurred while submitting the form.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok",
+                    customClass: {
+                        confirmButton: "btn btn-danger"
+                    }
+                });
+
+                $(".requestCallBtn").removeClass('hidden');
+                $(".requestCallBtnPw").addClass('hidden');
+            });
+            // Swal.fire({
+            //     text: "Are you sure you want to request a call?",
+            //     icon: "info",
+            //     iconColor: '#00ABE6',
+            //     showCancelButton: true,
+            //     confirmButtonColor: "#3085d6",
+            //     cancelButtonColor: "#d33",
+            //     cancelButtonText: "No, Cancel.",
+            //     confirmButtonText: "Yes, Proceed!",
+            // })
+            // .then((result) => {
+            //     if (result.isConfirmed) {
+            //         fetch("{{route('request.email')}}", {
+            //             method: 'POST',
+            //             headers: {
+            //                 'Content-Type': 'application/json',
+            //                 'X-CSRF-TOKEN': csrfToken,
+            //                 'X-Requested-With': 'XMLHttpRequest',
+            //             },
+            //             body: JSON.stringify(combinedData)
+            //         })
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             if(data.success) {
+            //                 Swal.fire({
+            //                     text: "Request send successfully!",
+            //                     icon: "success",
+            //                     buttonsStyling: false,
+            //                     confirmButtonText: "Ok, got it!",
+            //                     customClass: {
+            //                         confirmButton: "btn btn-primary"
+            //                     }
+            //                 })
+            //             }
+            //             else {
+            //                 Swal.fire({
+            //                     text: "Something went wrong while requesting.",
+            //                     icon: "error",
+            //                     buttonsStyling: false,
+            //                     confirmButtonText: "Ok",
+            //                     customClass: {
+            //                         confirmButton: "btn btn-danger"
+            //                     }
+            //                 });
+            //             }
+            //         })
+            //         .catch(error => {
+            //             Swal.fire({
+            //                 text: "An error occurred while submitting the form.",
+            //                 icon: "error",
+            //                 buttonsStyling: false,
+            //                 confirmButtonText: "Ok",
+            //                 customClass: {
+            //                     confirmButton: "btn btn-danger"
+            //                 }
+            //             });
+            //         });
+            //     }
+            // });
+        }
+
+        function calculateSavingsNoDelay () {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const container = document.getElementById('top-3-container');
+            const calcTitle = document.querySelector('.calc-title')
+            const dotsContainer = document.querySelector('.dots-container')
+
+            calcTitle.innerHTML = 'Calculating';
+            container.innerHTML = '';
+            dotsContainer.classList.remove('hidden')
+
+            fetch("{{route('calculate-savings')}}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: calculatorData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // if (data) {
+
+                    const bgColor = {
+                        'Macquarie' : 'bg-blue',
+                        'St. George' : 'bg-white-1',
+                        'CBA' : 'bg-black',
+                    }
+
+                    const lenderList = data.data.map(lender =>{
+                        console.log('lender: ', lender)
+                        return (`
+                            <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
+                                <div class="header ${bgColor[lender?.lender]} h-[60px] flex items-center ps-5">
+                                    <image src='${lender.logo}' style="height: auto; width: 130px"/>
+                                </div>
+                                <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
+                                    <div class="text-center">
+                                        <div class="text-2xl flex items-center justify-center gap-2">
+                                            <p>${lender.rate }</p>
+                                            <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
+                                        </div>
+                                        <p class="text-xs text-black-1">${lender.type} rate</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl flex items-center justify-center gap-2">
+                                            <p>${ lender.comparison }</p>
+                                            <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
+                                        </div>
+                                        <p class="text-xs text-black-1">Comparison</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-2xl">$ ${ Number(lender.monthly).toLocaleString() }</p>
+                                        <p class="text-xs text-black-1">Monthly</p>
+                                        <p class="text-xs text-black-1">Repayments</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-2xl">$ ${ Number(lender.savings).toLocaleString() }</p>
+                                        <p class="text-xs text-black-1">Savings over</p>
+                                        <p class="text-xs text-black-1">${ lender.term } ${ lender.term > 1 ? 'years' : 'year' }</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `)
+                    }).join('');
+
+                    dotsContainer.classList.add('hidden')
+                    calcTitle.innerHTML = 'Top 3 Lenders';
+                    container.innerHTML = `<ul>${lenderList}</ul>`;
+                    $('#client_details_modal').modal('hide');
+                    if(!propertyAddress == '') document.querySelector('.requestCallBtn').classList.remove('hidden')
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    text: "An error occurred while submitting the form.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok",
+                    customClass: {
+                        confirmButton: "btn btn-danger"
+                    }
+                })
+                .then(() => {
+                    $('#client_details_modal').modal('hide');
+                });
             });
         }
     </script>

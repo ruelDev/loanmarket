@@ -56,13 +56,13 @@ class CalculatorController extends Controller
                 $uniqueLenders[] = $rate->lender_id;
 
                 $client_variable_interest_rate = $request->clientRate;
-                $client_var_monthly_rate = $client_variable_interest_rate / 12;
+                $client_var_monthly_rate = ($client_variable_interest_rate / 100 ) / 12;
 
                 $variable_interest_rate = $rate->loan_rate; // for variable ( depends on the LVR computation )
                 $var_monthly_rate = $variable_interest_rate / 12;  // Variable Monthly Interest Rate
 
                 // Monthly payment for variable rate loan
-                $variable_monthly_payment = $rate->monthly_payment;
+                $variable_monthly_payment =  $this->calculateVariableEMI($loan_amount, $var_monthly_rate, $total_months);
                 $client_variable_monthly_payment = $this->calculateVariableEMI($loan_amount, $client_var_monthly_rate, $total_months);
 
                 // Total repayments for the whole loan period
@@ -83,8 +83,9 @@ class CalculatorController extends Controller
                     'rate' => number_format($rate->loan_rate  * 100, 2),
                     'comparison' => number_format($rate->comparison_rate  * 100, 2),
                     'term' => $LOAN_TERM_YEARS,
-                    'type' => 'VARIABLE',
-                    'savings' => $savings,
+                    'type' => 'Variable',
+                    'savings' => floor($savings),
+                    // 'clientEmi' => $client_total_repayment
                 ]);
             }
 
@@ -123,7 +124,7 @@ class CalculatorController extends Controller
             ->orderBy('monthly_payment', 'asc')
             ->get();
 
-        $LVR = $this->calculateLVR($loan_amount, $property_value); // LVR Calculation
+        $lvr = $this->calculateLVR($loan_amount, $property_value); // LVR Calculation
 
         $uniqueLenders = [];
         $top = [];
@@ -132,23 +133,77 @@ class CalculatorController extends Controller
             if (!in_array($rate->lender_id, $uniqueLenders)) {
                 $uniqueLenders[] = $rate->lender_id;
 
-                $client_rate = $request->clientRate;
-                $client_fixed_monthly_rate = $client_rate / 12;
-
-                $fixed_interest_rate = $rate->loan_rate; // depends on the dropdown of fixed term years
-                $fixed_monthly_rate = $fixed_interest_rate / 12; // Fixed Monthly Interest Rate
+                $lender_fixed_rate = $rate->loan_rate; // depends on the dropdown of fixed term years
+                $lender_fixed_monthly_rate = $lender_fixed_rate / 12; // Fixed Monthly Interest Rate
 
                 // Monthly payment for first n years (fixed rate, n depends on the fixed term years)
-                $fixed_monthly_payment = $rate->monthly_payment;
-                $total_fixed_repayment = $fixed_monthly_payment * $fixed_term_months;
+                $lender_fixed_monthly_payment = $rate->monthly_payment;
+                $lender_total_fixed_repayment = $lender_fixed_monthly_payment * $fixed_term_months;
+
+                // Remaining balance after 5 years
+                $lender_remaining_balance = $loan_amount * pow((1 + $lender_fixed_monthly_rate), $fixed_term_months) - ($lender_fixed_monthly_payment * ((pow((1 + $lender_fixed_monthly_rate), $fixed_term_months) - 1) / $lender_fixed_monthly_rate));
+
+                $variable_rate = VariableRate::with('lender')
+                    ->select(
+                        '*',
+                        DB::raw("
+                            $lender_remaining_balance * (loan_rate/12) * (POWER(1 + (loan_rate/12), $remaining_term_months))
+                            / (POWER(1 + (loan_rate/12), $remaining_term_months) - 1) AS monthly_payment
+                        ")
+                    )
+                    ->where('loan_purpose', $loan_purpose)
+                    ->where(function ($query) use ($lvr) {
+                        $query->where('tier_min', '<=', $lvr)
+                            ->where('tier_max', '>=', $lvr);
+                    })
+                    ->where('lender_id', $rate->lender_id)
+                    ->orderBy('monthly_payment', 'asc')
+                    ->first();
+
+                $lender_variable_monthly_payment = $variable_rate->monthly_payment;
+                $lender_total_variable_repayment = $lender_variable_monthly_payment * $remaining_term_months;
+
+                $lender_totalMonthlyRepayments = $lender_total_variable_repayment + $lender_total_fixed_repayment;
+
+                $client_rate = $request->clientRate;
+                $client_fixed_monthly_rate = ($client_rate / 100) / 12;
+                $client_variable_monthly_rate = (($client_rate  + 0.65) / 100) / 12;
 
                 $client_fixed_monthly_payment = $this->calculateFixedEMI($loan_amount, $client_fixed_monthly_rate, $total_months);
                 $client_total_fixed_repayment = $client_fixed_monthly_payment * $fixed_term_months;
 
-                $savings = $client_fixed_monthly_payment - $total_fixed_repayment;
-
                 // Remaining balance after 5 years
-                $remaining_balance = $loan_amount * pow((1 + $fixed_monthly_rate), $fixed_term_months) - ($fixed_monthly_payment * ((pow((1 + $fixed_monthly_rate), $fixed_term_months) - 1) / $fixed_monthly_rate));
+                $client_remaining_balance = $loan_amount * pow((1 + $client_fixed_monthly_rate), $fixed_term_months) - ($client_fixed_monthly_payment * ((pow((1 + $client_fixed_monthly_rate), $fixed_term_months) - 1) / $client_fixed_monthly_rate));
+
+                $client_variable_monthly_payment = $this->calculateFixedEMI($client_remaining_balance, $client_variable_monthly_rate, $remaining_term_months);
+                $client_total_variable_repayment = $client_variable_monthly_payment * $remaining_term_months;
+
+                $client_totalMonthlyRepayments = $client_total_fixed_repayment + $client_total_variable_repayment;
+                $savings = $client_totalMonthlyRepayments - $lender_totalMonthlyRepayments;
+
+                // dd([
+                //     'client' => [
+                //         'total_months' => $total_months,
+                //         'rate' => $client_rate,
+                //         'variable_rate' => $client_variable_monthly_rate,
+                //         'totalMonthlyRepayments' => $client_totalMonthlyRepayments,
+                //         'variable_monthly' => $client_variable_monthly_payment,
+                //         'fixed_monthly' => $client_fixed_monthly_payment,
+                //         'var_repay' => $client_total_variable_repayment,
+                //         'fix_repay' => $client_total_fixed_repayment,
+                //     ],
+                //     'lender' => [
+                //         'variable_monthlyPayment' => $lender_variable_monthly_payment,
+                //         'variable_repayment' => $lender_total_variable_repayment,
+                //         'variable_rate' => $variable_rate->loan_rate,
+
+                //         "lender_fixed_monthly_payment" => $lender_fixed_monthly_payment,
+                //         "lender" => $rate->lender['name'],
+                //         "rate" => $rate['loan_rate'],
+                //         "totalMonthlyRepayments " => $lender_totalMonthlyRepayments,
+                //     ],
+                //     'savings' => $savings
+                // ]);
 
                 array_push($top, [
                     'propertyAddress' => $request->propertyAddress,
@@ -159,7 +214,7 @@ class CalculatorController extends Controller
                     'rate' => number_format($rate->loan_rate  * 100, 2),
                     'comparison' => number_format($rate->comparison_rate  * 100, 2),
                     'term' => $loan_term_years,
-                    'type' => 'FIXED',
+                    'type' => 'Fixed',
                     'savings' => floor($savings),
                 ]);
             }

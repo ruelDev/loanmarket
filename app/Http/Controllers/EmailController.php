@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\BecomePartnerEmail;
+use App\Mail\FeedbackEmail;
 use App\Mail\RequestCallEmail;
 use App\Models\ClientLenders;
 use App\Models\ClientRecord;
@@ -80,5 +81,16 @@ class EmailController extends Controller
         ], $request->message));
 
         return response()->json(['success' => 'Email sent successfully!']);
+    }
+
+    public function feedbackEmail(Request $request) {
+
+        Mail::to(env('MAIL_FROM_ADDRESS'))->send(new FeedbackEmail([
+            'name' => $request->name,
+            'email' => $request->email,
+            'feedback' => $request->message,
+        ]));
+
+        return response()->json(['success' => 'Feedback sent successfully!']);
     }
 }

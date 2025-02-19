@@ -6,7 +6,7 @@
 
         <title>YourHomeLoanReview</title>
 
-        <link rel="icon" href="{{ asset('assets/images/loanmarket/logos/Logo.png') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('assets/images/loanmarket/logos/favicon.png') }}" type="image/x-icon">
         <linke rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}">
         <script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
         <script src="https://kit.fontawesome.com/2673272b88.js" crossorigin="anonymous"></script>
@@ -74,6 +74,8 @@
             #client_details_modal input,
             #become_partner_modal input,
             #become_partner_modal textarea,
+            #feedback_modal input,
+            #feedback_modal textarea,
             .calc-form select {
                 width: 100%;
                 /* max-width: 220px; */
@@ -91,6 +93,8 @@
             #client_details_modal input:hover,
             #become_partner_modal input:hover,
             #become_partner_modal textarea:hover,
+            #feedback_modal input:hover,
+            #feedback_modal textarea:hover,
             .calc-form select:hover {
                 border: 2px solid lightgrey;
                 box-shadow: 0px 0px 20px -17px;
@@ -100,11 +104,14 @@
             #client_details_modal input:active,
             #become_partner_modal input:active,
             #become_partner_modal textarea:active,
+            #feedback_modal input:active,
+            #feedback_modal textarea:active,
             .calc-form select:active {
                 transform: scale(0.95);
             }
 
-            #become_partner_modal textarea {
+            #become_partner_modal textarea,
+            #feedback_modal textarea {
                 min-height: 150px !important;
                 resize: none;
             }
@@ -307,42 +314,83 @@
         >
             Become a Partner
         </button>
-        <button id="backToTop" class="hidden sm:block fixed bottom-[5rem] right-[2rem] bg-blue w-[3.5rem] h-[3.5rem] rounded-full text-[1rem] opacity-0 invisible transition-all duration-200 hover:scale-125"><i class="fa-solid fa-arrow-up text-white"></i></button>
+
+        <div class="fixed bottom-[3rem] right-[2rem] flex flex-col gap-5">
+            <button id="backToTop" class="hidden sm:block  bg-blue w-[3.5rem] h-[3.5rem] rounded-full text-[1rem] opacity-0 invisible transition-all duration-200 hover:scale-125"><i class="fa-solid fa-arrow-up text-white"></i></button>
+            <button
+                class="hidden sm:block  bg-blue w-[3.5rem] h-[3.5rem] rounded-full text-[1rem] transition-all duration-200 hover:scale-125"
+                onclick="openmodalFeedback()"
+            >
+                <i class="fa-solid fa-comment text-white"></i>
+            </button>
+        </div>
 
         <div class="modal fade" tabindex="-1" id="become_partner_modal">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <h3 class="my-3 text-xl">Become a Partner</h3>
-                            <form id="become_partner_form">
-                                @csrf
-                                <div class="mb-3">
-                                    <label class="label text-xs text-black required" for="name">Name</label>
-                                    <input id="name" name="name" type="text" placeholder="Name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="label text-xs text-black required" for="phone">Contact Number</label>
-                                    <input id="phone" name="phone" type="text" placeholder="Contact Number" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="label text-xs text-black required" for="email">Email</label>
-                                    <input id="email" name="email" type="email" placeholder="Email" required>
-                                </div>
-                                {{-- <div class="mb-3">
-                                    <label class="label text-xs text-black required" for="subject">Subject</label>
-                                    <input id="subject" name="subject" type="text" placeholder="Subject" value="Home Loan Inquiry" required>
-                                </div> --}}
-                                <div class="mb-3">
-                                    <label class="label text-xs text-black required" for="message">Message</label>
-                                    <textarea id="message" name="message" type="message" placeholder="Message" required></textarea>
-                                </div>
-                                <button type="button" class="bg-gray-100 border border-gray-100 text-black px-5 py-3 rounded" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="bg-blue text-white px-5 py-3 rounded" id="clientDetailsSubmit">Continue</button>
-                            </form>
-                        </div>
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h3 class="my-3 text-xl">Become a Partner</h3>
+                        <form id="become_partner_form">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="label text-xs text-black required" for="name">Name</label>
+                                <input id="name" name="name" type="text" placeholder="Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="label text-xs text-black required" for="phone">Contact Number</label>
+                                <input id="phone" name="phone" type="text" placeholder="Contact Number" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="label text-xs text-black required" for="email">Email</label>
+                                <input id="email" name="email" type="email" placeholder="Email" required>
+                            </div>
+                            {{-- <div class="mb-3">
+                                <label class="label text-xs text-black required" for="subject">Subject</label>
+                                <input id="subject" name="subject" type="text" placeholder="Subject" value="Home Loan Inquiry" required>
+                            </div> --}}
+                            <div class="mb-3">
+                                <label class="label text-xs text-black required" for="message">Message</label>
+                                <textarea id="message" name="message" type="message" placeholder="Message" required></textarea>
+                            </div>
+                            <button type="button" class="bg-gray-100 border border-gray-100 text-black px-5 py-3 rounded" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="bg-blue text-white px-5 py-3 rounded" id="clientDetailsSubmit">Continue</button>
+                        </form>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="modal fade" tabindex="-1" id="feedback_modal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h3 class="my-3 text-xl">Send Feedback</h3>
+                        <form id="feedback_form">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="label text-xs text-black required" for="name">Name</label>
+                                <input id="name" name="name" type="text" placeholder="Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="label text-xs text-black required" for="email">Email</label>
+                                <input id="email" name="email" type="email" placeholder="Email" required>
+                            </div>
+                            {{-- <div class="mb-3">
+                                <label class="label text-xs text-black required" for="subject">Subject</label>
+                                <input id="subject" name="subject" type="text" placeholder="Subject" value="Home Loan Inquiry" required>
+                            </div> --}}
+                            <div class="mb-3">
+                                <label class="label text-xs text-black required" for="message">Message</label>
+                                <textarea id="message" name="message" type="message" placeholder="Message" required></textarea>
+                            </div>
+                            <button type="button" class="bg-gray-100 border border-gray-100 text-black px-5 py-3 rounded" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="bg-blue text-white px-5 py-3 rounded" id="FeedbackSubmit">Send</button>
+                            <button class="bg-blue text-white px-5 py-3 rounded hidden" id="FeedbackPleasewait">Please wait...</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @include('components.footer')
     </body>
@@ -369,6 +417,12 @@
 
         function openmodal() {
             const myModal = new bootstrap.Modal(document.getElementById('become_partner_modal'));
+            myModal.show();
+            return;
+        }
+
+        function openmodalFeedback() {
+            const myModal = new bootstrap.Modal(document.getElementById('feedback_modal'));
             myModal.show();
             return;
         }
@@ -429,6 +483,76 @@
                 })
                 .then(() => {
                     $('#client_details_modal').modal('hide');
+                });
+            });
+        })
+
+        document.getElementById('feedback_form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const form = document.getElementById("feedback_form");
+            const formData = new FormData(form); // Collect form data
+
+            $('#FeedbackPleasewait').removeClass('hidden');
+            $('#FeedbackSubmit').addClass('hidden');
+
+            fetch("{{route('feedback.email')}}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    Swal.fire({
+                        text: "Feedback send successfully!",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    })
+                    .then(() => {
+                        $('#FeedbackPleasewait').addClass('hidden');
+                        $('#FeedbackSubmit').removeClass('hidden');
+                        form.reset();
+                        $('#feedback_modal').modal('hide');
+                    })
+                }
+                else {
+                    Swal.fire({
+                        text: "Something went wrong while requesting.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok",
+                        customClass: {
+                            confirmButton: "btn btn-danger"
+                        }
+                    });
+
+                    $('#FeedbackPleasewait').addClass('hidden');
+                    $('#FeedbackSubmit').removeClass('hidden');
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    text: "An error occurred while submitting the form.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok",
+                    customClass: {
+                        confirmButton: "btn btn-danger"
+                    }
+                })
+                .then(() => {
+                    $('#FeedbackPleasewait').addClass('hidden');
+                    $('#FeedbackSubmit').removeClass('hidden');
+                    $('#feedback_modal').modal('hide');
                 });
             });
         })

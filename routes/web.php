@@ -42,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::post('/request-email', [EmailController::class, 'requestEmail'])->name('request.email');
 Route::post('/become-partner-email', [EmailController::class, 'becomePartnerEmail'])->name('become-partner.email');
+Route::post('/feedback-email', [EmailController::class, 'feedbackEmail'])->name('feedback.email');
 Route::get('/compare-loans', [CompareLendersController::class, 'index']);
 Route::post('/calculate-savings', [CalculatorController::class, 'calculateSavings'])->name('calculate-savings');
 Route::get('/calculate-savings', [CalculatorController::class, 'calculateSavingsDefault'])->name('calculate-savings-default');

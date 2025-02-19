@@ -1,15 +1,15 @@
 <footer id="footer">
     <div class="top bg-darkGreen-1">
         <div class="container py-20">
-            <h3 class="text-2xl text-white mb-5 text-center text-md-start">Connect With Us</h3>
-            <div class="grid grid-cols-1 gap-10 md:gap-0 md:grid-cols-3">
-                <div class="flex flex-col gap-2 items-center md:items-start text-white">
+            <h3 class="text-2xl text-white mb-5 text-center text-lg-start">Connect With Us</h3>
+            <div class="grid grid-cols-1 gap-10 md:gap-0 lg:grid-cols-3">
+                <div class="flex flex-col gap-2 items-center lg:items-start text-white">
                     <h5 class="text-white">Call 2135-788</h5>
-                    <p class="w-80 text-center text-md-start">Our Customer Care team is available weekdays, 8:30 AM to 5:30 PM (UTC).</p>
+                    <p class="w-11/12 xl:w-80 text-center text-lg-start text-wrap">Our Customer Care team is available weekdays, 8:30 AM to 5:30 PM (UTC).</p>
                 </div>
-                <div class="flex flex-col gap-2 align-items-center align-items-md-start text-white">
+                <div class="flex flex-col gap-2 align-items-center align-items-lg-start text-white">
                     <h5 class="text-white">Work for Loans Made Simple</h5>
-                    <p class="w-80 text-center text-md-start">Looking for a career change? We’re committed to working with you to achieve your goals.</p>
+                    <p class="w-11/12 xl:w-80 text-center text-lg-start">Looking for a career change? We’re committed to working with you to achieve your goals.</p>
                 </div>
                 <div class="flex justify-center">
                     <ul class="flex flex-col gap-2">

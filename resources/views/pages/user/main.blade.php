@@ -1,7 +1,7 @@
 @extends('layouts.pages.main')
 
 @section('content')
-    <div id="hero-section" class="bg-cover bg-no-repeat bg-center h-[30vh] md:h-[50vh]">
+    <div id="hero-section" class="bg-cover bg-no-repeat bg-center h-[30vh] lg:h-[40vh]">
         <div class="container h-full flex flex-col items-center justify-center gap-5">
             @foreach ($data['hero']['title'] as $key => $item)
                 <h1 class="text-center text-2xl md:text-6xl text-white {{ $key != 0 ? "font-bold" : "font-poppins"}} animate-hero-title"
@@ -13,7 +13,7 @@
     </div>
     <section id="rso-section">
         <div class="container py-20">
-            <h2 class="text-xl md:text-3xl font-bold mb-5 text-blue-1">Property Management</h2>
+            <h2 class="text-xl md:text-3xl font-bold mb-5 text-blue-1">Our Trusted Partners</h2>
             <div class="grid md:grid-cols-2 gap-5 md:gap-10">
                 @foreach($ros as $key => $item)
                     <div class="p-5 animate-card">
@@ -43,8 +43,8 @@
     <section id="find-the-right-loan-section">
         <div class="container mb-5">
             <div class="card p-5 md:p-10">
-                <div class="grid grid-cols-5 gap-10 md:gap-0">
-                    <div class="col-span-5 md:col-span-3 md:p-3 flex items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 md:gap-0">
+                    <div class="col-span-5 lg:col-span-3 md:p-3 flex items-center">
                         <div>
                             <h3 class="text-xl md:text-3xl">Find The Right Loan For You:</h3>
                             <div>
@@ -95,7 +95,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-span-5 md:col-span-2">
+                    <div class="col-span-5 lg:col-span-2">
                         <div class="rounded overflow-hidden">
                             <img src="{{asset('assets/images/loanmarket/featured1.webp')}}" alt="">
                         </div>
@@ -107,13 +107,13 @@
     <section id="why-review-loan-section">
         <div class="container mb-10">
             <div class="card p-10 bg-blue">
-                <div class="grid grid-cols-2 md:grid-cols-6">
+                <div class="grid grid-cols-2 lg:grid-cols-6">
                     <div class="col-span-2">
                         <h3 class="text-3xl text-white mb-10 md:mb-0">
                             Why Review Your Home Loan?
                         </h3>
                     </div>
-                    <div class="col-span-2">
+                    <div class="col-span-2 sm:col lg:-cols-2">
                         <div class="flex flex-col gap-3 mb-10">
                             <img src="{{asset('assets/images/loanmarket/svg/perscent.svg')}}" width="50px"/>
                             <h4 class="text-white text-xl md:w-2/3">Save Money</h4>
@@ -125,7 +125,7 @@
                             <p class="text-white text-[.9rem] md:w-2/3"> Life changes - make sure your loan still fits your goals.</p>
                         </div>
                     </div>
-                    <div class="col-span-2">
+                    <div class="col-span-2 sm:col lg:-cols-2">
                         <div class="flex flex-col gap-3 mb-10">
                             <img src="{{asset('assets/images/loanmarket/svg/turnaroundtime.svg')}}" width="50px"/>
                             <h4 class="text-white text-xl md:w-2/3">Cut Unnecessary Fees</h4>
