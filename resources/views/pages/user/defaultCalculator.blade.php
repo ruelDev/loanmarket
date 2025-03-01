@@ -16,7 +16,7 @@
     <div id="calculator-section" class="bg-white-3">
         <div class="container py-10">
             <div class="container">
-                <div class="card bg-white rounded-md p-5 p-sm-10">
+                <div class="card bg-white rounded-md p-5 p-sm-10 p-md-5">
                     <div class="grid gap-4 grid-cols-1 lg:grid-cols-6">
                         <div class="col-span-6 lg:col-span-2">
                             <div class="flex flex-col justify-between h-full">
@@ -24,7 +24,7 @@
                                     <h3 class="text-2xl mb-5 text-black">Calculate Your Own Savings</h3>
                                     <div class="calc-form flex flex-col gap-3">
                                         <div class="calc-input flex flex-col gap-1">
-                                            <label class="label text-xs text-black required" for="property_address">Property Address</label>
+                                            <label class="label text-xs text-black" for="property_address">Property Address</label>
                                             <input id="property_address" name="property_ddress" type="text" placeholder="Address">
                                             <small class="text-red-500 hidden" id="property_address_error">Please enter a valid address.</small>
                                         </div>
@@ -38,10 +38,6 @@
                                             <input id="loan_amount" class="" name="text" type="number" placeholder="Amount" min="0" value="300000">
                                             <small class="text-red-500 hidden" id="loan_amount_error">Please enter a valid amount.</small>
                                         </div>
-                                        {{-- <div class="calc-input flex flex-col gap-1">
-                                            <label class="label text-xs text-black" for="loan-rate">Loan Rate</label>
-                                            <input id="loan-rate" class="" name="text" type="text" placeholder="Rate">
-                                        </div> --}}
                                         <div class="calc-input flex flex-col gap-1">
                                             <label class="label text-xs text-black" for="loan_purpose">Loan Purpose</label>
                                             <div class="radio-inputs">
@@ -70,7 +66,7 @@
                                         </div>
                                         <div class="calc-input flex flex-col gap-1" id="loan-term-container">
                                             <label class="label text-xs text-black" for="loan_term">Fixed Term</label>
-                                            <select id="loan_term" class="" name="loan_term" placeholder="Fixed Term">
+                                            <select id="loan_term" class="" name="text" type="text" placeholder="Term">
                                                 <option value="1">1 Year</option>
                                                 <option value="2">2 Years</option>
                                                 <option value="3">3 Years</option>
@@ -80,18 +76,15 @@
                                         </div>
                                         <div class="calc-input flex flex-col gap-1">
                                             <label class="label text-xs text-black" for="client_rate">Interest Rate (%)</label>
-                                            <input id="client_rate" class="input-style" name="client_rate" type="number" placeholder="Current interest rate" min="0" value="6.5">
+                                            <input id="client_rate" class="input-style" name ="client_rate" type="number" placeholder="Current interest rate" min="0" value="6.5">
                                             <small class="text-red-500 hidden" id="property_value_error">Please enter a valid value.</small>
                                         </div>
                                         <div class="calc-input flex flex-col gap-1" id="loan-term-container">
                                             <label class="label text-xs text-black" for="client_term">Remaning Loan Term</label>
                                             <select id="client_term" class="" name="client_term" placeholder="Term">
-                                                <option value="5">5 Years</option>
-                                                <option value="10">10 Years</option>
-                                                <option value="15">15 Years</option>
-                                                <option value="20">20 Years</option>
-                                                <option value="25">25 Years</option>
-                                                <option value="30" selected>30 Years</option>
+                                                @for ($option = 1; $option <= 30; $option++)
+                                                    <option value="{{$option}}" {{ $option == 30 ? "Selected" : ""}}>{{$option}} {{ $option == 1 ? 'Year' : 'Years'}}</option>
+                                                @endfor
                                             </select>
                                         </div>
                                         <button id="calculate-btn" class="bg-blue text-white w-[200px] py-3 rounded-lg">Calculate Savings</button>
@@ -107,7 +100,7 @@
                             <div class="bg-white-3 border p-5 rounded">
                                 <div class="hidden md:flex justify-between items-center">
                                     <h4 class="text-xl calc-title">Top 3 Lenders</h4>
-                                    <button class="text-blue text-[1.1rem] text-decoration-underline requestCallBtn hidden" onclick="requestCall()">Request a call from your Property  Manager</button>
+                                    <button class="text-blue text-[1.1rem] text-decoration-underline requestCallBtn hidden" onclick="requestCall()">Request a call from your Review Team</button>
                                     <p class="text-blue text-[1.1rem] requestCallBtnPw  hidden">Please wait...</p>
                                 </div>
                                 <div class="flex justify-center items-center md:hidden">
@@ -121,7 +114,7 @@
                                     <div class="dot"></div>
                                 </section>
                                 <div class="flex justify-center mt-10">
-                                    <div class="flex flex-col gap-5 w-full" id="top-3-container">
+                                    <div class="flex flex-col gap-5 w-full h-[600px] overflow-y-scroll" id="top-3-container">
                                         @foreach($data['lenders'] as $item)
                                          @foreach ($item as $key => $value)
                                             <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto">
@@ -131,7 +124,7 @@
                                                 <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                                     <div class="text-center">
                                                         <div class="text-2xl flex items-center justify-center gap-2">
-                                                            <p>0</p>
+                                                            <p>{{ $value['ratePA'] }}</p>
                                                             <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
                                                         </div>
                                                         <p class="text-xs text-black-1">Fixed rate</p>
@@ -161,7 +154,7 @@
                                     </div>
                                 </div>
                                 <div class="flex md:hidden justify-center items-center mt-5">
-                                    <button id="requestCallBtnMobile" class="text-white bg-blue py-3 w-full rounded requestCallBtn hidden" onclick="requestCall()">Request a call from your Property  Manager</button>
+                                    <button id="requestCallBtnMobile" class="text-white bg-blue py-3 w-full rounded requestCallBtn hidden" onclick="requestCall()">Request a call from your Review Team</button>
                                     <p class="text-blue text-[1.1rem] requestCallBtnPw hidden">Please wait...</p>
                                 </div>
                             </div>
@@ -207,17 +200,23 @@
                     <div class="mb-3">
                         <label class="label text-xs text-black" for="name">Name</label>
                         <input id="name" name="name" type="text" placeholder="Name">
+                        <small class="text-red-500 hidden" id="name_error">Please enter your fullname.</small>
                     </div>
                     <div class="mb-3">
                         <label class="label text-xs text-black" for="phone">Contact Number</label>
-                        <input id="phone" name="phone" type="text" placeholder="Contact Number">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 z-10 left-3 flex items-center text-black-1"><i class="fa-solid fa-plus"></i></span>
+                            <input id="phone" name="phone" type="number" class="ps-7" placeholder="Contact Number">
+                        </div>
+                        <small class="text-red-500 hidden" id="phone_error">Please enter a 10 digit contact number.</small>
                     </div>
                     <div class="mb-3">
                         <label class="label text-xs text-black" for="email">Email</label>
                         <input id="email" name="email" type="email" placeholder="Email">
+                        <small class="text-red-500 hidden" id="email_error">Please enter a valid email address.</small>
                     </div>
-                    <button type="button" class="border border-blue text-black px-5 py-3 rounded" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="bg-blue text-white px-5 py-3 rounded" id="clientDetailsSubmit" onclick="calculateSavings()">Continue</button>
+                    <button type="button" class="bg-gray-100 border border-blue text-black px-5 py-3 rounded" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="bg-blue text-white px-5 py-3 rounded" id="clientDetailsSubmit">Continue</button>
                 </div>
             </div>
         </div>
@@ -259,7 +258,7 @@
                     </p>
                     <p class="mt-2">
                         If you would like a more detailed and personalized discussion about the loan options available to you,
-                        we encourage you to speak with an expert. Click the “<strong>Request a call from your Property Manager</strong>”
+                        we encourage you to speak with an expert. Click the “<strong>Request a call from your Review Team</strong>”
                         button to connect with one of our experienced property managers, who can provide insights on loan
                         structures, interest rates, repayment plans, and any other relevant factors affecting your loan.
                     </p>
@@ -331,7 +330,6 @@
         document.getElementById('calculate-btn').addEventListener('click', async (event) => {
             event.preventDefault();
 
-            // Gather form data
             propertyAddress = document.getElementById('property_address').value.trim();
             const propertyAddressError = document.getElementById('property_address_error')
 
@@ -353,7 +351,6 @@
                 loanAmount = 0
             }
 
-            // Validate form inputs
             if (!propertyAddress) {
                 propertyAddressError.classList.remove("hidden");
                 isValid = false;
@@ -373,10 +370,8 @@
                 clientRate
             })
 
-            // Check for user information in localStorage
             const client = localStorage.getItem('client');
 
-            // Show modal if any information is missing
             if (!client) {
                 const myModal = new bootstrap.Modal(document.getElementById('client_details_modal'));
                 myModal.show();
@@ -390,20 +385,68 @@
             document.getElementById('property_address_error').classList.add('hidden')
         });
 
-        document.getElementById('client_details_modal').addEventListener('shown.bs.modal', function () {
-            document.getElementById('clientDetailsSubmit').addEventListener('click', () => {
-                const clientDetails = {
-                    name: document.getElementById('name').value,
-                    phone: document.getElementById('phone').value,
-                    email: document.getElementById('email').value,
-                };
+        document.addEventListener("DOMContentLoaded", function() {
+            const nameInput  = document.getElementById("name"),
+                nameError  = document.getElementById("name_error"),
+                emailInput = document.getElementById("email"),
+                emailError = document.getElementById("email_error"),
+                phoneInput = document.getElementById("phone"),
+                phoneError = document.getElementById("phone_error");
 
-                localStorage.setItem('client', JSON.stringify(clientDetails));
+            phoneInput.addEventListener("input", function(e) {
+                let value = e.target.value.replace(/\D/g, '');
 
-                $('#client_details_modal').modal('hide');
-                calculateSavings();
-            })
-        })
+                if (value.length > 10) {
+                    value = value.slice(0, 10);
+                }
+
+                e.target.value = value;
+            });
+
+
+
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    phonePattern = /^\d{10}$/;
+
+            function validate() {
+                let isValid = true;
+
+                if (nameInput.value.trim() === "") {
+                    nameError.classList.remove("hidden");
+                    isValid = false;
+                } else nameError.classList.add("hidden");
+
+
+                if (emailInput.value.trim() === "" || !emailPattern.test(emailInput.value)) {
+                    emailError.classList.remove("hidden");
+                    isValid = false;
+                } else  emailError.classList.add("hidden");
+
+                if (!phonePattern.test(phoneInput.value)) {
+                    phoneError.classList.remove("hidden");
+                    isValid = false;
+                } else phoneError.classList.add("hidden");
+
+                return isValid;
+            }
+
+            document.getElementById("clientDetailsSubmit").addEventListener("click", function(e) {
+                e.preventDefault();
+
+                if (validate()) {
+                    const clientDetails = {
+                        name:  nameInput.value,
+                        email: emailInput.value,
+                        phone: phoneInput.value
+                    };
+
+                    localStorage.setItem('client', JSON.stringify(clientDetails));
+
+                    $('#client_details_modal').modal('hide');
+                    calculateSavings();
+                }
+            });
+        });
 
         function calculateSavings () {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -439,8 +482,8 @@
                         const lenderList = data.data.map(lender =>{
                             return (`
                                 <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
-                                    <div class="header ${bgColor[lender?.lender]} h-[60px] flex items-center ps-5">
-                                        <image src='${lender.logo}' style="height: auto; width: 130px"/>
+                                    <div class="header ${bgColor[lender?.lender] ?? 'bg-white'} h-[60px] flex items-center ps-5">
+                                        <image src='${lender.logo}' style="height: auto; width: 130px"/><span>${lender.lender_id}. ${lender.lender}</span>
                                     </div>
                                     <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                         <div class="text-center">
@@ -575,65 +618,6 @@
                 $(".requestCallBtn").removeClass('hidden');
                 $(".requestCallBtnPw").addClass('hidden');
             });
-            // Swal.fire({
-            //     text: "Are you sure you want to request a call?",
-            //     icon: "info",
-            //     iconColor: '#00ABE6',
-            //     showCancelButton: true,
-            //     confirmButtonColor: "#3085d6",
-            //     cancelButtonColor: "#d33",
-            //     cancelButtonText: "No, Cancel.",
-            //     confirmButtonText: "Yes, Proceed!",
-            // })
-            // .then((result) => {
-            //     if (result.isConfirmed) {
-            //         fetch("{{route('request.email')}}", {
-            //             method: 'POST',
-            //             headers: {
-            //                 'Content-Type': 'application/json',
-            //                 'X-CSRF-TOKEN': csrfToken,
-            //                 'X-Requested-With': 'XMLHttpRequest',
-            //             },
-            //             body: JSON.stringify(combinedData)
-            //         })
-            //         .then(response => response.json())
-            //         .then(data => {
-            //             if(data.success) {
-            //                 Swal.fire({
-            //                     text: "Request send successfully!",
-            //                     icon: "success",
-            //                     buttonsStyling: false,
-            //                     confirmButtonText: "Ok, got it!",
-            //                     customClass: {
-            //                         confirmButton: "btn btn-primary"
-            //                     }
-            //                 })
-            //             }
-            //             else {
-            //                 Swal.fire({
-            //                     text: "Something went wrong while requesting.",
-            //                     icon: "error",
-            //                     buttonsStyling: false,
-            //                     confirmButtonText: "Ok",
-            //                     customClass: {
-            //                         confirmButton: "btn btn-danger"
-            //                     }
-            //                 });
-            //             }
-            //         })
-            //         .catch(error => {
-            //             Swal.fire({
-            //                 text: "An error occurred while submitting the form.",
-            //                 icon: "error",
-            //                 buttonsStyling: false,
-            //                 confirmButtonText: "Ok",
-            //                 customClass: {
-            //                     confirmButton: "btn btn-danger"
-            //                 }
-            //             });
-            //         });
-            //     }
-            // });
         }
 
         function calculateSavingsNoDelay () {
@@ -658,8 +642,6 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // if (data) {
-
                     const bgColor = {
                         'Macquarie' : 'bg-blue',
                         'St. George' : 'bg-white-1',
@@ -670,8 +652,8 @@
                         console.log('lender: ', lender)
                         return (`
                             <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
-                                <div class="header ${bgColor[lender?.lender]} h-[60px] flex items-center ps-5">
-                                    <image src='${lender.logo}' style="height: auto; width: 130px"/>
+                                <div class="header ${bgColor[lender?.lender] ?? 'bg-white'} h-[60px] flex items-center ps-5">
+                                    <image src='${lender.logo}' style="height: auto; width: 130px; margin-right: 10px"/><span>${lender.lender_id}. ${lender.lender}</span>
                                 </div>
                                 <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                     <div class="text-center">

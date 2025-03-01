@@ -17,8 +17,8 @@
             <div class="grid md:grid-cols-2 gap-5 md:gap-10">
                 @foreach($ros as $key => $item)
                     <div class="p-5 animate-card">
-                        <div class="item cursor-pointer rso-card rounded overflow-hidden {{ $key % 2 == 0 ? 'animate-slide-left -translate-x-1/2' : 'animate-slide-right translate-x-1/2' }}"
-                            onclick="window.location.href='{{route('rso', $item['name'])}}'"
+                        <div class="item cursor-pointere rso-card rounded overflow-hidden {{ $key % 2 == 0 ? 'animate-slide-left -translate-x-1/2' : 'animate-slide-right translate-x-1/2' }}"
+                            {{-- onclick="window.location.href='{{route('rso', $item['url'])}}'" --}}
                             style="animation-delay: {{ $key * 0.3 }}s;">
                             <div class="relative w-full h-[300px] bg-center bg-cover flex items-center justify-center"
                                 style="

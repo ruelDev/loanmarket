@@ -38,10 +38,6 @@
                                             <input id="loan_amount" class="" name="text" type="number" placeholder="Amount" min="0" value="300000">
                                             <small class="text-red-500 hidden" id="loan_amount_error">Please enter a valid amount.</small>
                                         </div>
-                                        {{-- <div class="calc-input flex flex-col gap-1">
-                                            <label class="label text-xs text-black" for="loan-rate">Loan Rate</label>
-                                            <input id="loan-rate" class="" name="text" type="text" placeholder="Rate">
-                                        </div> --}}
                                         <div class="calc-input flex flex-col gap-1">
                                             <label class="label text-xs text-black" for="loan_purpose">Loan Purpose</label>
                                             <div class="radio-inputs">
@@ -80,18 +76,15 @@
                                         </div>
                                         <div class="calc-input flex flex-col gap-1">
                                             <label class="label text-xs text-black" for="client_rate">Interest Rate (%)</label>
-                                            <input id="client_rate" class="input-style" name="client_rate" type="number" placeholder="Current interest rate" min="0" value="6.5">
+                                            <input id="client_rate" class="input-style" name ="client_rate" type="number" placeholder="Current interest rate" min="0" value="6.5">
                                             <small class="text-red-500 hidden" id="property_value_error">Please enter a valid value.</small>
                                         </div>
                                         <div class="calc-input flex flex-col gap-1" id="loan-term-container">
                                             <label class="label text-xs text-black" for="client_term">Remaning Loan Term</label>
                                             <select id="client_term" class="" name="client_term" placeholder="Term">
-                                                <option value="5">5 Years</option>
-                                                <option value="10">10 Years</option>
-                                                <option value="15">15 Years</option>
-                                                <option value="20">20 Years</option>
-                                                <option value="25">25 Years</option>
-                                                <option value="30" selected>30 Years</option>
+                                                @for ($option = 1; $option <= 30; $option++)
+                                                    <option value="{{$option}}" {{ $option == 30 ? "Selected" : ""}}>{{$option}} {{ $option == 1 ? 'Year' : 'Years'}}</option>
+                                                @endfor
                                             </select>
                                         </div>
                                         <button id="calculate-btn" class="bg-blue text-white w-[200px] py-3 rounded-lg">Calculate Savings</button>
@@ -107,7 +100,7 @@
                             <div class="bg-white-3 border p-5 rounded">
                                 <div class="hidden md:flex justify-between items-center">
                                     <h4 class="text-xl calc-title">Top 3 Lenders</h4>
-                                    <button class="text-blue text-[1.1rem] text-decoration-underline requestCallBtn hidden" onclick="requestCall()">Request a call from your Property  Manager</button>
+                                    <button class="text-blue text-[1.1rem] text-decoration-underline requestCallBtn hidden" onclick="requestCall()">Request a call from your {{ $rso['call_to'] == null ? 'Review Partner' : $rso['call_to'] }}</button>
                                     <p class="text-blue text-[1.1rem] requestCallBtnPw  hidden">Please wait...</p>
                                 </div>
                                 <div class="flex justify-center items-center md:hidden">
@@ -121,7 +114,7 @@
                                     <div class="dot"></div>
                                 </section>
                                 <div class="flex justify-center mt-10">
-                                    <div class="flex flex-col gap-5 w-full" id="top-3-container">
+                                    <div class="flex flex-col gap-5 w-full h-[600px] overflow-y-scroll" id="top-3-container">
                                         @foreach($data['lenders'] as $item)
                                          @foreach ($item as $key => $value)
                                             <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto">
@@ -207,22 +200,27 @@
                     <div class="mb-3">
                         <label class="label text-xs text-black" for="name">Name</label>
                         <input id="name" name="name" type="text" placeholder="Name">
+                        <small class="text-red-500 hidden" id="name_error">Please enter your fullname.</small>
                     </div>
                     <div class="mb-3">
                         <label class="label text-xs text-black" for="phone">Contact Number</label>
-                        <input id="phone" name="phone" type="text" placeholder="Contact Number">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 z-10 left-3 flex items-center text-black-1"><i class="fa-solid fa-plus"></i></span>
+                            <input id="phone" name="phone" type="number" class="ps-7" placeholder="Contact Number">
+                        </div>
+                        <small class="text-red-500 hidden" id="phone_error">Please enter a 10 digit contact number.</small>
                     </div>
                     <div class="mb-3">
                         <label class="label text-xs text-black" for="email">Email</label>
                         <input id="email" name="email" type="email" placeholder="Email">
+                        <small class="text-red-500 hidden" id="email_error">Please enter a valid email address.</small>
                     </div>
                     <button type="button" class="bg-gray-100 border border-blue text-black px-5 py-3 rounded" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="bg-blue text-white px-5 py-3 rounded" id="clientDetailsSubmit" onclick="calculateSavings()">Continue</button>
+                    <button type="button" class="bg-blue text-white px-5 py-3 rounded" id="clientDetailsSubmit">Continue</button>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="modal fade" tabindex="-1" id="how_calc_works_modal">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -304,10 +302,6 @@
 
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
-            localStorage.removeItem('client')
-        });
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -335,7 +329,6 @@
         document.getElementById('calculate-btn').addEventListener('click', async (event) => {
             event.preventDefault();
 
-            // Gather form data
             propertyAddress = document.getElementById('property_address').value.trim();
             const propertyAddressError = document.getElementById('property_address_error')
 
@@ -358,7 +351,6 @@
                 loanAmount = 0
             }
 
-            // Validate form inputs
             if (!propertyAddress) {
                 propertyAddressError.classList.remove("hidden");
                 isValid = false;
@@ -378,10 +370,8 @@
                 clientRate
             })
 
-            // Check for user information in localStorage
             const client = localStorage.getItem('client');
 
-            // Show modal if any information is missing
             if (!client) {
                 const myModal = new bootstrap.Modal(document.getElementById('client_details_modal'));
                 myModal.show();
@@ -395,20 +385,68 @@
             document.getElementById('property_address_error').classList.add('hidden')
         });
 
-        document.getElementById('client_details_modal').addEventListener('shown.bs.modal', function () {
-            document.getElementById('clientDetailsSubmit').addEventListener('click', () => {
-                const clientDetails = {
-                    name: document.getElementById('name').value,
-                    phone: document.getElementById('phone').value,
-                    email: document.getElementById('email').value,
-                };
+        document.addEventListener("DOMContentLoaded", function() {
+            const nameInput  = document.getElementById("name"),
+                nameError  = document.getElementById("name_error"),
+                emailInput = document.getElementById("email"),
+                emailError = document.getElementById("email_error"),
+                phoneInput = document.getElementById("phone"),
+                phoneError = document.getElementById("phone_error");
 
-                localStorage.setItem('client', JSON.stringify(clientDetails));
+            phoneInput.addEventListener("input", function(e) {
+                let value = e.target.value.replace(/\D/g, '');
 
-                $('#client_details_modal').modal('hide');
-                calculateSavings();
-            })
-        })
+                if (value.length > 10) {
+                    value = value.slice(0, 10);
+                }
+
+                e.target.value = value;
+            });
+
+
+
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    phonePattern = /^\d{10}$/;
+
+            function validate() {
+                let isValid = true;
+
+                if (nameInput.value.trim() === "") {
+                    nameError.classList.remove("hidden");
+                    isValid = false;
+                } else nameError.classList.add("hidden");
+
+
+                if (emailInput.value.trim() === "" || !emailPattern.test(emailInput.value)) {
+                    emailError.classList.remove("hidden");
+                    isValid = false;
+                } else  emailError.classList.add("hidden");
+
+                if (!phonePattern.test(phoneInput.value)) {
+                    phoneError.classList.remove("hidden");
+                    isValid = false;
+                } else phoneError.classList.add("hidden");
+
+                return isValid;
+            }
+
+            document.getElementById("clientDetailsSubmit").addEventListener("click", function(e) {
+                e.preventDefault();
+
+                if (validate()) {
+                    const clientDetails = {
+                        name:  nameInput.value,
+                        email: emailInput.value,
+                        phone: phoneInput.value
+                    };
+
+                    localStorage.setItem('client', JSON.stringify(clientDetails));
+
+                    $('#client_details_modal').modal('hide');
+                    calculateSavings();
+                }
+            });
+        });
 
         function calculateSavings () {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -444,8 +482,8 @@
                         const lenderList = data.data.map(lender =>{
                             return (`
                                 <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
-                                    <div class="header ${bgColor[lender?.lender]} h-[60px] flex items-center ps-5">
-                                        <image src='${lender.logo}' style="height: auto; width: 130px"/>
+                                    <div class="header ${bgColor[lender?.lender] ?? 'bg-white'} h-[60px] flex items-center ps-5">
+                                        <image src='${lender.logo}' style="height: auto; width: 130px"/><span>${lender.lender_id}. ${lender.lender}</span>
                                     </div>
                                     <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                         <div class="text-center">
@@ -673,8 +711,8 @@
                     const lenderList = data.data.map(lender =>{
                         return (`
                             <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
-                                <div class="header ${bgColor[lender?.lender]} h-[60px] flex items-center ps-5">
-                                    <image src='${lender.logo}' style="height: auto; width: 130px"/>
+                                <div class="header ${bgColor[lender?.lender] ?? 'bg-white'} h-[60px] flex items-center ps-5">
+                                    <image src='${lender.logo}' style="height: auto; width: 130px; margin-right: 10px"/><span>${lender.lender_id}. ${lender.lender}</span>
                                 </div>
                                 <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                     <div class="text-center">

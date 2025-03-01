@@ -9,7 +9,7 @@
         <script src="https://kit.fontawesome.com/2673272b88.js" crossorigin="anonymous"></script>
 
         <style>
-            main{
+            main {
                 background-image:
                         linear-gradient(to bottom, #3d3d3d6f, #1d1d1dae),
                         url(@yield('background'));

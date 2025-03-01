@@ -32,13 +32,9 @@
                 <div class="flex justify-center px-10 py-10">
                     <form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="authentication/layouts/creative/sign-in.html" action="#">
                         <div class="flex flex-col items-center justify-center gap-5 mb-5">
-                            <!--begin::Title-->
                             <image src="{{ asset('assets/images/loanmarket/logos/Logo.png') }}"
                                 class="w-[3rem] md:w-[5rem] w-xl-[5rem]"/>
                             <h1 class="text-blue-1 text-3xl fw-bolder mb-3">Your Home Loan Review</h1>
-                            <!--end::Title-->
-                            <!--begin::Subtitle-->
-                            <!--end::Subtitle=-->
                         </div>
                         <div class="fv-row mb-8">
                             <input type="text" placeholder="Username" name="username" autocomplete="off" class="form-control bg-transparent" />

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('lender_rates_fixed', function (Blueprint $table) {
             $table->id();
             $table->integer('lender_id');
+            $table->longText('lender_rate_additional_info')->nullable();
             $table->string('productID');
             $table->decimal('loan_rate', 10, 5);
             $table->integer('loan_term');
@@ -25,6 +26,9 @@ return new class extends Migration
             $table->decimal('tier_min', 20, 2)->nullable();
             $table->decimal('tier_max', 20, 2)->nullable();
             $table->string('tier_unitOfMeasure')->nullable();
+            $table->longText('tier_additional_info')->nullable();
+            $table->longText('product_name')->nullable();
+            $table->longText('product_description')->nullable();
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use App\Models\FixedRate;
 use App\Models\VariableRate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class CalculatorController extends Controller
@@ -79,6 +80,7 @@ class CalculatorController extends Controller
                     'propertyValue' => $request->propertyValue,
                     'lender' => $rate->lender['name'],
                     'logo' => $rate->lender['logo'],
+                    'lender_id' => count($top) + 1,
                     'monthly' => round($rate->monthly_payment),
                     'rate' => number_format($rate->loan_rate  * 100, 2),
                     'comparison' => number_format($rate->comparison_rate  * 100, 2),
@@ -89,7 +91,7 @@ class CalculatorController extends Controller
                 ]);
             }
 
-            if (count($top) === 3) break;
+            if (count($top) === 20) break;
         }
 
         Session::put('top_lenders', $top);
@@ -160,6 +162,8 @@ class CalculatorController extends Controller
                     ->orderBy('monthly_payment', 'asc')
                     ->first();
 
+                if($variable_rate === null) continue;
+
                 $lender_variable_monthly_payment = $variable_rate->monthly_payment;
                 $lender_total_variable_repayment = $lender_variable_monthly_payment * $remaining_term_months;
 
@@ -181,35 +185,12 @@ class CalculatorController extends Controller
                 $client_totalMonthlyRepayments = $client_total_fixed_repayment + $client_total_variable_repayment;
                 $savings = $client_totalMonthlyRepayments - $lender_totalMonthlyRepayments;
 
-                // dd([
-                //     'client' => [
-                //         'total_months' => $total_months,
-                //         'rate' => $client_rate,
-                //         'variable_rate' => $client_variable_monthly_rate,
-                //         'totalMonthlyRepayments' => $client_totalMonthlyRepayments,
-                //         'variable_monthly' => $client_variable_monthly_payment,
-                //         'fixed_monthly' => $client_fixed_monthly_payment,
-                //         'var_repay' => $client_total_variable_repayment,
-                //         'fix_repay' => $client_total_fixed_repayment,
-                //     ],
-                //     'lender' => [
-                //         'variable_monthlyPayment' => $lender_variable_monthly_payment,
-                //         'variable_repayment' => $lender_total_variable_repayment,
-                //         'variable_rate' => $variable_rate->loan_rate,
-
-                //         "lender_fixed_monthly_payment" => $lender_fixed_monthly_payment,
-                //         "lender" => $rate->lender['name'],
-                //         "rate" => $rate['loan_rate'],
-                //         "totalMonthlyRepayments " => $lender_totalMonthlyRepayments,
-                //     ],
-                //     'savings' => $savings
-                // ]);
-
                 array_push($top, [
                     'propertyAddress' => $request->propertyAddress,
                     'propertyValue' => $request->propertyValue,
                     'lender' => $rate->lender['name'],
                     'logo' => $rate->lender['logo'],
+                    'lender_id' => count($top) + 1,
                     'monthly' => round($rate->monthly_payment),
                     'rate' => number_format($rate->loan_rate  * 100, 2),
                     'comparison' => number_format($rate->comparison_rate  * 100, 2),
@@ -219,16 +200,16 @@ class CalculatorController extends Controller
                 ]);
             }
 
-            if (count($top) === 3) break;
+            if (count($top) === 20) break;
         }
 
         Session::put('top_lenders', $top);
         return $top;
     }
 
-    public function index($name) {
+    public function index($url) {
         $data = config('data');
-        $rso = ROS::where('name', $name)->first();
+        $rso = ROS::where('url', $url)->first();
         return view('pages.user.calculator', compact(['rso', 'data']));
     }
 

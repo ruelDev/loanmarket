@@ -13,6 +13,8 @@ class VariableRate extends Model
 
     protected $fillable = [
         'lender_id',
+        'lender_rate_additional_info',
+        'productID',
         'loan_rate',
         'comparison_rate',
         'loan_type',
@@ -22,6 +24,9 @@ class VariableRate extends Model
         'tier_min',
         'tier_max',
         'tier_unitOfMeasure',
+        'product_name',
+        'product_additional_info',
+        'product_description'
     ];
 
     public function lender()

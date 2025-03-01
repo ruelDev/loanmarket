@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('real_estate_offices', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('url')->unique();
             $table->string('email')->nullable();
             $table->longText('tagline')->nullable();
+            $table->longText('call_to')->nullable();
             $table->longText('featured')->nullable();
             $table->longText('logo')->nullable();
             $table->timestamps();

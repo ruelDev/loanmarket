@@ -35,7 +35,9 @@
         <p>Loan Type: {{ $lender['type'] }}</p>
         <p>Loan Term (if Fixed): {{ $lender['type'] === 'FIXED' ? $lender['term'] : 'N/A' }}</p>
         <p>Loan Rate: {{ $lender['rate'] }}</p>
-        <p>Monthly Repayment: {{ $lender['monthly'] }}</p>
+        <p>Monthly Repayment: $ {{ number_format($lender['monthly'], 2) }}</p>
+        <p>Total Savings: $ {{ number_format($lender['savings'], 2) }}</p>
+        <br/>
         <br/>
     @endforeach
     <br/>

@@ -225,14 +225,12 @@
                 stroke-dashoffset: -32.42;
             }
 
-            /* Chrome, Safari, Edge, Opera */
             input[type="number"]::-webkit-inner-spin-button,
             input[type="number"]::-webkit-outer-spin-button {
                 -webkit-appearance: none;
                 margin: 0;
             }
 
-            /* Firefox */
             input[type="number"] {
                 -moz-appearance: textfield;
             }
@@ -306,23 +304,11 @@
         @include('components.header')
         @yield('content')
 
-        <button
-            class="bg-blue text-white py-2 px-5 rounded-sm mt-5 transition-all ease-in-out hover:scale-110 hidden sm:block fixed left-[1rem] top-1/2 -translate-y-1/2 rotate-90 origin-left"
-            {{-- data-bs-toggle="modal"
-            data-bg-target="#become-partner-modal" --}}
-            onclick="openmodal()"
-        >
-            Become a Partner
-        </button>
+        <button class="bg-blue text-white py-2 px-5 rounded-sm mt-5 transition-all ease-in-out hover:scale-110 hidden sm:block fixed left-[1rem] top-1/2 -translate-y-1/2 rotate-90 origin-left" onclick="openmodal()">Become a Partner</button>
 
         <div class="fixed bottom-[3rem] right-[2rem] flex flex-col gap-5">
             <button id="backToTop" class="hidden sm:block  bg-blue w-[3.5rem] h-[3.5rem] rounded-full text-[1rem] opacity-0 invisible transition-all duration-200 hover:scale-125"><i class="fa-solid fa-arrow-up text-white"></i></button>
-            <button
-                class="hidden sm:block  bg-blue w-[3.5rem] h-[3.5rem] rounded-full text-[1rem] transition-all duration-200 hover:scale-125"
-                onclick="openmodalFeedback()"
-            >
-                <i class="fa-solid fa-comment text-white"></i>
-            </button>
+            <button class="hidden sm:block  bg-blue w-[3.5rem] h-[3.5rem] rounded-full text-[1rem] transition-all duration-200 hover:scale-125" onclick="openmodalFeedback()"><i class="fa-solid fa-comment text-white"></i></button>
         </div>
 
         <div class="modal fade" tabindex="-1" id="become_partner_modal">
@@ -344,10 +330,6 @@
                                 <label class="label text-xs text-black required" for="email">Email</label>
                                 <input id="email" name="email" type="email" placeholder="Email" required>
                             </div>
-                            {{-- <div class="mb-3">
-                                <label class="label text-xs text-black required" for="subject">Subject</label>
-                                <input id="subject" name="subject" type="text" placeholder="Subject" value="Home Loan Inquiry" required>
-                            </div> --}}
                             <div class="mb-3">
                                 <label class="label text-xs text-black required" for="message">Message</label>
                                 <textarea id="message" name="message" type="message" placeholder="Message" required></textarea>
@@ -375,10 +357,6 @@
                                 <label class="label text-xs text-black required" for="email">Email</label>
                                 <input id="email" name="email" type="email" placeholder="Email" required>
                             </div>
-                            {{-- <div class="mb-3">
-                                <label class="label text-xs text-black required" for="subject">Subject</label>
-                                <input id="subject" name="subject" type="text" placeholder="Subject" value="Home Loan Inquiry" required>
-                            </div> --}}
                             <div class="mb-3">
                                 <label class="label text-xs text-black required" for="message">Message</label>
                                 <textarea id="message" name="message" type="message" placeholder="Message" required></textarea>
@@ -393,10 +371,12 @@
         </div>
 
         @include('components.footer')
+
     </body>
     <script src="assets/plugins/global/plugins.bundle.js"></script>
     <script src="assets/js/scripts.bundle.js"></script>
     @stack('scripts')
+
     <script>
         const backToTopButton = document.getElementById('backToTop');
 
@@ -410,7 +390,6 @@
             }
         });
 
-            // Scroll smoothly to the top when clicked
         backToTopButton.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });

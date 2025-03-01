@@ -15,9 +15,11 @@ class ROSSeeder extends Seeder
     {
         ROS::insert([
             [
-                'name' => 'RayWhite',
+                'name' => 'RayWhite - One Group',
+                'url' => 'raywhite-one-group',
                 'email' => 'raywhite@gmail.com',
                 'tagline' => 'Your Investment. Our Priority.',
+                'call_to' => 'Accountants',
                 'featured' => 'assets/images/raywhite/bg.webp',
                 'logo' => 'assets/images/raywhite/logo.svg',
                 'created_at' => now(),
@@ -25,8 +27,10 @@ class ROSSeeder extends Seeder
             ],
             [
                 'name' => 'Housemark',
+                'url' => 'housemark',
                 'email' => 'housemark@gmail.com',
                 'tagline' => 'Rental Properties Properly Managed',
+                'call_to' => 'Financial Reviewers',
                 'featured' => 'assets/images/housemark/bg.webp',
                 'logo' => 'assets/images/housemark/logo.png',
                 'created_at' => now(),

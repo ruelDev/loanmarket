@@ -15,17 +15,6 @@ class EmailController extends Controller
 {
     public function requestEmail(Request $request)
     {
-        // [
-        //     "name" => "max"
-        //     "phone" => "234234"
-        //     "email" => "ruellobo.04@gmail.com"
-        //     "propertyAddress" => "Test"
-        //     "propertyValue" => "123"
-        //     "loanAmount" => "123123"
-        //     "loanType" => "FIXED"
-        //     "loanTerm" => "1"
-        //   ]
-
         $topLenders = Session::get('top_lenders');
 
         ClientRecord::insert([
@@ -53,13 +42,13 @@ class EmailController extends Controller
                     'loan_rate' => $lender['rate'],
                     'loan_term' => $lender['term'],
                     'monthly' => $lender['monthly'],
-                    'savings' => null,
+                    'savings' => $lender['savings'],
                     'created_at' => now()
                 ]
             ]);
         }
 
-        $messageContent = "Hi, we received your request and will call you back soon.";
+        $messageContent = "Hi, we have received your request and will call you within 2 business days. In the meantime, please find below a summary of Your Home Loan Review.";
 
         Mail::to($request->email)->send(new RequestCallEmail([
             'name' => $request->name,
