@@ -28,6 +28,7 @@ return new class extends Migration
             $table->longText('tier_additional_info')->nullable();
             $table->longText('product_name')->nullable();
             $table->longText('product_description')->nullable();
+            $table->decimal('with_package', 20, 2)->nullable();
             $table->timestamps();
         });
     }

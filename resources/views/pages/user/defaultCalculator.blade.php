@@ -275,6 +275,24 @@
     <script>
 
         let propertyAddress;
+        const bgColor = {
+            'Macquarie' : 'bg-white-1',
+            'St. George' : 'bg-green-stgeorge',
+            'CBA' : 'bg-black-combank',
+            'ANZ' : 'bg-blue-anz',
+            'Ubank' : 'bg-purple-ubank',
+            'Bankfirst' : 'bg-green-bankfirst',
+            'Bankwest' : 'bg-black',
+            'Bendigo Bank' : 'bg-white-bendigo',
+            'Bank Australia' : 'bg-yellow-bankaustralia',
+            'Bank Autralia' : 'bg-yellow-bankaustralia',
+            'Beyond Bank Australia' : 'bg-purple-beyondbankaus',
+            'Adelaide Bank' : 'bg-white-1',
+            'BankSA': 'bg-white',
+            'Westpac' : 'bg-white',
+            'NAB' : 'bg-white-nab',
+            'People\'s Choice' : 'bg-yellow-peopleschoice'
+        }
 
         document.addEventListener("DOMContentLoaded", function() {
             localStorage.removeItem('client')
@@ -471,19 +489,11 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // if (data) {
-
-                        const bgColor = {
-                            'Macquarie' : 'bg-blue',
-                            'St. George' : 'bg-white-1',
-                            'CBA' : 'bg-black',
-                        }
-
                         const lenderList = data.data.map(lender =>{
                             return (`
                                 <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
-                                    <div class="header ${bgColor[lender?.lender] ?? 'bg-white'} h-[60px] flex items-center ps-5">
-                                        <image src='${lender.logo}' style="height: auto; width: 130px"/><span>${lender.lender_id}. ${lender.lender}</span>
+                                    <div class="header ${bgColor[lender?.lender] ?? 'bg-blue'} h-[60px] flex items-center ps-5">
+                                        <image src='${lender.logo}' style="height: auto; width: 130px; margin-right: 10px"/>
                                     </div>
                                     <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                         <div class="text-center">
@@ -642,18 +652,11 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    const bgColor = {
-                        'Macquarie' : 'bg-blue',
-                        'St. George' : 'bg-white-1',
-                        'CBA' : 'bg-black',
-                    }
-
                     const lenderList = data.data.map(lender =>{
-                        console.log('lender: ', lender)
                         return (`
                             <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
-                                <div class="header ${bgColor[lender?.lender] ?? 'bg-white'} h-[60px] flex items-center ps-5">
-                                    <image src='${lender.logo}' style="height: auto; width: 130px; margin-right: 10px"/><span>${lender.lender_id}. ${lender.lender}</span>
+                                <div class="header ${bgColor[lender?.lender] ?? 'bg-blue'} h-[60px] flex items-center ps-5">
+                                    <image src='${lender.logo}' style="height: auto; width: 130px; margin-right: 10px"/>
                                 </div>
                                 <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                     <div class="text-center">

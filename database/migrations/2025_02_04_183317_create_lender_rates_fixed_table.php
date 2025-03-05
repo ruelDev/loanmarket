@@ -17,7 +17,7 @@ return new class extends Migration
             $table->longText('lender_rate_additional_info')->nullable();
             $table->string('productID');
             $table->decimal('loan_rate', 10, 5);
-            $table->integer('loan_term');
+            $table->integer('loan_term')->nullable();
             $table->decimal('comparison_rate', 10, 6)->nullable();
             $table->string('loan_purpose');
             $table->string('loan_type');
@@ -29,6 +29,7 @@ return new class extends Migration
             $table->longText('tier_additional_info')->nullable();
             $table->longText('product_name')->nullable();
             $table->longText('product_description')->nullable();
+            $table->decimal('with_package', 20, 2)->nullable();
             $table->timestamps();
         });
     }

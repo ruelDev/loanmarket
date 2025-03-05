@@ -41,11 +41,33 @@ class CalculatorController extends Controller
                     / (POWER(1 + (loan_rate/12), $total_months) - 1) AS monthly_payment
                 ")
             )
-            ->where('loan_purpose', $loan_purpose)
-            ->where(function ($query) use ($lvr) {
-                $query->where('tier_min', '<=', $lvr)
+            ->when($loan_amount < 150000, function ($query) use ($lvr) {
+                return $query->where(function ($q) use ($lvr) {
+                    // Apply LVR filter only to non-CBA lenders
+                    $q->whereHas('lender', function ($subQuery) {
+                        $subQuery->where('name', '!=', 'CBA');
+                    })->where(function ($q) use ($lvr) {
+                        $q->where('tier_min', '<=', $lvr)
+                          ->where('tier_max', '>=', $lvr);
+                    });
+
+                    // Allow CBA only if 'with_package' is NULL
+                    $q->orWhereHas('lender', function ($subQuery) {
+                        $subQuery->where('name', 'CBA')
+                                 ->whereNull('with_package');
+                    });
+                });
+            })
+            ->when($loan_amount >= 200000, function ($query) use ($lvr) {
+                return $query->where('tier_min', '<=', $lvr)
                     ->where('tier_max', '>=', $lvr);
             })
+            ->where('repayment_type', 'PRINCIPAL_AND_INTEREST')
+            ->where('loan_purpose', $loan_purpose)
+            // ->where(function ($query) use ($lvr) {
+            //     $query->where('tier_min', '<=', $lvr)
+            //         ->where('tier_max', '>=', $lvr);
+            // })
             ->orderBy('monthly_payment', 'asc')
             ->get();
 
@@ -81,18 +103,22 @@ class CalculatorController extends Controller
                     'lender' => $rate->lender['name'],
                     'logo' => $rate->lender['logo'],
                     'lender_id' => count($top) + 1,
-                    'monthly' => round($rate->monthly_payment),
+                    'monthly' => ceil($rate->monthly_payment),
                     'rate' => number_format($rate->loan_rate  * 100, 2),
                     'comparison' => number_format($rate->comparison_rate  * 100, 2),
                     'term' => $LOAN_TERM_YEARS,
                     'type' => 'Variable',
-                    'savings' => floor($savings),
+                    'savings' => ceil($savings),
                     // 'clientEmi' => $client_total_repayment
                 ]);
             }
 
-            if (count($top) === 20) break;
+            if (count($top) === 3) break;
         }
+
+        usort($top, function ($a, $b) {
+            return $b['savings'] <=> $a['savings'];
+        });
 
         Session::put('top_lenders', $top);
         return $top;
@@ -121,8 +147,19 @@ class CalculatorController extends Controller
                 'loan_term',
                 'repayment_type'
             )
+            ->when($loan_amount < 150000, function ($query) {
+                return $query->where(function ($q) {
+                    $q->whereDoesntHave('lender', function ($subQuery) {
+                        $subQuery->where('name', 'CBA');
+                    })->orWhereHas('lender', function ($subQuery) {
+                        $subQuery->where('name', 'CBA')
+                                 ->whereNull('with_package');
+                    });
+                });
+            })
             ->where('loan_term', $fixed_term_years)
             ->where('loan_purpose', $loan_purpose)
+            ->where('repayment_type', 'PRINCIPAL_AND_INTEREST')
             ->orderBy('monthly_payment', 'asc')
             ->get();
 
@@ -191,17 +228,21 @@ class CalculatorController extends Controller
                     'lender' => $rate->lender['name'],
                     'logo' => $rate->lender['logo'],
                     'lender_id' => count($top) + 1,
-                    'monthly' => round($rate->monthly_payment),
+                    'monthly' => ceil($rate->monthly_payment),
                     'rate' => number_format($rate->loan_rate  * 100, 2),
                     'comparison' => number_format($rate->comparison_rate  * 100, 2),
                     'term' => $loan_term_years,
                     'type' => 'Fixed',
-                    'savings' => floor($savings),
+                    'savings' => ceil($savings),
                 ]);
             }
 
-            if (count($top) === 20) break;
+            if (count($top) === 3) break;
         }
+
+        usort($top, function ($a, $b) {
+            return $b['savings'] <=> $a['savings'];
+        });
 
         Session::put('top_lenders', $top);
         return $top;

@@ -8,6 +8,7 @@ use Mockery\Undefined;
 use App\Models\Lenders;
 use App\Models\FixedRate;
 use App\Models\LenderRates;
+use Illuminate\Support\Str;
 use App\Models\VariableRate;
 use GuzzleHttp\Promise\Utils;
 use Illuminate\Console\Command;
@@ -62,7 +63,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://open-api.bankwest.com.au/bwpublic/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/bankwest.png',
         ],
         [
             'name' => 'ANZ',
@@ -70,7 +71,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://api.anz/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/anz.png',
         ],
         [
             'name' => 'NAB',
@@ -78,7 +79,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://openbank.api.nab.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/nab.png',
         ],
         [
             'name' => 'Westpac',
@@ -86,7 +87,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://digital-api.westpac.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/westpac.png',
         ],
         [
             'name' => 'Bank Autralia',
@@ -94,7 +95,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://public.cdr-api.bankaust.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/bankAustralia.png',
         ],
         [
             'name' => 'Bendigo Bank', #magulo
@@ -102,7 +103,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://api.cdr.bendigobank.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/bendigoBank.png',
         ],
         [
             'name' => 'Adelaide Bank', #magulo
@@ -110,7 +111,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://api.cdr.adelaidebank.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/adelaideBank.png',
         ],
         [
             'name' => 'People\'s Choice',
@@ -118,7 +119,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://ob-public.peopleschoice.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/peoplesChoice.png',
         ],
         [
             'name' => 'Beyond Bank Australia', #magulo - nasa additional info ang lvr
@@ -126,7 +127,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://public.cdr.api.beyondbank.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/beyondBankAustralia.png',
         ],
         [
             'name' => 'Heritage Bank', # magulo
@@ -134,7 +135,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://product.api.heritage.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/heritageBank.png',
         ],
         [
             'name' => 'Credit Union SA',  #magulo - nasa additional info ang lvr
@@ -142,7 +143,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://openbanking.api.creditunionsa.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/creditUnionSa.png',
         ],
         [
             'name' => 'Bankfirst',
@@ -150,7 +151,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://public.cdr.bankfirst.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/bankfirst.png',
         ],
         [
             'name' => 'Ubank',
@@ -158,7 +159,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://public.cdr-api.86400.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/ubank.png',
         ],
         [
             'name' => 'BankSA',
@@ -166,15 +167,15 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://digital-api.banksa.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/banksa.png',
         ],
         [
-            'name' => 'Australia Unity',
+            'name' => 'Australian Unity',
             'link' => 'https://open-banking.australianunity.com.au/cds-au/v1/banking/products?product-category=RESIDENTIAL_MORTGAGES',
             'version' => '3',
             'products_link' => 'https://open-banking.australianunity.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/australianUnity.png',
         ],
         // [
         //     'name' => 'Defence Bank', #not reading / no error / no logs
@@ -190,7 +191,7 @@ class FetchLenderRates extends Command
             'version' => '3',
             'products_link' => 'https://public.cdr-api.pnbank.com.au/cds-au/v1/banking/products/',
             'products_version' => '4',
-            'logo' => 'assets/images/lenders/stGeorge.png',
+            'logo' => 'assets/images/lenders/pnbank.png',
         ],
     ];
 
@@ -228,7 +229,6 @@ class FetchLenderRates extends Command
                     $data = json_decode($response->getBody(), true);
                     $products = $data['data']['products'] ?? [];
                     switch($apiName) {
-                        case 'CBA':
                         case 'ANZ':
                         case 'NAB':
                         case 'Bank Autralia':
@@ -348,6 +348,143 @@ class FetchLenderRates extends Command
                                                                     'repayment_type' => $repaymentType,
                                                                     'product_name' => $productName,
                                                                     'product_description' => $description,
+                                                                ]);
+                                                            }
+                                                        }
+                                                    }
+                                                    else continue;
+                                                }
+                                            }
+                                            else {
+                                                Log::warning('Product Details Fetch Failed', ['productId' => $productId]);
+                                            }
+                                        })
+                                        ->wait(); // Ensure synchronous wait to prevent request exhaustion
+                                }
+                            }
+                        break;
+
+                        case 'CBA':
+                            foreach ($products as $product) {
+                                $productId = $product['productId'] ?? null;
+                                $productName = $product['name'] ?? null;
+                                $productInfo = $product['additionalInfo'] ?? null;
+                                $description = $product['description'] ?? null;
+                                $brand = isset($product['brand']) ? $product['brand'] : (isset($product['brandName']) ? isset($product['brandName']) : null);
+                                $isTailored = $product['isTailored'] ?? null;
+
+                                if ($productId) {
+                                    $client->getAsync("{$products_link}{$productId}", [
+                                            'headers' => [
+                                                'Authorization' => 'application/json',
+                                                'Content-Type' => 'application/json',
+                                                'x-v' => $products_version
+                                            ]
+                                        ])
+                                        ->then(function ($productResponse) use ($productId, $productName, $id, $description, $productInfo) {
+                                            if ($productResponse->getStatusCode() === 200) {
+                                                $productDetails = json_decode($productResponse->getBody(), true);
+                                                $lendingRates = $productDetails['data']['lendingRates'] ?? [];
+
+                                                foreach ($lendingRates as $lendingRate) {
+
+                                                    if($this->isLendingRate($lendingRate['loanPurpose'], $lendingRate['repaymentType'])) {
+                                                        $rate = $lendingRate['rate'] ?? null;
+                                                        $type = $lendingRate['lendingRateType'] ?? null;
+                                                        $purpose = $lendingRate['loanPurpose'] ?? null;
+                                                        $comparisonRate = $lendingRate['comparisonRate'] ?? 0;
+                                                        $repaymentType = $lendingRate['repaymentType'] ?? null;
+                                                        $lendingRateAdditionalInfo = isset($lendingRate['additionalInfo']) ? $lendingRate['additionalInfo'] : null;
+
+                                                        if ($type == 'VARIABLE') {
+                                                            if(in_array($productId, ['6c781d6471644fe084847533ab31aca2', 'f1d6fcc359804f3c9365d576c56356fc'])) {
+                                                                if(isset($lendingRate['tiers']) && (count($lendingRate['tiers']) > 0)) {
+                                                                    foreach ($lendingRate['tiers'] as $tier) {
+                                                                        if(!str_contains($tier['name'], 'LVR')) continue;
+
+                                                                        $tierName =  $this->tierName($tier['unitOfMeasure']);
+
+                                                                        $this->variableWithTiers([
+                                                                            'lender_id' => $id,
+                                                                            'lender_rate_additional_info' => $lendingRateAdditionalInfo,
+                                                                            'productID' => $productId,
+                                                                            'loan_rate' => floatval($rate),
+                                                                            'comparison_rate' => floatval($comparisonRate),
+                                                                            'loan_purpose' => $purpose,
+                                                                            'loan_type' => $type,
+                                                                            'repayment_type' => $repaymentType,
+                                                                            'tier_name' => $tierName,
+                                                                            'tier_min' => $tier['minimumValue'],
+                                                                            'tier_max' => $tier['maximumValue'] ?? null,
+                                                                            'tier_unitOfMeasure' => $tier['unitOfMeasure'],
+                                                                            'tier_additional_info' => isset($tier['additionalInfo']) ? $tier['additionalInfo'] : null,
+                                                                            'product_name' => $productName,
+                                                                            'product_description' => $description,
+                                                                            'with_package' => Str::contains($lendingRateAdditionalInfo, 'with Package') ? '150000' : null,
+                                                                        ]);
+                                                                    }
+                                                                }
+                                                                else {
+                                                                    $this->variableNoTiers([
+                                                                        'lender_id' => $id,
+                                                                        'lender_rate_additional_info' => $lendingRateAdditionalInfo,
+                                                                        'productID' => $productId,
+                                                                        'loan_rate' => floatval($rate),
+                                                                        'comparison_rate' =>  floatval($comparisonRate),
+                                                                        'loan_purpose' => $purpose,
+                                                                        'loan_type' => $type,
+                                                                        'repayment_type' => $repaymentType,
+                                                                        'product_name' => $productName,
+                                                                        'product_description' => $description,
+                                                                        'with_package' => Str::contains($lendingRateAdditionalInfo, 'with Package') ? '150000' : null,
+                                                                    ]);
+                                                                }
+                                                            }
+                                                        }
+                                                        elseif ($type == 'FIXED') {
+                                                            preg_match('/\d+/', $lendingRate['additionalValue'] ?? '', $matches);
+                                                            $term = $matches[0] ?? null;
+
+                                                            if(isset($lendingRate['tiers']) && (count($lendingRate['tiers']) > 0)) {
+
+                                                                foreach ($lendingRate['tiers'] as $tier) {
+                                                                    $tierName =  $this->tierName($tier['unitOfMeasure']);
+
+                                                                    $this->fixedWithTiers([
+                                                                        'lender_id' => $id,
+                                                                        'lender_rate_additional_info' => $lendingRateAdditionalInfo,
+                                                                        'productID' => $productId,
+                                                                        'loan_rate' => floatval($rate),
+                                                                        'comparison_rate' => floatval($comparisonRate),
+                                                                        'loan_term' => $term,
+                                                                        'loan_purpose' => $purpose,
+                                                                        'loan_type' => $type,
+                                                                        'repayment_type' => $repaymentType,
+                                                                        'tier_name' => $tierName,
+                                                                        'tier_min' => $tier['minimumValue'],
+                                                                        'tier_max' => $tier['maximumValue'] ?? null,
+                                                                        'tier_unitOfMeasure' => $tier['unitOfMeasure'],
+                                                                        'tier_additional_info' => isset($tier['additionalInfo']) ? $tier['additionalInfo'] : null,
+                                                                        'with_package' => Str::contains($lendingRateAdditionalInfo, 'with Package') ? '150000' : null,
+                                                                        'product_name' => $productName,
+                                                                        'product_description' => $description,
+                                                                    ]);
+                                                                }
+                                                            }
+                                                            else {
+                                                                $this->fixedNoTiers([
+                                                                    'lender_id' => $id,
+                                                                    'lender_rate_additional_info' => $lendingRateAdditionalInfo,
+                                                                    'productID' => $productId,
+                                                                    'loan_rate' => floatval($rate),
+                                                                    'comparison_rate' => floatval($comparisonRate),
+                                                                    'loan_term' => $term,
+                                                                    'loan_purpose' => $purpose,
+                                                                    'loan_type' => $type,
+                                                                    'repayment_type' => $repaymentType,
+                                                                    'product_name' => $productName,
+                                                                    'product_description' => $description,
+                                                                    'with_package' => Str::contains($lendingRateAdditionalInfo, 'with Package') ? '150000' : null,
                                                                 ]);
                                                             }
                                                         }
@@ -724,15 +861,37 @@ class FetchLenderRates extends Command
                                                             }
                                                         }
                                                         elseif ($type == 'FIXED') {
-                                                            preg_match('/\d+/', $lendingRate['additionalValue'] ?? '', $matches);
-                                                            $term = $matches[0] ?? null;
+                                                            if(in_array($productId, ['afd4e980-5904-4a9f-806c-e45ebd44a563', 'f3ea71d7-2ab2-430a-9f24-8d4aed351125'])) {
+                                                                preg_match('/\d+/', $lendingRate['additionalValue'] ?? '', $matches);
+                                                                $term = $matches[0] ?? null;
 
-                                                            if(isset($lendingRate['tiers']) && (count($lendingRate['tiers']) > 0)) {
+                                                                if(isset($lendingRate['tiers']) && (count($lendingRate['tiers']) > 0)) {
 
-                                                                foreach ($lendingRate['tiers'] as $tier) {
-                                                                    $tierName =  $this->tierName($tier['unitOfMeasure']);
+                                                                    foreach ($lendingRate['tiers'] as $tier) {
+                                                                        $tierName =  $this->tierName($tier['unitOfMeasure']);
 
-                                                                    $this->fixedWithTiers([
+                                                                        $this->fixedWithTiers([
+                                                                            'lender_id' => $id,
+                                                                            'lender_rate_additional_info' => $lendingRateAdditionalInfo,
+                                                                            'productID' => $productId,
+                                                                            'loan_rate' => floatval($rate),
+                                                                            'comparison_rate' => floatval($comparisonRate),
+                                                                            'loan_term' => $term,
+                                                                            'loan_purpose' => $purpose,
+                                                                            'loan_type' => $type,
+                                                                            'repayment_type' => $repaymentType,
+                                                                            'tier_name' => $tierName,
+                                                                            'tier_min' => $tier['minimumValue'],
+                                                                            'tier_max' => $tier['maximumValue'] ?? null,
+                                                                            'tier_unitOfMeasure' => $tier['unitOfMeasure'],
+                                                                            'tier_additional_info' => isset($tier['additionalInfo']) ? $tier['additionalInfo'] : null,
+                                                                            'product_name' => $productName,
+                                                                            'product_description' => $description,
+                                                                        ]);
+                                                                    }
+                                                                }
+                                                                else {
+                                                                    $this->fixedNoTiers([
                                                                         'lender_id' => $id,
                                                                         'lender_rate_additional_info' => $lendingRateAdditionalInfo,
                                                                         'productID' => $productId,
@@ -742,30 +901,10 @@ class FetchLenderRates extends Command
                                                                         'loan_purpose' => $purpose,
                                                                         'loan_type' => $type,
                                                                         'repayment_type' => $repaymentType,
-                                                                        'tier_name' => $tierName,
-                                                                        'tier_min' => $tier['minimumValue'],
-                                                                        'tier_max' => $tier['maximumValue'] ?? null,
-                                                                        'tier_unitOfMeasure' => $tier['unitOfMeasure'],
-                                                                        'tier_additional_info' => isset($tier['additionalInfo']) ? $tier['additionalInfo'] : null,
                                                                         'product_name' => $productName,
                                                                         'product_description' => $description,
                                                                     ]);
                                                                 }
-                                                            }
-                                                            else {
-                                                                $this->fixedNoTiers([
-                                                                    'lender_id' => $id,
-                                                                    'lender_rate_additional_info' => $lendingRateAdditionalInfo,
-                                                                    'productID' => $productId,
-                                                                    'loan_rate' => floatval($rate),
-                                                                    'comparison_rate' => floatval($comparisonRate),
-                                                                    'loan_term' => $term,
-                                                                    'loan_purpose' => $purpose,
-                                                                    'loan_type' => $type,
-                                                                    'repayment_type' => $repaymentType,
-                                                                    'product_name' => $productName,
-                                                                    'product_description' => $description,
-                                                                ]);
                                                             }
                                                         }
                                                     }
@@ -1813,6 +1952,7 @@ class FetchLenderRates extends Command
             });
         }
 
+        Log::info('Completed Fetching Rates');
         Utils::settle($promises)->wait();
 
     }
@@ -1870,6 +2010,7 @@ class FetchLenderRates extends Command
                     'tier_additional_info' => isset($data['tier_additional_info']) ? $data['tier_additional_info'] : null,
                     'product_name' => $data['product_name'],
                     'product_description' => $data['product_description'],
+                    'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
@@ -1900,6 +2041,7 @@ class FetchLenderRates extends Command
                     'tier_additional_info' => $data['tier_additional_info'],
                     'product_name' => $data['product_name'],
                     'product_description' => $data['product_description'],
+                    'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
@@ -1929,6 +2071,7 @@ class FetchLenderRates extends Command
                     'tier_additional_info' => isset($data['tier_additional_info']) ? $data['tier_additional_info'] : null,
                     'product_name' => $data['product_name'],
                     'product_description' => $data['product_description'],
+                    'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
@@ -1958,6 +2101,7 @@ class FetchLenderRates extends Command
                     'tier_additional_info' => $data['tier_additional_info'],
                     'product_name' => $data['product_name'],
                     'product_description' => $data['product_description'],
+                    'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],

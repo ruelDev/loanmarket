@@ -31,17 +31,22 @@ export default {
                     2: "#01355C66",
                     3: "#E5F7FD",
                     card: "#1B84FF",
+                    anz: "#004165",
                 },
                 yellow: {
                     DEFAULT: "#DFE377",
                     raywhite: "#FFE512",
                     card: "#F6C000",
+                    bankaustralia: "#F4F1ED",
+                    peopleschoice: "#EDEADF",
                 },
                 white: {
                     DEFAULT: "#fff",
                     1: "#FEFEFE",
                     2: "#E5F7FD",
                     3: "#f7f7f7",
+                    bendigo: "#F6F2F5",
+                    nab: "#E6E6E6",
                 },
                 darkGreen: {
                     DEFAULT: "#1A2C32",
@@ -50,12 +55,19 @@ export default {
                 black: {
                     DEFAULT: "#2B2B2B",
                     1: "#2B2B2Baa",
+                    combank: "#231F20",
                 },
                 red: {
                     card: "#F8285A",
                 },
                 green: {
                     card: "#17C653",
+                    bankfirst: "#47D7AC",
+                    stgeorge: "#78BE20",
+                },
+                purple: {
+                    ubank: "#E3C1FF",
+                    beyondbankaus: "#522058"
                 },
             },
             animation: {
