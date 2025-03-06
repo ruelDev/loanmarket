@@ -150,7 +150,7 @@ class CalculatorController extends Controller
             ->when($loan_amount < 150000, function ($query) {
                 return $query->where(function ($q) {
                     $q->whereDoesntHave('lender', function ($subQuery) {
-                        $subQuery->where('name', 'CBA');
+                        $subQuery->whereIn('name',  ['CBA', 'Heritage Bank']);
                     })->orWhereHas('lender', function ($subQuery) {
                         $subQuery->where('name', 'CBA')
                                  ->whereNull('with_package');

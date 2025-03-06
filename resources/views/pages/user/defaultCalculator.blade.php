@@ -15,7 +15,7 @@
     </div>
     <div id="calculator-section" class="bg-white-3">
         <div class="container py-10">
-            <div class="container">
+            <div class="xl:container">
                 <div class="card bg-white rounded-md p-5 p-sm-10 p-md-5">
                     <div class="grid gap-4 grid-cols-1 lg:grid-cols-6">
                         <div class="col-span-6 lg:col-span-2">
@@ -99,7 +99,7 @@
                         <div class="col-span-6 lg:col-span-4">
                             <div class="bg-white-3 border p-5 rounded">
                                 <div class="hidden md:flex justify-between items-center">
-                                    <h4 class="text-xl calc-title">Top 3 Lenders</h4>
+                                    <h4 class="text-[1.1rem] calc-title">Top 3 Lenders</h4>
                                     <button class="text-blue text-[1.1rem] text-decoration-underline requestCallBtn hidden" onclick="requestCall()">Request a call from your Review Team</button>
                                     <p class="text-blue text-[1.1rem] requestCallBtnPw  hidden">Please wait...</p>
                                 </div>
@@ -114,7 +114,7 @@
                                     <div class="dot"></div>
                                 </section>
                                 <div class="flex justify-center mt-10">
-                                    <div class="flex flex-col gap-5 w-full h-[600px] overflow-y-scroll" id="top-3-container">
+                                    <div class="flex flex-col gap-5 w-full" id="top-3-container"> #h-[600px] overflow-y-scroll
                                         @foreach($data['lenders'] as $item)
                                          @foreach ($item as $key => $value)
                                             <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto">
@@ -492,31 +492,31 @@
                         const lenderList = data.data.map(lender =>{
                             return (`
                                 <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
-                                    <div class="header ${bgColor[lender?.lender] ?? 'bg-blue'} h-[60px] flex items-center ps-5">
+                                    <div class="header bg-white-nab h-[60px] flex items-center ps-5">
                                         <image src='${lender.logo}' style="height: auto; width: 130px; margin-right: 10px"/>
                                     </div>
                                     <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                         <div class="text-center">
-                                            <div class="text-2xl flex items-center justify-center gap-2">
+                                            <div class="text-xl xl:text-2xl flex items-center justify-center gap-2">
                                                 <p>${lender.rate }</p>
                                                 <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
                                             </div>
                                             <p class="text-xs text-black-1">${lender.type} rate</p>
                                         </div>
                                         <div class="text-center">
-                                            <div class="text-2xl flex items-center justify-center gap-2">
+                                            <div class="text-xl xl:text-2xl flex items-center justify-center gap-2">
                                                 <p>${ lender.comparison }</p>
                                                 <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
                                             </div>
                                             <p class="text-xs text-black-1">Comparison</p>
                                         </div>
                                         <div class="text-center">
-                                            <p class="text-2xl">$ ${ Number(lender.monthly).toLocaleString() }</p>
+                                            <p class="text-xl xl:text-2xl">$ ${ Number(lender.monthly).toLocaleString() }</p>
                                             <p class="text-xs text-black-1">Monthly</p>
                                             <p class="text-xs text-black-1">Repayments</p>
                                         </div>
                                         <div class="text-center">
-                                            <p class="text-2xl">$ ${ Number(lender.savings).toLocaleString() }</p>
+                                            <p class="text-xl xl:text-2xl">$ ${ Number(lender.savings).toLocaleString() }</p>
                                             <p class="text-xs text-black-1">Savings over</p>
                                             <p class="text-xs text-black-1">${ lender.term } ${ lender.term > 1 ? 'years' : 'year' }</p>
                                         </div>
@@ -655,31 +655,31 @@
                     const lenderList = data.data.map(lender =>{
                         return (`
                             <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
-                                <div class="header ${bgColor[lender?.lender] ?? 'bg-blue'} h-[60px] flex items-center ps-5">
+                                <div class="header bg-white-nab h-[60px] flex items-center ps-5">
                                     <image src='${lender.logo}' style="height: auto; width: 130px; margin-right: 10px"/>
                                 </div>
                                 <div class="grid gap-10 md:grid-cols-4 py-3 hover:bg-blue-hover">
                                     <div class="text-center">
-                                        <div class="text-2xl flex items-center justify-center gap-2">
+                                        <div class="text-xl xl:text-2xl flex items-center justify-center gap-2">
                                             <p>${lender.rate }</p>
                                             <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
                                         </div>
                                         <p class="text-xs text-black-1">${lender.type} rate</p>
                                     </div>
                                     <div class="text-center">
-                                        <div class="text-2xl flex items-center justify-center gap-2">
+                                        <div class="text-xl xl:text-2xl flex items-center justify-center gap-2">
                                             <p>${ lender.comparison }</p>
                                             <div class="flex flex-col"><span class="text-[10px] leading-none">%</span><span class="text-[10px] leading-none">p.a.</span></div>
                                         </div>
                                         <p class="text-xs text-black-1">Comparison</p>
                                     </div>
                                     <div class="text-center">
-                                        <p class="text-2xl">$ ${ Number(lender.monthly).toLocaleString() }</p>
+                                        <p class="text-xl xl:text-2xl">$ ${ Number(lender.monthly).toLocaleString() }</p>
                                         <p class="text-xs text-black-1">Monthly</p>
                                         <p class="text-xs text-black-1">Repayments</p>
                                     </div>
                                     <div class="text-center">
-                                        <p class="text-2xl">$ ${ Number(lender.savings).toLocaleString() }</p>
+                                        <p class="text-xl xl:text-2xl">$ ${ Number(lender.savings).toLocaleString() }</p>
                                         <p class="text-xs text-black-1">Savings over</p>
                                         <p class="text-xs text-black-1">${ lender.term } ${ lender.term > 1 ? 'years' : 'year' }</p>
                                     </div>
