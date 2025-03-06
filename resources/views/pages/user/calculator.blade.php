@@ -574,7 +574,7 @@
                 ...calcData
             };
 
-            fetch("{{route('request.email')}}", {
+            fetch("{{route('request.email.rso')}}", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

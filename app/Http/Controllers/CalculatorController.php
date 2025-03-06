@@ -251,6 +251,7 @@ class CalculatorController extends Controller
     public function index($url) {
         $data = config('data');
         $rso = ROS::where('url', $url)->first();
+        Session::put('rso_email', $rso->email);
         return view('pages.user.calculator', compact(['rso', 'data']));
     }
 

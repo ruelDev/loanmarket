@@ -40,6 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
+Route::post('/request-email-rso', [EmailController::class, 'requestEmailRSO'])->name('request.email.rso');
 Route::post('/request-email', [EmailController::class, 'requestEmail'])->name('request.email');
 Route::post('/become-partner-email', [EmailController::class, 'becomePartnerEmail'])->name('become-partner.email');
 Route::post('/feedback-email', [EmailController::class, 'feedbackEmail'])->name('feedback.email');

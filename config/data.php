@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'YHLR_EMAIL' => 'ruellobo.04@gmail.com',
     'hero' => [
         'title' => [
             'Your Home Loan Review',
