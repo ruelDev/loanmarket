@@ -177,14 +177,6 @@ class FetchLenderRates extends Command
             'products_version' => '4',
             'logo' => 'assets/images/lenders/australianUnity.png',
         ],
-        // [
-        //     'name' => 'Defence Bank', #not reading / no error / no logs
-        //     'link' => 'https://product.defencebank.com.au/cds-au/v1/banking/products?product-category=RESIDENTIAL_MORTGAGES',
-        //     'version' => '3',
-        //     'products_link' => 'https://product.defencebank.com.au/cds-au/v1/banking/products/',
-        //     'products_version' => '4',
-        //     'logo' => 'assets/images/lenders/stGeorge.png',
-        // ],
         [
             'name' => 'P&N Bank',
             'link' => 'https://public.cdr-api.pnbank.com.au/cds-au/v1/banking/products?product-category=RESIDENTIAL_MORTGAGES',
@@ -211,10 +203,16 @@ class FetchLenderRates extends Command
             $products_link = $item['products_link'];
             $products_version = $item['products_version'];
 
-            Lenders::insert([
-                'name' => $apiName,
-                'logo' => $apiLogo
-            ]);
+            Lenders::upsert(
+                [
+                    [
+                        'name' => $apiName,
+                        'logo' => $apiLogo
+                    ]
+                ],
+                ['name'],
+                ['logo']
+            );
 
             $promises[$key] = $client->getAsync($item['link'], [
                 'headers' => [
@@ -1992,29 +1990,58 @@ class FetchLenderRates extends Command
 
     private function fixedNoTiers ($data) {
         try {
-            FixedRate::insert([
+            // FixedRate::insert([
+            //     [
+            //         'lender_id' => $data['lender_id'],
+            //         'lender_rate_additional_info' => $data['lender_rate_additional_info'],
+            //         'productID' => $data['productID'],
+            //         'loan_rate' => $data['loan_rate'],
+            //         'comparison_rate' => $data['comparison_rate'],
+            //         'loan_term' => $data['loan_term'],
+            //         'loan_purpose' => $data['loan_purpose'],
+            //         'loan_type' => $data['loan_type'],
+            //         'repayment_type' => $data['repayment_type'],
+            //         'tier_name' => isset($data['tier_name']) ? $data['tier_name'] : null,
+            //         'tier_min' => isset($data['tier_min']) ? $data['tier_min'] : '0.00',
+            //         'tier_max' => isset($data['tier_max']) ? $data['tier_max'] : '0.00',
+            //         'tier_unitOfMeasure' => isset($data['tier_unitOfMeasure']) ? $data['tier_unitOfMeasure'] : null,
+            //         'tier_additional_info' => isset($data['tier_additional_info']) ? $data['tier_additional_info'] : null,
+            //         'product_name' => $data['product_name'],
+            //         'product_description' => $data['product_description'],
+            //         'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
+            //         'created_at' => now(),
+            //         'updated_at' => now(),
+            //     ],
+            // ]);
+
+            FixedRate::upsert(
                 [
-                    'lender_id' => $data['lender_id'],
-                    'lender_rate_additional_info' => $data['lender_rate_additional_info'],
-                    'productID' => $data['productID'],
-                    'loan_rate' => $data['loan_rate'],
-                    'comparison_rate' => $data['comparison_rate'],
-                    'loan_term' => $data['loan_term'],
-                    'loan_purpose' => $data['loan_purpose'],
-                    'loan_type' => $data['loan_type'],
-                    'repayment_type' => $data['repayment_type'],
-                    'tier_name' => isset($data['tier_name']) ? $data['tier_name'] : null,
-                    'tier_min' => isset($data['tier_min']) ? $data['tier_min'] : '0.00',
-                    'tier_max' => isset($data['tier_max']) ? $data['tier_max'] : '0.00',
-                    'tier_unitOfMeasure' => isset($data['tier_unitOfMeasure']) ? $data['tier_unitOfMeasure'] : null,
-                    'tier_additional_info' => isset($data['tier_additional_info']) ? $data['tier_additional_info'] : null,
-                    'product_name' => $data['product_name'],
-                    'product_description' => $data['product_description'],
-                    'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    [
+                        'unique_id' => $data['productID'].'-'.(string)$data['loan_rate'].'-'.(string)$data['comparison_rate'].'-'.$data['loan_purpose'].'-'.$data['repayment_type'],
+                        'lender_id' => $data['lender_id'],
+                        'lender_rate_additional_info' => $data['lender_rate_additional_info'],
+                        'productID' => $data['productID'],
+                        'loan_rate' => $data['loan_rate'],
+                        'comparison_rate' => $data['comparison_rate'],
+                        'loan_term' => $data['loan_term'],
+                        'loan_purpose' => $data['loan_purpose'],
+                        'loan_type' => $data['loan_type'],
+                        'repayment_type' => $data['repayment_type'],
+                        'tier_name' => isset($data['tier_name']) ? $data['tier_name'] : null,
+                        'tier_min' => isset($data['tier_min']) ? $data['tier_min'] : '0.00',
+                        'tier_max' => isset($data['tier_max']) ? $data['tier_max'] : '0.00',
+                        'tier_unitOfMeasure' => isset($data['tier_unitOfMeasure']) ? $data['tier_unitOfMeasure'] : null,
+                        'tier_additional_info' => isset($data['tier_additional_info']) ? $data['tier_additional_info'] : null,
+                        'product_name' => $data['product_name'],
+                        'product_description' => $data['product_description'],
+                        'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ],
                 ],
-            ]);
+                ['unique_id'],
+                ['loan_rate', 'comparison_rate', 'loan_term', 'lender_rate_additional_info', 'product_name', 'product_description']
+            );
         }
         catch (\Exception $e) {
             Log::error('Error Inserting Fixed Rate No Tiers', ['lender' => $data['lender_id'], 'error' => $e->getMessage()]);
@@ -2023,29 +2050,58 @@ class FetchLenderRates extends Command
 
     private function fixedWithTiers ($data) {
         try {
-            FixedRate::insert([
+            // FixedRate::insert([
+            //     [
+            //         'lender_id' => $data['lender_id'],
+            //         'lender_rate_additional_info' => $data['lender_rate_additional_info'],
+            //         'productID' => $data['productID'],
+            //         'loan_rate' => $data['loan_rate'],
+            //         'comparison_rate' => $data['comparison_rate'],
+            //         'loan_term' => $data['loan_term'],
+            //         'loan_purpose' => $data['loan_purpose'],
+            //         'loan_type' => $data['loan_type'],
+            //         'repayment_type' => $data['repayment_type'],
+            //         'tier_name' => $data['tier_name'],
+            //         'tier_min' => $data['tier_min'],
+            //         'tier_max' => $data['tier_max'],
+            //         'tier_unitOfMeasure' => $data['tier_unitOfMeasure'],
+            //         'tier_additional_info' => $data['tier_additional_info'],
+            //         'product_name' => $data['product_name'],
+            //         'product_description' => $data['product_description'],
+            //         'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
+            //         'created_at' => now(),
+            //         'updated_at' => now(),
+            //     ],
+            // ]);
+
+            FixedRate::upsert(
                 [
-                    'lender_id' => $data['lender_id'],
-                    'lender_rate_additional_info' => $data['lender_rate_additional_info'],
-                    'productID' => $data['productID'],
-                    'loan_rate' => $data['loan_rate'],
-                    'comparison_rate' => $data['comparison_rate'],
-                    'loan_term' => $data['loan_term'],
-                    'loan_purpose' => $data['loan_purpose'],
-                    'loan_type' => $data['loan_type'],
-                    'repayment_type' => $data['repayment_type'],
-                    'tier_name' => $data['tier_name'],
-                    'tier_min' => $data['tier_min'],
-                    'tier_max' => $data['tier_max'],
-                    'tier_unitOfMeasure' => $data['tier_unitOfMeasure'],
-                    'tier_additional_info' => $data['tier_additional_info'],
-                    'product_name' => $data['product_name'],
-                    'product_description' => $data['product_description'],
-                    'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    [
+                        'unique_id' => $data['productID'].'-'.(string)$data['loan_rate'].'-'.(string)$data['comparison_rate'].'-'.$data['loan_purpose'].'-'.$data['repayment_type'],
+                        'lender_id' => $data['lender_id'],
+                        'lender_rate_additional_info' => $data['lender_rate_additional_info'],
+                        'productID' => $data['productID'],
+                        'loan_rate' => $data['loan_rate'],
+                        'comparison_rate' => $data['comparison_rate'],
+                        'loan_term' => $data['loan_term'],
+                        'loan_purpose' => $data['loan_purpose'],
+                        'loan_type' => $data['loan_type'],
+                        'repayment_type' => $data['repayment_type'],
+                        'tier_name' => $data['tier_name'],
+                        'tier_min' => $data['tier_min'],
+                        'tier_max' => $data['tier_max'],
+                        'tier_unitOfMeasure' => $data['tier_unitOfMeasure'],
+                        'tier_additional_info' => $data['tier_additional_info'],
+                        'product_name' => $data['product_name'],
+                        'product_description' => $data['product_description'],
+                        'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ],
                 ],
-            ]);
+                ['unique_id'],
+                ['loan_rate', 'comparison_rate', 'loan_term', 'lender_rate_additional_info', 'product_name', 'product_description', 'tier_min', 'tier_max']
+            );
         }
         catch (\Exception $e) {
             Log::error('Error Inserting Fixed Rate', ['lender' => $data['lender_id'], 'error' => $e->getMessage()]);
@@ -2054,28 +2110,38 @@ class FetchLenderRates extends Command
 
     private function variableNoTiers ($data) {
         try {
-            VariableRate::insert([
+            VariableRate::upsert(
                 [
-                    'lender_id' => $data['lender_id'],
-                    'lender_rate_additional_info' => $data['lender_rate_additional_info'],
-                    'productID' => $data['productID'],
-                    'loan_rate' => $data['loan_rate'],
-                    'comparison_rate' =>  $data['comparison_rate'],
-                    'loan_purpose' => $data['loan_purpose'],
-                    'loan_type' => $data['loan_type'],
-                    'repayment_type' => $data['repayment_type'],
-                    'tier_name' => isset($data['tier_name']) ? $data['tier_name'] : null,
-                    'tier_min' => isset($data['tier_min']) ? $data['tier_min'] : '0.00',
-                    'tier_max' => isset($data['tier_max']) ? $data['tier_max'] : '0.00',
-                    'tier_unitOfMeasure' => isset($data['tier_unitOfMeasure']) ? $data['tier_unitOfMeasure'] : null,
-                    'tier_additional_info' => isset($data['tier_additional_info']) ? $data['tier_additional_info'] : null,
-                    'product_name' => $data['product_name'],
-                    'product_description' => $data['product_description'],
-                    'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    [
+                        // 'unique_id' => $data['productID'].'-'.(string)$data['loan_rate'].'-'.(string)$data['comparison_rate'].'-'.$data['loan_purpose'].'-'.$data['repayment_type'],
+                        'unique_id' => ($data['productID'] ?? 'unknown') . '-' .
+                        (string)($data['loan_rate'] ?? '0.00') . '-' .
+                        (string)($data['comparison_rate'] ?? '0.00') . '-' .
+                        ($data['loan_purpose'] ?? 'unknown') . '-' .
+                        ($data['repayment_type'] ?? 'unknown'),
+                        'lender_id' => $data['lender_id'],
+                        'lender_rate_additional_info' => $data['lender_rate_additional_info'],
+                        'productID' => $data['productID'],
+                        'loan_rate' => $data['loan_rate'],
+                        'comparison_rate' =>  $data['comparison_rate'],
+                        'loan_purpose' => $data['loan_purpose'],
+                        'loan_type' => $data['loan_type'],
+                        'repayment_type' => $data['repayment_type'],
+                        'tier_name' => isset($data['tier_name']) ? $data['tier_name'] : null,
+                        'tier_min' => isset($data['tier_min']) ? $data['tier_min'] : '0.00',
+                        'tier_max' => isset($data['tier_max']) ? $data['tier_max'] : '0.00',
+                        'tier_unitOfMeasure' => isset($data['tier_unitOfMeasure']) ? $data['tier_unitOfMeasure'] : null,
+                        'tier_additional_info' => isset($data['tier_additional_info']) ? $data['tier_additional_info'] : null,
+                        'product_name' => $data['product_name'],
+                        'product_description' => $data['product_description'],
+                        'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ],
                 ],
-            ]);
+                ['unique_id'],
+                ['loan_rate', 'comparison_rate', 'lender_rate_additional_info', 'product_name', 'product_description', 'tier_min', 'tier_max']
+            );
         }
         catch (\Exception $e) {
             Log::error('Error Inserting Variable Rate', ['lender' => $data['lender_id'], 'error' => $e->getMessage()]);
@@ -2084,28 +2150,39 @@ class FetchLenderRates extends Command
 
     private function variableWithTiers ($data) {
         try {
-            VariableRate::insert([
+            VariableRate::upsert(
                 [
-                    'lender_id' => $data['lender_id'],
-                    'lender_rate_additional_info' => $data['lender_rate_additional_info'],
-                    'productID' => $data['productID'],
-                    'loan_rate' => $data['loan_rate'],
-                    'comparison_rate' =>  $data['comparison_rate'],
-                    'loan_purpose' => $data['loan_purpose'],
-                    'loan_type' => $data['loan_type'],
-                    'repayment_type' => $data['repayment_type'],
-                    'tier_name' => $data['tier_name'],
-                    'tier_min' => $data['tier_min'],
-                    'tier_max' => $data['tier_max'],
-                    'tier_unitOfMeasure' => $data['tier_unitOfMeasure'],
-                    'tier_additional_info' => $data['tier_additional_info'],
-                    'product_name' => $data['product_name'],
-                    'product_description' => $data['product_description'],
-                    'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    [
+                        // 'unique_id' => $data['productID'].'-'.(string)$data['loan_rate'].'-'.(string)$data['comparison_rate'].'-'.$data['loan_purpose'].'-'.$data['repayment_type'],
+                        'unique_id' => ($data['productID'] ?? 'unknown') . '-' .
+                        (string)($data['loan_rate'] ?? '0.00') . '-' .
+                        (string)($data['comparison_rate'] ?? '0.00') . '-' .
+                        ($data['loan_purpose'] ?? 'unknown') . '-' .
+                        ($data['repayment_type'] ?? 'unknown'),
+                        'lender_id' => $data['lender_id'],
+                        'lender_rate_additional_info' => $data['lender_rate_additional_info'],
+                        'productID' => $data['productID'],
+                        'loan_rate' => $data['loan_rate'],
+                        'comparison_rate' =>  $data['comparison_rate'],
+                        'loan_purpose' => $data['loan_purpose'],
+                        'loan_type' => $data['loan_type'],
+                        'repayment_type' => $data['repayment_type'],
+                        'tier_name' => $data['tier_name'],
+                        'tier_min' => $data['tier_min'],
+                        'tier_max' => $data['tier_max'],
+                        'tier_unitOfMeasure' => $data['tier_unitOfMeasure'],
+                        'tier_additional_info' => $data['tier_additional_info'],
+                        'product_name' => $data['product_name'],
+                        'product_description' => $data['product_description'],
+                        'with_package' => isset($data['with_package']) ? $data['with_package'] : null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ],
                 ],
-            ]);
+                ['unique_id'],
+                ['loan_rate', 'comparison_rate', 'lender_rate_additional_info', 'product_name', 'product_description', 'tier_min', 'tier_max']
+
+            );
         }
         catch (\Exception $e) {
             Log::error('Error Inserting Variable Rate', ['lender' => $data['lender_id'], 'error' => $e->getMessage()]);

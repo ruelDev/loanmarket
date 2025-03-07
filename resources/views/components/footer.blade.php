@@ -39,13 +39,13 @@
             <div class="flex flex-col-reverse md:flex-row justify-between items-center">
 
                 <div class="text-center text-white py-5">
-                    ©2024 LoansMadeSimple. All rights reserved.
+                    ©2025 YourHomeLoanReview. All rights reserved.
                 </div>
                 <div class="text-center text-white py-5">
-                    LoansMadeSimple 789 875 | LoansMadeSimple Credit Licence 390222
+                    YourHomeLoanReview 99 685 012 326
                 </div>
             </div>
-            <div class="text-white text-center md:text-start md:h-[100px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae sapien sed elit blandit ultricies. Vivamus placerat, sem in suscipit feugiat, elit ex tincidunt libero, a faucibus ligula magna eget nunc. Integer accumsan quam sit amet nulla dignissim, non fermentum justo vulputate. Duis volutpat libero nec.</div>
+            <div class="text-white text-center md:text-start md:h-[100px]">The information provided is on the understanding that it is for illustrative and discussion purpose only. Whilst all care and attention is taken in its preparation any party seeking to rely on its content or otherwise should make their own enquiries and research to ensure its relevance to your specific personal and business requirements and circumstances. For more information, visit <a href="https://www.nhfic.gov.au/" target="_blank" class="text-blue underline">https://www.nhfic.gov.au</a>. Terms, conditions, fees and charges may apply. Normal lending criteria apply. Rates subject to change. Copy © 2025 Your Home Loan Review Pty Ltd.</div>
         </div>
     </div>
 </footer>

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('lender_rates_variable', function (Blueprint $table) {
             $table->id();
+            $table->string('unique_id')->unique();
             $table->integer('lender_id');
             $table->longText('lender_rate_additional_info')->nullable();
             $table->string('productID');

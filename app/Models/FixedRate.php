@@ -12,6 +12,7 @@ class FixedRate extends Model
     protected $table = 'lender_rates_fixed';
 
     protected $fillable = [
+        'unique_id',
         'lender_id',
         'lender_rate_additional_info',
         'productID',

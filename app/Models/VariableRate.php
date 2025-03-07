@@ -12,6 +12,7 @@ class VariableRate extends Model
     protected $table = 'lender_rates_variable';
 
     protected $fillable = [
+        'unique_id',
         'lender_id',
         'lender_rate_additional_info',
         'productID',
