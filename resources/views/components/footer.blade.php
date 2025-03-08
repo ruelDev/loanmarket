@@ -1,5 +1,5 @@
 <footer id="footer">
-    <div class="top bg-darkGreen-1">
+    {{-- <div class="top bg-darkGreen-1">
         <div class="container py-20">
             <h3 class="text-2xl text-white mb-5 text-center text-lg-start">Connect With Us</h3>
             <div class="grid grid-cols-1 gap-10 md:gap-0 lg:grid-cols-3">
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="bottom bg-darkGreen pt-10 md:pt-0">
         <div class="container bottom flex flex-col-reverse md:flex-col gap-5">
             <div class="flex flex-col-reverse md:flex-row justify-between items-center">

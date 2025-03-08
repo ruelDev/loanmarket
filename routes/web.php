@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/logout', [DashboardController::class, 'logout'])->name('admin.logout');
     Route::get('/admin/real-state-offices', [AdminROSController::class, 'index'])->name('admin.ros');
+    Route::post('/admin/real-state-offices/store', [AdminROSController::class, 'store'])->name('admin.rso.store');
     Route::post('/admin/brokers/store', [AdminBrokersController::class, 'store'])->name('admin.brokers.store');
     Route::post('/admin/brokers/delete', [AdminBrokersController::class, 'delete'])->name('admin.brokers.delete');
     Route::get('/admin/brokers', [AdminBrokersController::class, 'index'])->name('admin.brokers');

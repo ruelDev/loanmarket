@@ -17,7 +17,7 @@ class ROSSeeder extends Seeder
             [
                 'name' => 'RayWhite - One Group',
                 'url' => 'raywhite-one-group',
-                'email' => 'raywhite.onegroup@gmail.com',
+                'email' => 'melissa.howard@raywhite.com',
                 'tagline' => 'Your Investment. Our Priority.',
                 'call_to' => 'Accountants',
                 'featured' => 'assets/images/raywhite/onegroup/bg.webp',
@@ -28,7 +28,7 @@ class ROSSeeder extends Seeder
             [
                 'name' => 'RayWhite - Mooloolaba',
                 'url' => 'raywhite-mooloolaba',
-                'email' => 'raywhite.mooloolaba@gmail.com',
+                'email' => 'mooloolaba.qld@raywhite.com',
                 'tagline' => 'One Team. Two Locations.',
                 'call_to' => 'Financial Reviewers',
                 'featured' => 'assets/images/raywhite/mooloolaba/bg.webp',

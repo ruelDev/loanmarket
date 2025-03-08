@@ -319,6 +319,12 @@
 
 @push('scripts')
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         "use strict";
         var table;
         var dt;
@@ -344,37 +350,11 @@
                     },
                 },
                 { data: 'tagline' },
-                // {
-                //     data: 'id',
-                //     render: function (data, type, row) {
-                //         return `<div class="flex gap-3">
-                //                     <label class="form-check form-switch form-check-custom form-check-solid">
-                //                         <input class="form-check-input h-50 ros_status" onChange="updateROSStatus(${data})" type="checkbox" value="${data}" checked="checked"/>
-                //                     </label>
-                //                     <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" onClick="updateROS(${data})">
-                //                         <i class="ki-duotone ki-pencil fs-2">
-                //                             <span class="path1"></span>
-                //                             <span class="path2"></span>
-                //                         </i>
-                //                     </button>
-                //                     <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" onClick="deleteROS(${data})">
-                //                         <i class="ki-duotone ki-trash fs-2">
-                //                             <span class="path1"></span>
-                //                             <span class="path2"></span>
-                //                             <span class="path3"></span>
-                //                             <span class="path4"></span>
-                //                             <span class="path5"></span>
-                //                         </i>
-                //                     </button>
-                //                 </div>`;
-                //     }
-                // }
             ],
             columnDefs: [
                 { width: "150px", targets: 0 },
                 { width: "200px", targets: 1 },
                 { width: "250px", targets: 2 },
-                // { width: "90px", targets: 3},
             ]
         })
 
@@ -384,6 +364,44 @@
 
         document.getElementById('ros_create_form').addEventListener('submit', e =>{
             e.preventDefault();
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const loanType = document.querySelector('input[name="loan_type"]:checked').value;
+            const loanTerm = document.getElementById('loan_term').value;
+            const loanPurpose = document.querySelector('input[name="loan_purpose"]:checked').value;
+            const clientTerm = document.getElementById('client_term').value;
+            const clientRate = document.getElementById('client_rate').value;
+            const formData = new FormData(this);
+
+            fetch("{{route('admin.rso.store')}}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('test');
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        text: "An error occurred while submitting the form.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok",
+                        customClass: {
+                            confirmButton: "btn btn-danger"
+                        }
+                    })
+                    .then(() => {
+                        $('#client_details_modal').modal('hide');
+                    });
+                });
 
             Swal.fire({
                 text: "Real State Office added successfully!",

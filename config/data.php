@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'YHLR_EMAIL' => 'ruellobo.04@gmail.com',
+    'YHLR_EMAIL' => 'customerservice@yourhomeloanreview.com.au',
     'hero' => [
         'title' => [
             'Your Home Loan Review',

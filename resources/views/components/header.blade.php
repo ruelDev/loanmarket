@@ -11,7 +11,7 @@
                 <li><a class="navbar-link" href="#lenders-section">Lenders</a></li>
                 <li class="{{ !request()->routeIs(['calculate-savings-default', 'rso'])  ? '' : 'hidden' }}"><a class="navbar-link" href="{{route('calculate-savings-default')}}">Calculate Savings</a></li>
                 <li><a class="navbar-link" href="#footer">Contact</a></li>
-                <li><a href="{{route('login')}}" class="text-blue font-bold">Login</a></li>
+                {{-- <li><a href="{{route('login')}}" class="text-blue font-bold">Login</a></li> --}}
             </ul>
             <label id="menu-toggle" class="hamburger md:hidden z-50">
                 <input type="checkbox">
@@ -30,7 +30,7 @@
                         <li class="{{ !request()->routeIs(['calculate-savings-default', 'rso'])  ? '' : 'hidden' }}"><a href="{{route('calculate-savings-default')}}">Calculate Savings</a></li>
                         <li><a href="#footer">Contact</a></li>
                         <li class="cursor-pointer" onclick="openmodal()">Become a Partner</li>
-                        <li><a href="{{route('login')}}" class="text-blue font-bold">Login</a></li>
+                        {{-- <li><a href="{{route('login')}}" class="text-blue font-bold">Login</a></li> --}}
                     </ul>
                     <ul class="flex flex-col items-center justify-between gap-5 py-10">
                         <li class="cursor-pointer" onclick="openmodalFeedback()">Send Feedback</li>

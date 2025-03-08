@@ -52,4 +52,11 @@ class ROSController extends Controller
 
         return view('pages.admin.ros');
     }
+
+    public function store(Request $request) {
+
+        dd($request->all());
+
+        return response()->json(['success' => 'Broker added successfully.']);
+    }
 }

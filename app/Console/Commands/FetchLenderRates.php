@@ -90,7 +90,7 @@ class FetchLenderRates extends Command
             'logo' => 'assets/images/lenders/westpac.png',
         ],
         [
-            'name' => 'Bank Autralia',
+            'name' => 'Bank Australia',
             'link' => 'https://public.cdr-api.bankaust.com.au/cds-au/v1/banking/products?product-category=RESIDENTIAL_MORTGAGES',
             'version' => '3',
             'products_link' => 'https://public.cdr-api.bankaust.com.au/cds-au/v1/banking/products/',
@@ -229,9 +229,9 @@ class FetchLenderRates extends Command
                     switch($apiName) {
                         case 'ANZ':
                         case 'NAB':
-                        case 'Bank Autralia':
+                        case 'Bank Australia':
                         case 'People\'s Choice':
-                        case 'Australia Unity':
+                        case 'Australian Unity':
                             foreach ($products as $product) {
                                 $productId = $product['productId'] ?? null;
                                 $productName = $product['name'] ?? null;
@@ -248,13 +248,20 @@ class FetchLenderRates extends Command
                                                 'x-v' => $products_version
                                             ]
                                         ])
-                                        ->then(function ($productResponse) use ($productId, $productName, $id, $description, $productInfo) {
+                                        ->then(function ($productResponse) use ($productId, $productName, $id, $description, $productInfo, $apiName) {
                                             if ($productResponse->getStatusCode() === 200) {
                                                 $productDetails = json_decode($productResponse->getBody(), true);
                                                 $lendingRates = $productDetails['data']['lendingRates'] ?? [];
-
+                                                if($apiName == 'Bank Australia') {
+                                                    Log::info($apiName);
+                                                    Log::info($productId);
+                                                    Log::info($lendingRates);
+                                                }
                                                 foreach ($lendingRates as $lendingRate) {
-
+                                                    if($apiName == 'Bank Australia' || $apiName == 'Beyond Bank Australia') {
+                                                        Log::info($apiName);
+                                                        Log::info($lendingRate);
+                                                    }
                                                     if($this->isLendingRate($lendingRate['loanPurpose'], $lendingRate['repaymentType'])) {
                                                         $rate = $lendingRate['rate'] ?? null;
                                                         $type = $lendingRate['lendingRateType'] ?? null;
@@ -659,12 +666,16 @@ class FetchLenderRates extends Command
                                                 'x-v' => $products_version
                                             ]
                                         ])
-                                        ->then(function ($productResponse) use ($productId, $productName, $id, $description, $productInfo) {
+                                        ->then(function ($productResponse) use ($productId, $productName, $id, $description, $productInfo, $apiName) {
                                             if ($productResponse->getStatusCode() === 200) {
                                                 $productDetails = json_decode($productResponse->getBody(), true);
                                                 $lendingRates = $productDetails['data']['lendingRates'] ?? [];
 
                                                 foreach ($lendingRates as $lendingRate) {
+                                                    if($apiName == 'Bank Australia' || $apiName == 'Beyond Bank Australia') {
+                                                        Log::info($apiName);
+                                                        Log::info($lendingRate);
+                                                    }
 
                                                     if($this->isLendingRate($lendingRate['loanPurpose'], $lendingRate['repaymentType'])) {
                                                         $rate = $lendingRate['rate'] ?? null;
@@ -835,7 +846,7 @@ class FetchLenderRates extends Command
                                                                         'repayment_type' => $repaymentType,
                                                                         'tier_name' => $tierName,
                                                                         'tier_min' => $tier['minimumValue'],
-                                                                        'tier_max' => $tier['maximumValue'] ?? null,
+                                                                        'tier_max' => $tier['maximumValue'] ?? '0.00',
                                                                         'tier_unitOfMeasure' => $tier['unitOfMeasure'],
                                                                         'tier_additional_info' => isset($tier['additionalInfo']) ? $tier['additionalInfo'] : null,
                                                                         'product_name' => $productName,
@@ -880,7 +891,7 @@ class FetchLenderRates extends Command
                                                                             'repayment_type' => $repaymentType,
                                                                             'tier_name' => $tierName,
                                                                             'tier_min' => $tier['minimumValue'],
-                                                                            'tier_max' => $tier['maximumValue'] ?? null,
+                                                                            'tier_max' => $tier['maximumValue'] ?? '0.00',
                                                                             'tier_unitOfMeasure' => $tier['unitOfMeasure'],
                                                                             'tier_additional_info' => isset($tier['additionalInfo']) ? $tier['additionalInfo'] : null,
                                                                             'product_name' => $productName,

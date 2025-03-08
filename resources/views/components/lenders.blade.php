@@ -3,7 +3,7 @@
         <div id="default-carousel" class="relative w-full" data-carousel="slide">
             <div class="w-full flex justify-center mt-20">
                 <h2 class="text-center text-[1rem] md:text-2xl xl:text-2xl text-blue-1 w-[90vw] md:w-[70vw] xl:w-[55vw]">
-                    With Your Home Loan Review, you can compare over 60 lenders and thousands of home loan products to find the right loan deal for you.
+                    With Your Home Loan Review, you can compare lenders and thousands of home loan products to find the right loan deal for you.
                 </h2>
             </div>
             <div class="relative h-[300px] overflow-hidden rounded-lg md:h-[600px]">
