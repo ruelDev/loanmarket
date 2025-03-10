@@ -34,7 +34,7 @@ class BecomePartnerEmail extends Mailable
         return new Envelope(
             subject: 'YourHomeLoanReview: Become Partner - Inquiry',
             from: $this->client['email'],
-            to: 'ruellobo.04@gmail.com',
+            to: 'customerservice@yourhomeloanreview.com.au',
         );
     }
 

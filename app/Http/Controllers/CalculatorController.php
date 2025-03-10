@@ -113,7 +113,7 @@ class CalculatorController extends Controller
                 ]);
             }
 
-            if (count($top) === 3) break;
+            if (count($top) === 25) break;
         }
 
         usort($top, function ($a, $b) {
@@ -237,7 +237,7 @@ class CalculatorController extends Controller
                 ]);
             }
 
-            if (count($top) === 3) break;
+            if (count($top) === 25) break;
         }
 
         usort($top, function ($a, $b) {

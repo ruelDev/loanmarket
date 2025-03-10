@@ -42,10 +42,11 @@
                     ©2025 YourHomeLoanReview. All rights reserved.
                 </div>
                 <div class="text-center text-white py-5">
-                    YourHomeLoanReview 99 685 012 326
+                    YourHomeLoanReview 99 685 042 326
                 </div>
             </div>
-            <div class="text-white text-center md:text-start md:h-[100px]">The information provided is on the understanding that it is for illustrative and discussion purpose only. Whilst all care and attention is taken in its preparation any party seeking to rely on its content or otherwise should make their own enquiries and research to ensure its relevance to your specific personal and business requirements and circumstances. For more information, visit <a href="https://www.nhfic.gov.au/" target="_blank" class="text-blue underline">https://www.nhfic.gov.au</a>. Terms, conditions, fees and charges may apply. Normal lending criteria apply. Rates subject to change. Copy © 2025 Your Home Loan Review Pty Ltd.</div>
+            <div class="text-white text-center md:text-start md:h-[100px]">The information provided is on the understanding that it is for illustrative and discussion purpose only. Whilst all care and attention is taken in its preparation any party seeking to rely on its content or otherwise should make their own enquiries and research to ensure its relevance to your specific personal and business requirements and circumstances. For more information, download our terms of use here <a href="{{ asset('assets/pdf/TermsofUse(002)-YHLR_e91eab60-52d4-4180-b562-7870b5b1c432.pdf') }}" class="text-blue underline" target="_blank">Terms of Use - YHLR</a>. Terms, conditions, fees and charges may apply. Normal lending criteria apply. Rates subject to change. Copy © 2025 Your Home Loan Review Pty Ltd.</div>
+
         </div>
     </div>
 </footer>

@@ -99,12 +99,12 @@
                         <div class="col-span-6 lg:col-span-4">
                             <div class="bg-white-3 border p-5 rounded">
                                 <div class="hidden md:flex justify-between items-center">
-                                    <h4 class="text-[1.1rem] calc-title">Top 3 Lenders</h4>
+                                    <h4 class="text-[1.1rem] calc-title">Lenders</h4>
                                     <button class="text-blue text-[1.1rem] text-decoration-underline requestCallBtn hidden" onclick="requestCall()">Request a call from your Review Team</button>
                                     <p class="text-blue text-[1.1rem] requestCallBtnPw  hidden">Please wait...</p>
                                 </div>
                                 <div class="flex justify-center items-center md:hidden">
-                                    <h4 class="text-2xl font-bold calc-title">Top 3 Lenders</h4>
+                                    <h4 class="text-2xl font-bold calc-title">Lenders</h4>
                                 </div>
                                 <section class="dots-container hidden mt-10">
                                     <div class="dot"></div>
@@ -114,7 +114,7 @@
                                     <div class="dot"></div>
                                 </section>
                                 <div class="flex justify-center mt-10">
-                                    <div class="flex flex-col gap-5 w-full" id="top-3-container"> #h-[600px] overflow-y-scroll
+                                    <div class="flex flex-col gap-5 w-full h-[600px] overflow-y-scroll" id="top-3-container"> #h-[600px] overflow-y-scroll
                                         @foreach($data['lenders'] as $item)
                                          @foreach ($item as $key => $value)
                                             <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto">
@@ -489,7 +489,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        const lenderList = data.data.map(lender =>{
+                        const lenderList = data.data.map((lender, index) =>{
                             return (`
                                 <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
                                     <div class="header bg-white-nab h-[60px] flex items-center ps-5">
@@ -526,7 +526,7 @@
                         }).join('');
 
                         dotsContainer.classList.add('hidden')
-                        calcTitle.innerHTML = 'Top 3 Lenders';
+                        calcTitle.innerHTML = 'Lenders';
                         container.innerHTML = `<ul>${lenderList}</ul>`;
                         if(!propertyAddress == '') document.querySelector('.requestCallBtn').classList.remove('hidden')
                         if(!propertyAddress == '') document.querySelector('#requestCallBtnMobile').classList.remove('hidden')
@@ -652,7 +652,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    const lenderList = data.data.map(lender =>{
+                    const lenderList = data.data.map((lender, index) =>{
                         return (`
                             <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto mb-3">
                                 <div class="header bg-white-nab h-[60px] flex items-center ps-5">
@@ -689,7 +689,7 @@
                     }).join('');
 
                     dotsContainer.classList.add('hidden')
-                    calcTitle.innerHTML = 'Top 3 Lenders';
+                    calcTitle.innerHTML = 'Lenders';
                     container.innerHTML = `<ul>${lenderList}</ul>`;
                     $('#client_details_modal').modal('hide');
                     if(!propertyAddress == '') document.querySelector('.requestCallBtn').classList.remove('hidden')
