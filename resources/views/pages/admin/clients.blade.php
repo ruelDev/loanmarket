@@ -6,19 +6,27 @@
     @endphp
     <div id="kt_app_content_container" class="container-fluid p-0">
         <div class="card card-flush p-10">
-            <div class="flex justify-end mb-3">
+            <div class="flex justify-between mb-3">
+                <select id="lender-select" class="form-select form-select-solid my-1 w-[300px]" data-kt-select2="true" data-placeholder="Filter by Property Management">
+                    <option></option>
+                    <option value="2">Your Home Loan Review</option>
+                    <option value="3">Your Home Loan Review</option>
+                    <option value="4">Your Home Loan Review</option>
+                </select>
                 <div class="d-flex align-items-center position-relative my-1">
                     <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-6"><span class="path1"></span><span class="path2"></span></i>
-                    <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Visitors"/>
+                    <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15 py-3" placeholder="Search Visitors"/>
                 </div>
             </div>
             <table id="kt_datatable_example_1" class="table align-middle table-row-dashed fs-6 gy-5">
                 <thead>
                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                    <th>Property Management</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    {{-- <th>Action</th> --}}
+                    <th>Date Inquiry</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-semibold">
@@ -41,10 +49,46 @@
                 url: "{{route('admin.clients')}}",
             },
             columns: [
+                {
+                    data: 'property_management',
+                    render: function (data, type, row) {
+                        console.log('data', data);
+                        return data ? data.rso_name : 'Your Home Loan Review';
+                    }
+                },
                 { data: 'name'},
                 { data: 'email' },
                 { data: 'phone' },
-                // { data: 'broker.name' },
+                {
+                    data: 'date_inquiry',
+                    render: function (data, type, row) {
+                        return data ? data : '---';
+                    }
+                },
+                {
+                    data: 'id',
+                    render: function (data, type, row) {
+                        return `
+                            <div class="flex gap-3">
+                                <button class="btn btn-icon btn-bg-light btn-active-color-success btn-sm" onClick="viewClient(${data.id})">
+                                    <i class="ki-duotone ki-tablet-text-up fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                    </i>
+                                </button>
+                                <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" onClick="deleteClient(${data.id})">
+                                    <i class="ki-duotone ki-trash fs-2">
+                                        <span class="path1"></span>
+                                        <span class="path2"></span>
+                                        <span class="path3"></span>
+                                        <span class="path4"></span>
+                                        <span class="path5"></span>
+                                    </i>
+                                </button>
+                            </div>
+                        `;
+                    }
+                }
             ],
         })
 
@@ -52,6 +96,40 @@
         filterSearch.addEventListener('keyup', function (e) {
             dt.search(e.target.value).draw();
         });
+
+        $(document).ready(function() {
+            $('#lender-select').select2({
+                placeholder: "Select a lender",
+                allowClear: true,
+                width: 'resolve',
+            });
+        });
+
+        function deleteClient(id) {
+            Swal.fire({
+                title: 'Under Development',
+                text: 'This feature is under development',
+                icon: 'info',
+                confirmButtonText: 'Okay, got it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                },
+                buttonsStyling: false
+            })
+        }
+
+        function viewClient(id) {
+            Swal.fire({
+                title: 'Under Development',
+                text: 'This feature is under development',
+                icon: 'info',
+                confirmButtonText: 'Okay, got it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                },
+                buttonsStyling: false
+            })
+        }
 
     </script>
 @endpush

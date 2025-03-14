@@ -29,7 +29,7 @@
                 <div class="card-header pt-5">
                     <div class="card-title d-flex flex-column">
                         <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $ros }}</span>
-                        <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Real Estate Offices</span>
+                        <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Property Managers</span>
                     </div>
                 </div>
             </a>

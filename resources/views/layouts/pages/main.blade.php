@@ -436,6 +436,7 @@
                     .then(() => {
                         form.reset();
                         $('#become_partner_modal').modal('hide');
+                        window.location.reload();
                     })
                 }
                 else {
@@ -501,6 +502,7 @@
                         $('#FeedbackSubmit').removeClass('hidden');
                         form.reset();
                         $('#feedback_modal').modal('hide');
+                        window.location.reload();
                     })
                 }
                 else {

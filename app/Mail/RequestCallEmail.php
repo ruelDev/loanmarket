@@ -33,7 +33,7 @@ class RequestCallEmail extends Mailable
     {
         return new Envelope(
             subject: 'YourHomeLoanReview: Client Request Call',
-            from: 'customerservice@yourhomeloanreview.com.au',
+            from: 'customer.service@yourhomeloanreview.com.au',
         );
     }
 

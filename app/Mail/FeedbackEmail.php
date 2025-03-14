@@ -29,8 +29,7 @@ class FeedbackEmail extends Mailable
     {
         return new Envelope(
             subject: 'YourHomeLoanReview: Feedback',
-            from: $this->data['email'],
-            to: 'customerservice@yourhomeloanreview.com.au',
+            to: 'customer.service@yourhomeloanreview.com.au',
         );
     }
 

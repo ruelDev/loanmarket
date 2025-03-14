@@ -100,7 +100,8 @@
                             <div class="bg-white-3 border p-5 rounded">
                                 <div class="hidden md:flex justify-between items-center">
                                     <h4 class="text-[1.1rem] calc-title">Lenders</h4>
-                                    <button class="text-blue text-[1.1rem] text-decoration-underline requestCallBtn hidden" onclick="requestCall()">Request a call from your {{ $rso['call_to'] == null ? 'Review Partner' : $rso['call_to'] }}</button>
+                                    {{-- <button class="text-blue text-[1.1rem] text-decoration-underline requestCallBtn hidden" onclick="requestCall()">Request a call from your {{ $rso['call_to'] == null ? 'Review Partner' : $rso['call_to'] }}</button> --}}
+                                    <button class="text-blue text-[1.1rem] text-decoration-underline requestCallBtn hidden" onclick="requestCall()">Email Summary of Savings</button>
                                     <p class="text-blue text-[1.1rem] requestCallBtnPw  hidden">Please wait...</p>
                                 </div>
                                 <div class="flex justify-center items-center md:hidden">
@@ -114,7 +115,7 @@
                                     <div class="dot"></div>
                                 </section>
                                 <div class="flex justify-center mt-10">
-                                    <div class="flex flex-col gap-5 w-full h-[600px] overflow-y-scroll" id="top-3-container"> #h-[600px] overflow-y-scroll
+                                    <div class="flex flex-col gap-5 w-full h-[600px] overflow-y-scroll" id="top-3-container">
                                         @foreach($data['lenders'] as $item)
                                          @foreach ($item as $key => $value)
                                             <div class="border rounded overflow-hidden cursor-pointer hover:border-black w-auto">
@@ -154,7 +155,7 @@
                                     </div>
                                 </div>
                                 <div class="flex md:hidden justify-center items-center mt-5">
-                                    <button id="requestCallBtnMobile" class="text-white bg-blue py-3 w-full rounded requestCallBtn hidden" onclick="requestCall()">Request a call from your Property  Manager</button>
+                                    <button id="requestCallBtnMobile" class="text-white bg-blue py-3 w-full rounded requestCallBtn hidden" onclick="requestCall()">Email Summary of Savings</button>
                                     <p class="text-blue text-[1.1rem] requestCallBtnPw hidden">Please wait...</p>
                                 </div>
                             </div>
@@ -258,7 +259,7 @@
                     </p>
                     <p class="mt-2">
                         If you would like a more detailed and personalized discussion about the loan options available to you,
-                        we encourage you to speak with an expert. Click the “<strong>Request a call from your Property Manager</strong>”
+                        we encourage you to speak with an expert. Click the “<strong>Email Summary of Savings</strong>”
                         button to connect with one of our experienced property managers, who can provide insights on loan
                         structures, interest rates, repayment plans, and any other relevant factors affecting your loan.
                     </p>
@@ -274,25 +275,6 @@
     <script>
 
         let propertyAddress;
-        const bgColor = {
-            'Macquarie' : 'bg-white-1',
-            'St. George' : 'bg-green-stgeorge',
-            'CBA' : 'bg-black-combank',
-            'ANZ' : 'bg-blue-anz',
-            'Ubank' : 'bg-purple-ubank',
-            'Bankfirst' : 'bg-green-bankfirst',
-            'Bankwest' : 'bg-black',
-            'Bendigo Bank' : 'bg-white-bendigo',
-            'Bank Australia' : 'bg-yellow-bankaustralia',
-            'Bank Autralia' : 'bg-yellow-bankaustralia',
-            'Beyond Bank Australia' : 'bg-purple-beyondbankaus',
-            'Adelaide Bank' : 'bg-white-1',
-            'BankSA': 'bg-white',
-            'Westpac' : 'bg-white',
-            'NAB' : 'bg-white-nab',
-            'People\'s Choice' : 'bg-yellow-peopleschoice'
-        }
-
 
         document.addEventListener("DOMContentLoaded", function() {
             localStorage.removeItem('client')
@@ -462,7 +444,34 @@
                     localStorage.setItem('client', JSON.stringify(clientDetails));
 
                     $('#client_details_modal').modal('hide');
-                    calculateSavings();
+
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    fetch("{{route('clients.details.store')}}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                        body: JSON.stringify(clientDetails)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            calculateSavings();
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            text: "An error occurred while submitting the form.",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok",
+                            customClass: {
+                                confirmButton: "btn btn-danger"
+                            }
+                        });
+                    });
                 }
             });
         });

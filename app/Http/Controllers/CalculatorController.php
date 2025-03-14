@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClientRecord;
 use App\Models\ROS;
 use App\Models\FixedRate;
 use App\Models\VariableRate;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -120,7 +122,7 @@ class CalculatorController extends Controller
             return $b['savings'] <=> $a['savings'];
         });
 
-        Session::put('top_lenders', $top);
+        Session::put('top_lenders', array_slice($top, 0, 3));
         return $top;
     }
 
@@ -244,7 +246,7 @@ class CalculatorController extends Controller
             return $b['savings'] <=> $a['savings'];
         });
 
-        Session::put('top_lenders', $top);
+        Session::put('top_lenders', array_slice($top, 0, 3));
         return $top;
     }
 

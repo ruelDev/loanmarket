@@ -31,6 +31,13 @@
 		<!--end::Global Stylesheets Bundle-->
         @vite('resources/css/app.css')
 		<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
+
+        <style>
+            .select2-container .select2-selection--single {
+                height: 3rem;
+                padding: 6px;
+            }
+        </style>
     </head>
 	<!--end::Head-->
 	<!--begin::Body-->

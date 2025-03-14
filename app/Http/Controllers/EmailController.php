@@ -7,6 +7,7 @@ use App\Mail\FeedbackEmail;
 use App\Mail\RequestCallEmail;
 use App\Models\ClientLenders;
 use App\Models\ClientRecord;
+use App\Models\ROS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -17,21 +18,29 @@ class EmailController extends Controller
     {
         $topLenders = Session::get('top_lenders');
 
-        ClientRecord::insert([
-            [
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'broker_id' => null
-            ]
-        ]);
+        // ClientRecord::insert([
+        //     [
+        //         'name' => $request->name,
+        //         'email' => $request->email,
+        //         'phone' => $request->phone,
+        //         'broker_id' => null
+        //     ]
+        // ]);
 
         $client = ClientRecord::where('name', $request->name)
             ->where('email', $request->email)
             ->where('phone', $request->phone)
+            ->orderBy('created_at', 'desc')
             ->first();
 
-        foreach($topLenders as $lender) {
+        foreach($topLenders as $key => $lender) {
+
+            $client->update([
+                'property_management' => null,
+                'updated_at' => now(),
+                'date_inquiry' => now(),
+            ]);
+
             ClientLenders::insert([
                 [
                     'client_id' => $client->id,
@@ -46,6 +55,8 @@ class EmailController extends Controller
                     'created_at' => now()
                 ]
             ]);
+
+            if ($key == 2) break;
         }
 
         $messageContent = "Hi, we have received your request and will call you within 2 business days. In the meantime, please find below a summary of Your Home Loan Review.";
@@ -66,21 +77,31 @@ class EmailController extends Controller
         $topLenders = Session::get('top_lenders');
         $rso_email = Session::get('rso_email');
 
-        ClientRecord::insert([
-            [
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'broker_id' => null
-            ]
-        ]);
+        // ClientRecord::insert([
+        //     [
+        //         'name' => $request->name,
+        //         'email' => $request->email,
+        //         'phone' => $request->phone,
+        //         'broker_id' => null
+        //     ]
+        // ]);
 
         $client = ClientRecord::where('name', $request->name)
             ->where('email', $request->email)
             ->where('phone', $request->phone)
+            ->orderBy('created_at', 'desc')
             ->first();
 
-        foreach($topLenders as $lender) {
+        foreach($topLenders as $key => $lender) {
+
+            $rso = ROS::where('email', $rso_email)->first();
+
+            $client->update([
+                'property_management' => $rso->id,
+                'updated_at' => now(),
+                'date_inquiry' => now(),
+            ]);
+
             ClientLenders::insert([
                 [
                     'client_id' => $client->id,
@@ -95,6 +116,8 @@ class EmailController extends Controller
                     'created_at' => now()
                 ]
             ]);
+
+            if ($key == 2) break;
         }
 
         $messageContent = "Hi, we have received your request and will call you within 2 business days. In the meantime, please find below a summary of Your Home Loan Review.";

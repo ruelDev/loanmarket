@@ -26,7 +26,7 @@
                     <th class="min-w-200px">Rate</th>
                     <th class="min-w-200px">Tier</th>
                     <th class="min-w-200px">Tier Minimum</th>
-                    <th class="min-w-200px">Tier Minimum</th>
+                    <th class="min-w-200px">Tier Maximum</th>
                     <th class="min-w-200px">Tier UOM</th>
                     <th class="min-w-200px">Purpose</th>
                     <th class="min-w-200px">Comparison Rate</th>

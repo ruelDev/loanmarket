@@ -22,7 +22,12 @@ class ClientsController extends Controller
 
             // if($orderColumnIndex !== null) $orderColumn = $columns[$orderColumnIndex];
 
-            $query = ClientRecord::with('broker');
+            $query = ClientRecord::with([
+                'broker',
+                'property_management' => function ($query) {
+                    $query->select('id', 'name as rso_name');
+                }
+            ]);
 
             // Apply search filter
             if (!empty($searchValue)) {
@@ -39,7 +44,9 @@ class ClientsController extends Controller
             //     $query->where('some_column', $filterField); // Modify to fit your filter logic
             // }
             // if($orderColumnIndex !== null) $query->orderBy($orderColumn, $orderDirection);
+
             $count = $query->count();
+            $query->orderBy('created_at', 'desc');
             $paginated = $query->paginate($pageSize, ['*'], 'page', $page);
             return response()->json([
                 'draw' => $request->get('draw'),

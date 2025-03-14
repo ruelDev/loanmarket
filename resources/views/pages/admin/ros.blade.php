@@ -2,14 +2,14 @@
 
 @section('content')
     @php
-        $title = 'Real Estate Offices'
+        $title = 'Property Managers'
     @endphp
     <div id="kt_app_content_container" class="container-fluid p-0">
         <div class="card card-flush p-10">
             <div class="flex justify-end items-center mb-3 gap-3">
                 <div class="d-flex align-items-center position-relative my-1">
                     <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-6"><span class="path1"></span><span class="path2"></span></i>
-                    <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Real State Offices"/>
+                    <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Propery Manager"/>
                 </div>
                 {{-- <button
                     class="rounded px-5 m-0 bg-green-600 py-3 border-2 border-green-600 text-white"

@@ -16,9 +16,15 @@ class ClientRecord extends Model
         'email',
         'phone',
         'broker_id',
+        'property_management',
+        'date_inquiry',
     ];
 
     public function broker() {
         return $this->belongsTo(Brokers::class, 'broker_id');
+    }
+
+    public function property_management() {
+        return $this->belongsTo(ROS::class, 'property_management');
     }
 }

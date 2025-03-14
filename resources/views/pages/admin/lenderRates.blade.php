@@ -42,27 +42,18 @@
 
     {{-- ROS Create Modal --}}
     <div class="modal fade" id="ros_create_modal" tabindex="-1" aria-hidden="true">
-        <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
-            <!--begin::Modal content-->
             <div class="modal-content rounded">
-                <!--begin::Modal header-->
                 <div class="modal-header pb-0 border-0 justify-content-end">
-                    <!--begin::Close-->
                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
                         </i>
                     </div>
-                    <!--end::Close-->
                 </div>
-                <!--begin::Modal header-->
-                <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                    <!--begin:Form-->
                     <form id="ros_create_form" class="form" action="#">
-                        <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <h1 class="mb-3 font-bold fs-xl">Create Real State Office</h1>
                         </div>
@@ -70,44 +61,31 @@
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span class="required">Logo</span>
                             </label>
-                            <!--begin::Image input-->
                             <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('{{asset('assets/media/logos/blank-img.jpg')}}')">
-                                <!--begin::Preview existing avatar-->
                                 <div class="image-input-wrapper w-125px h-125px bgi-position-center" style="background-size: 100%; background-image: url('{{asset('assets/media/logos/blank-img.jpg')}}')"></div>
-                                <!--end::Preview existing avatar-->
-                                <!--begin::Label-->
                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                     <i class="ki-duotone ki-pencil fs-7">
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                     </i>
-                                    <!--begin::Inputs-->
                                     <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
                                     <input type="hidden" name="avatar_remove" />
-                                    <!--end::Inputs-->
                                 </label>
-                                <!--end::Label-->
-                                <!--begin::Cancel-->
                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
                                     <i class="ki-duotone ki-cross fs-2">
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                     </i>
                                 </span>
-                                <!--end::Cancel-->
-                                <!--begin::Remove-->
                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
                                     <i class="ki-duotone ki-cross fs-2">
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                     </i>
                                 </span>
-                                <!--end::Remove-->
                             </div>
-                            <!--end::Image input-->
                             <!--begin::Hint-->
                             <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-                            <!--end::Hint-->
                         </div>
                         <div class="d-flex flex-column mb-8 fv-row">
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
@@ -129,45 +107,30 @@
                             <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
                                 <span class="required">Featured Image</span>
                             </label>
-                            <!--begin::Image input-->
                             <div class="image-input image-input-outline w-full" data-kt-image-input="true" style="background-image: url('{{asset('assets/media/logos/blank-img.jpg')}}')">
-                                <!--begin::Preview existing avatar-->
                                 <div class="image-input-wrapper w-100 h-125px bgi-position-center" style="background-size: 100%; background-image: url('{{asset('assets/media/logos/blank-img.jpg')}}')"></div>
-                                <!--end::Preview existing avatar-->
-                                <!--begin::Label-->
                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                     <i class="ki-duotone ki-pencil fs-7">
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                     </i>
-                                    <!--begin::Inputs-->
                                     <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
                                     <input type="hidden" name="avatar_remove" />
-                                    <!--end::Inputs-->
                                 </label>
-                                <!--end::Label-->
-                                <!--begin::Cancel-->
                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
                                     <i class="ki-duotone ki-cross fs-2">
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                     </i>
                                 </span>
-                                <!--end::Cancel-->
-                                <!--begin::Remove-->
                                 <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
                                     <i class="ki-duotone ki-cross fs-2">
                                         <span class="path1"></span>
                                         <span class="path2"></span>
                                     </i>
                                 </span>
-                                <!--end::Remove-->
                             </div>
-                            <!--end::Image input-->
-                            <!--begin::Hint-->
                             <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-                            <!--end::Hint-->
-                        </div>
                         <div class="text-center">
                             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-danger me-3" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
@@ -176,15 +139,10 @@
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
-                        <!--end::Actions-->
                     </form>
-                    <!--end:Form-->
                 </div>
-                <!--end::Modal body-->
             </div>
-            <!--end::Modal content-->
         </div>
-        <!--end::Modal dialog-->
     </div>
 
     {{-- ROS Edit Modal --}}
@@ -369,11 +327,7 @@
                 },
             ],
             columnDefs: [
-                { width: "200px", targets: 0 },
-                { width: "200px", targets: 0 },
-                { width: "200px", targets: 0 },
-                { width: "200px", targets: 0 },
-                { width: "200px", targets: 0 },
+                { width: "200px", targets: [0, 1, 2, 3, 4] }
             ]
         })
 

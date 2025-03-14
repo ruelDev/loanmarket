@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\BrokersController as AdminBrokersController;
 use App\Http\Controllers\Admin\LendersController as AdminLendersController;
 use App\Http\Controllers\Admin\ClientsController as AdminClientsController;
 use App\Http\Controllers\CalculatorController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\UtilityController;
 
@@ -41,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
+Route::post('/clients/details', [ClientController::class, 'store'])->name('clients.details.store');
 Route::post('/request-email-rso', [EmailController::class, 'requestEmailRSO'])->name('request.email.rso');
 Route::post('/request-email', [EmailController::class, 'requestEmail'])->name('request.email');
 Route::post('/become-partner-email', [EmailController::class, 'becomePartnerEmail'])->name('become-partner.email');

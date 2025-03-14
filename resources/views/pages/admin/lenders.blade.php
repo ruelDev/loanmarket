@@ -11,19 +11,19 @@
                     <i class="ki-duotone ki-magnifier fs-1 position-absolute ms-6"><span class="path1"></span><span class="path2"></span></i>
                     <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Lenders"/>
                 </div>
-                <button
+                {{-- <button
                     class="rounded px-5 m-0 bg-green-600 py-3 border-2 border-green-600 text-white"
                     data-bs-toggle="modal"
                     data-bs-target="#lender_create_modal"
                 >
                     New Lender
-                </button>
+                </button> --}}
             </div>
             <table id="kt_datatable_example_1" class="table align-middle table-row-dashed fs-6 gy-5">
                 <thead>
                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                     <th>Name</th>
-                    <th>Action</th>
+                    {{-- <th>Action</th> --}}
                 </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-semibold">
@@ -231,28 +231,27 @@
                         return `<p class="align-top">${data}</p>`;
                     },
                  },
-                 {
-                    data: 'id',
-                    render: function (data, type, row) {
-                        return `
-                            <div class="flex gap-3">
-                                <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" onClick="deleteROS(${data})">
-                                    <i class="ki-duotone ki-trash fs-2">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                        <span class="path3"></span>
-                                        <span class="path4"></span>
-                                        <span class="path5"></span>
-                                    </i>
-                                </button>
-                            </div>
-                        `;
-                    }
-                }
+                //  {
+                //     data: 'id',
+                //     render: function (data, type, row) {
+                //         return `
+                //             <div class="flex gap-3">
+                //                 <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm" onClick="deleteROS(${data})">
+                //                     <i class="ki-duotone ki-trash fs-2">
+                //                         <span class="path1"></span>
+                //                         <span class="path2"></span>
+                //                         <span class="path3"></span>
+                //                         <span class="path4"></span>
+                //                         <span class="path5"></span>
+                //                     </i>
+                //                 </button>
+                //             </div>
+                //         `;
+                //     }
+                // }
             ],
             columnDefs: [
                 { width: "100%", targets: 0 },
-                { width: "100px", targets: 0 },
             ]
         })
 
