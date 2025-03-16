@@ -69,7 +69,12 @@ class LendersController extends Controller
                         ->orwhereRaw("CAST(comparison_rate AS CHAR) LIKE ?", ["%$searchValue%"])
                         ->orwhereRaw("CAST(tier_min AS CHAR) LIKE ?", ["%$searchValue%"])
                         ->orwhereRaw("CAST(tier_max AS CHAR) LIKE ?", ["%$searchValue%"]);
+
+                    $q->orWhereHas('lender', function ($lenderQuery) use ($searchValue) {
+                        $lenderQuery->where('name', 'like', "%{$searchValue}%");
+                    });
                 });
+
             }
 
             $count = $query->count();
@@ -102,6 +107,10 @@ class LendersController extends Controller
                         ->orwhereRaw("CAST(comparison_rate AS CHAR) LIKE ?", ["%$searchValue%"])
                         ->orwhereRaw("CAST(tier_min AS CHAR) LIKE ?", ["%$searchValue%"])
                         ->orwhereRaw("CAST(tier_max AS CHAR) LIKE ?", ["%$searchValue%"]);
+
+                    $q->orWhereHas('lender', function ($lenderQuery) use ($searchValue) {
+                        $lenderQuery->where('name', 'like', "%{$searchValue}%");
+                    });
                 });
             }
 

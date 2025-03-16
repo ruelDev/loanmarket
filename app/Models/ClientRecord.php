@@ -24,7 +24,11 @@ class ClientRecord extends Model
         return $this->belongsTo(Brokers::class, 'broker_id');
     }
 
-    public function property_management() {
-        return $this->belongsTo(ROS::class, 'property_management');
+    public function rso() {
+        return $this->belongsTo(ROS::class, "property_management");
+    }
+
+    public function client_lenders() {
+        return $this->hasMany(ClientLenders::class, 'client_id');
     }
 }

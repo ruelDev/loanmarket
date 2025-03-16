@@ -35,13 +35,39 @@
                         </div>
                         <div class="separator my-2"></div>
                         <div class="menu-item px-5">
-                            <a href="" class="menu-link px-5">My Profile</a>
+                            <a data-bs-toggle='modal' data-bs-target="#update_password_modal" class="menu-link px-5">Update Password</a>
                         </div>
                         <div class="menu-item px-5">
-                            <a href="{{route('admin.logout')}}" class="menu-link px-5">Sign Out</a>
+                            <a onclick="logout()" class="menu-link px-5">Sign Out</a>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="update_password_modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 class="my-3 text-xl">Update Password</h3>
+                <div class="mb-3">
+                    <label class="form-label text-xs text-black" for="oldpass">Old Password:</label>
+                    <input class="form-control form-control-sm" id="oldpass" name="oldpass" type="text" placeholder="Old Password">
+                    <small class="text-red-500 hidden" id="oldpass_error">Old password is required.</small>
+                </div>
+                <div class="mb-3">
+                    <label class="label text-xs text-black" for="newpass">New Password:</label>
+                    <input id="newpass" name="newpass" type="text" placeholder="New Password">
+                    <small class="text-red-500 hidden" id="newpass_error">Please input the correct password.</small>
+                </div>
+                <div class="mb-3">
+                    <label class="label text-xs text-black" for="confirmpass">Confirm Password:</label>
+                    <input id="confirmpass" name="confirmpass" type="text" placeholder="Confirm Password">
+                </div>
+                <button type="button" class="bg-gray-100 border border-blue text-black px-5 py-3 rounded" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="bg-blue text-white px-5 py-3 rounded" id="updatePasswordSubmit">Update</button>
             </div>
         </div>
     </div>

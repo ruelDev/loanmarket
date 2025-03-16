@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth\AdminPasswordController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\CompareLendersController;
 use App\Http\Controllers\MainController;
@@ -38,7 +39,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/lenders/rates/fixed', [AdminLendersController::class, 'rates'])->name('admin.lenders.rates');
     Route::get('/admin/lenders/rates/variable', [AdminLendersController::class, 'ratesVariable'])->name('admin.lenders.rates.variable');
     Route::get('/admin/clients/lenders', [AdminClientsController::class, 'lenders'])->name('admin.clients.lenders');
+    Route::get('/admin/clients/{id}', [AdminClientsController::class, 'show'])->name('admin.clients.show');
     Route::get('/admin/clients', [AdminClientsController::class, 'index'])->name('admin.clients');
+    Route::post('/admin/password/update/{id}', [AdminPasswordController::class, 'reset'])->name('admin.password.update');
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 

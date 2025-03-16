@@ -23,13 +23,12 @@
                 <thead>
                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-200px px-0">Lender</th>
-                    <th class="min-w-200px">Rate</th>
+                    <th class="min-w-200px">Interest Rate</th>
+                    <th class="min-w-200px">Comparison Rate</th>
                     <th class="min-w-200px">Tier</th>
                     <th class="min-w-200px">Tier Minimum</th>
                     <th class="min-w-200px">Tier Maximum</th>
-                    <th class="min-w-200px">Tier UOM</th>
                     <th class="min-w-200px">Purpose</th>
-                    <th class="min-w-200px">Comparison Rate</th>
                     <th class="min-w-200px">Repayment</th>
                 </tr>
                 </thead>
@@ -333,11 +332,12 @@
             serverSide: true,
             "scrollX": true,
             ajax: {
-                url: "{{route('admin.lenders.rates')}}",
+                url: "{{route('admin.lenders.rates.variable')}}",
             },
             columns: [
                 {data: 'lender.name' },
                 {data: 'loan_rate'},
+                {data: 'comparison_rate'},
                 {
                     data: 'tier_name',
                     render: function (data, type, row) {
@@ -363,15 +363,10 @@
                     },
                 },
                 {data: 'loan_purpose'},
-                {data: 'comparison_rate'},
                 {data: 'repayment_type'},
             ],
             columnDefs: [
-                { width: "200px", targets: 0 },
-                { width: "200px", targets: 0 },
-                { width: "200px", targets: 0 },
-                { width: "200px", targets: 0 },
-                { width: "200px", targets: 0 },
+                { width: "200px", targets: [0, 1, 2, 3, 4] }
             ]
         })
 

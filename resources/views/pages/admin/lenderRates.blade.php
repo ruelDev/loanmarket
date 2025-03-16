@@ -23,15 +23,15 @@
                 <thead>
                 <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
                     <th class="min-w-150px px-0">Lender</th>
-                    <th class="min-w-150px">Rate</th>
-                    <th class="min-w-100px">Term</th>
+                    <th class="min-w-150px">Interest Rate</th>
                     <th class="min-w-200px">Comparison Rate</th>
+                    <th class="min-w-100px">Term</th>
                     <th class="min-w-200px">Purpose</th>
                     <th class="min-w-200px">Repayment</th>
-                    <th class="min-w-200px">Tier</th>
+                    {{-- <th class="min-w-200px">Tier</th>
                     <th class="min-w-200px">Tier Minimum</th>
                     <th class="min-w-200px">Tier Minaximum</th>
-                    <th class="min-w-200px">Tier UOM</th>
+                    <th class="min-w-200px">Tier UOM</th> --}}
                 </tr>
                 </thead>
                 <tbody class="text-gray-600 fw-semibold">
@@ -297,37 +297,37 @@
             columns: [
                 {data: 'lender.name' },
                 {data: 'loan_rate'},
-                {data: 'loan_term'},
                 {data: 'comparison_rate' },
+                {data: 'loan_term'},
                 {data: 'loan_purpose'},
                 {data: 'repayment_type'},
-                {
-                    data: 'tier_name',
-                    render: function (data, type, row) {
-                        return `<p class="align-top">${data ?? 'N/A'}</p>`;
-                    },
-                },
-                {
-                    data: 'tier_min',
-                    render: function (data, type, row) {
-                        return `<p class="align-top">${data ?? 'N/A'}</p>`;
-                    },
-                },
-                {
-                    data: 'tier_max',
-                    render: function (data, type, row) {
-                        return `<p class="align-top">${data ?? 'N/A'}</p>`;
-                    },
-                },
-                {
-                    data: 'tier_unitOfMeasure',
-                    render: function (data, type, row) {
-                        return `<p class="align-top">${data ?? 'N/A'}</p>`;
-                    },
-                },
+                // {
+                //     data: 'tier_name',
+                //     render: function (data, type, row) {
+                //         return `<p class="align-top">${data ?? 'N/A'}</p>`;
+                //     },
+                // },
+                // {
+                //     data: 'tier_min',
+                //     render: function (data, type, row) {
+                //         return `<p class="align-top">${data ?? 'N/A'}</p>`;
+                //     },
+                // },
+                // {
+                //     data: 'tier_max',
+                //     render: function (data, type, row) {
+                //         return `<p class="align-top">${data ?? 'N/A'}</p>`;
+                //     },
+                // },
+                // {
+                //     data: 'tier_unitOfMeasure',
+                //     render: function (data, type, row) {
+                //         return `<p class="align-top">${data ?? 'N/A'}</p>`;
+                //     },
+                // },
             ],
             columnDefs: [
-                { width: "200px", targets: [0, 1, 2, 3, 4] }
+                { width: "200px", targets: [0, 1, 2, 3, 4, 5] }
             ]
         })
 

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!--begin::Head-->
 	<head>
 		<title>ADMIN</title>
 
@@ -16,19 +15,12 @@
 		<link rel="canonical" href="http://preview.keenthemes.comindex.html" />
         <link rel="icon" href="{{ asset('assets/images/loanmarket/logos/Logo.png') }}" type="image/x-icon">
 
-		<!--begin::Fonts(mandatory for all pages)-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-		<!--end::Fonts-->
-		<!--begin::Vendor Stylesheets(used for this page only)-->
 		<link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
-		<!--end::Vendor Stylesheets-->
-		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-
 		<link href="{{ asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-		<!--end::Global Stylesheets Bundle-->
         @vite('resources/css/app.css')
 		<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
 
@@ -37,12 +29,30 @@
                 height: 3rem;
                 padding: 6px;
             }
+
+            #update_password_modal input {
+                width: 100%;
+                height: 45px;
+                padding: 12px;
+                border-radius: 10px !important;
+                border: 1.5px solid lightgrey;
+                outline: none;
+                transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+                box-shadow: 0px 0px 20px -18px;
+                position: relative;
+            }
+
+            #update_password_modal input:hover {
+                border: 2px solid lightgrey;
+                box-shadow: 0px 0px 20px -17px;
+            }
+
+            #update_password_modal input:active {
+                transform: scale(0.95);
+            }
         </style>
     </head>
-	<!--end::Head-->
-	<!--begin::Body-->
 	<body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default">
-		<!--begin::Theme mode setup on page load-->
 		<script>
             var defaultThemeMode = "light"; var themeMode;
             if ( document.documentElement ) {
@@ -57,44 +67,26 @@
             }
         </script>
 
-		<!--begin::App-->
 		<div class="d-flex flex-column flex-root app-root" id="kt_app_root">
-			<!--begin::Page-->
 			<div class="app-page flex-column flex-column-fluid" id="kt_app_page">
-                <!--begin::Header-->
 				@include('components.admin.header', ['title' => $title ?? ''])
-				<!--end::Header-->
-				<!--begin::Wrapper-->
 				<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-					<!--begin::Sidebar-->
                     @include('components.admin.sidebar')
-					<!--end::Sidebar-->
-					<!--begin::Main-->
 					<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-						<!--begin::Content wrapper-->
 						<div class="d-flex flex-column flex-column-fluid">
                             <div id="kt_app_content" class="app-content flex-column-fluid">
-								<!--begin::Content container-->
 								<div id="kt_app_content_container" class="app-container container-fluid">
                                     @yield('content')
                                 </div>
                             </div>
                         </div>
-						<!--end::Content wrapper-->
                     </div>
-					<!--end::Main-->
                 </div>
-				<!--end::Wrapper-->
             </div>
-			<!--end::Page-->
         </div>
-		<!--end::App-->
 		<script>var hostUrl = "assets/";</script>
-		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
 		<script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
 		<script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
-		<!--end::Global Javascript Bundle-->
-		<!--begin::Vendors Javascript(used for this page only)-->
 		<script src="{{asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
 		<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
@@ -108,8 +100,6 @@
 		<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
 		<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
 		<script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-		<!--end::Vendors Javascript-->
-		<!--begin::Custom Javascript(used for this page only)-->
 		<script src="{{asset('assets/js/widgets.bundle.js')}}"></script>
 		<script src="{{asset('assets/js/custom/widgets.js')}}"></script>
 		<script src="{{asset('assets/js/custom/apps/chat/chat.js')}}"></script>
@@ -117,9 +107,123 @@
 		<script src="{{asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
 		<script src="{{asset('assets/js/custom/utilities/modals/new-target.js')}}"></script>
 		<script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
-		<!--end::Custom Javascript-->
-		<!--end::Javascript-->
         @stack('scripts')
+
+        <script>
+            function logout(){
+                Swal.fire({
+                    text: 'Are you sure you want to logout?',
+                    icon: 'warning',
+                    confirmButtonText: 'Yes, Logout',
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                    },
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{{ route('admin.logout') }}";
+                    }
+                });
+            }
+
+            document.getElementById('updatePasswordSubmit').addEventListener('click', function () {
+                const oldPass = document.getElementById('oldpass').value.trim();
+                const newPass = document.getElementById('newpass').value.trim();
+                const confirmPass = document.getElementById('confirmpass').value.trim();
+
+                const oldPassError = document.getElementById('oldpass_error');
+                const newPassError = document.getElementById('newpass_error');
+
+                let isValid = true;
+
+                // Check Old Password
+                if (oldPass === "") {
+                    oldPassError.textContent = "Old password is required!";
+                    oldPassError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    oldPassError.classList.add('hidden');
+                }
+
+                // Check New Password Length
+                if (newPass === "") {
+                    newPassError.textContent = "New password is required!";
+                    newPassError.classList.remove('hidden');
+                    isValid = false;
+                }
+                else if (newPass.length < 6) {
+                    newPassError.textContent = "New password must be at least 6 characters long!";
+                    newPassError.classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    newPassError.classList.add('hidden');
+                }
+
+                // Check if Confirm Password matches New Password
+                if (newPass !== confirmPass) {
+                    newPassError.textContent = "Passwords do not match!";
+                    newPassError.classList.remove('hidden');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                    fetch("{{ route('admin.password.update', Auth::user()->id) }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                        body: JSON.stringify({
+                            old_password: oldPass,
+                            new_password: newPass,
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire({
+                                text: 'Password updated successfully!',
+                                icon: 'success',
+                                confirmButtonText: 'Close',
+                                customClass: {
+                                    confirmButton: 'btn btn-success',
+                                },
+                            })
+                            .then((result) => {
+                                window.location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Close',
+                                customClass: {
+                                    confirmButton: 'btn btn-danger',
+                                },
+                            });
+                        }
+                    });
+                }
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const modal = document.getElementById('update_password_modal');
+
+                // Listen to the Bootstrap modal close event
+                modal.addEventListener('hidden.bs.modal', function () {
+                    // Reset form fields
+                    document.getElementById('oldpass').value = '';
+                    document.getElementById('newpass').value = '';
+                    document.getElementById('confirmpass').value = '';
+
+                    // Hide error messages
+                    document.getElementById('oldpass_error').classList.add('hidden');
+                    document.getElementById('newpass_error').classList.add('hidden');
+                });
+            });
+        </script>
 	</body>
-	<!--end::Body-->
 </html>
